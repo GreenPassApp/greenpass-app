@@ -1,15 +1,12 @@
-import 'dart:collection';
-import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
-
-import 'package:dart_base45/dart_base45.dart';
-import 'package:dart_cose/dart_cose.dart';
+import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
+import 'package:greenpass_app/green_validator/green_validator.dart';
+import 'package:greenpass_app/green_validator/model/validation_result.dart';
+import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 
-import 'package:dart_cose/src/util/certificate_util.dart';
-
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await CountryCodes.init();
   runApp(MyApp());
 }
 
@@ -47,67 +44,59 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text('This is just a demo for verifying the EU green certificate.'),
-              Padding(padding: const EdgeInsets.only(top: 16.0)),
-              TextField(
-                controller: _certTextController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Raw certificate',
+      extendBodyBehindAppBar: true,
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('This is just a demo for verifying the EU green certificate.'),
+                Padding(padding: const EdgeInsets.only(top: 16.0)),
+                TextField(
+                  controller: _certTextController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Raw certificate',
+                  ),
                 ),
-              ),
-              Padding(padding: const EdgeInsets.only(top: 16.0)),
-              ElevatedButton(
-                onPressed: () => {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      // TODO scan a qr code
-                      String qr = _certTextController.text;
+                Padding(padding: const EdgeInsets.only(top: 16.0)),
+                ElevatedButton(
+                  onPressed: () => {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        // TODO scan a qr code
+                        String qr = _certTextController.text;
 
-                      // the current green certificate must start with "HC1:"
-                      if (!qr.startsWith('HC1:')) throw ('The certificate does not have the right prefix.');
+                        ValidationResult res = GreenValidator.validate(qr);
 
-                      // decode base45 string (after prefix)
-                      String base45_string = qr.replaceFirst('HC1:', '');
-                      Uint8List compressed_data = Base45.decode(base45_string);
+                        if (!res.success)
+                          throw ('Could not validate: ' + res.errorCode.toString());
 
-                      // decompress data
-                      List<int> cose_data = zlib.decode(compressed_data);
+                        GreenCertificate cert = res.certificate!;
 
-                      var res = Cose.decodeAndVerify(
-                        cose_data,
-                        {
-                          'DEsVUSvpFAE=': '''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'''
-                        },
-                      );
+                        print(cert);
+                        print(cert.personInfo.firstName);
 
-                      print(res.payload);
-                      print(res.payload[-260][1]['nam']['gn']);
-
-                      return AlertDialog(
-                        content: Text(
-                          'Cert: ' + res.payload.toString() + '\n' +
-                          //res.certificate!.publicKey.toString() + '\n' +
-                          '\n' +
-                          'Valid: ' + res.verified.toString() + '\n' +
-                          'Error: ' + res.errorCode.toString()
-                        ),
-                      );
-                    },
-                  )
-                },
-                child: Text('Validate'),
-              )
-            ],
+                        return AlertDialog(
+                          content: Text(
+                            'Type: ' + cert.certificateType.toString() + '\n' +
+                            'For: ' + cert.personInfo.firstName + ' ' + cert.personInfo.lastName + '\n' +
+                            'Error: ' + res.errorCode.toString()
+                          ),
+                        );
+                      },
+                    )
+                  },
+                  child: Text('Validate'),
+                )
+              ],
+            ),
           ),
         ),
       ),

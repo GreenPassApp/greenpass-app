@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  intl: ^0.17.0
+  country_codes: ^2.0.0
   dart_base45: ^1.0.1
   dart_cose: ^1.1.3
 
