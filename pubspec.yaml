@@ -25,6 +25,8 @@ dependencies:
     sdk: flutter
   intl: ^0.17.0
   country_codes: ^2.0.0
+  qr_code_scanner: ^0.5.1
+  vibration: ^1.7.4-nullsafety.0
   dart_base45: ^1.0.1
   dart_cose: ^1.1.3
 
