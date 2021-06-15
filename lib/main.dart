@@ -6,7 +6,6 @@ import 'package:greenpass_app/green_validator/model/validation_result.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/views/demo_page.dart';
 import 'package:greenpass_app/views/qr_code_scanner.dart';
-import 'package:pass_flutter/pass_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
