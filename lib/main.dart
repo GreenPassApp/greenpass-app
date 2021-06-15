@@ -6,6 +6,7 @@ import 'package:greenpass_app/green_validator/model/validation_result.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/views/demo_page.dart';
 import 'package:greenpass_app/views/qr_code_scanner.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,6 +61,19 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
 
   }
 
+  Future<void> _pkPassDownload({required String url}) async {
+    assert(url.isNotEmpty);
+    if (await canLaunch(url)) {
+      try{
+        await launch(url);
+      }on Exception catch (_){
+        print('Launch problem');
+      }
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -94,7 +108,8 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
             tooltip: 'Information',
             color: _currentPageIdx == 0 ? Colors.black : Colors.white,
             onPressed: () async {
-              _addPassIntoWallet();
+              await _pkPassDownload(url:"https://jakobstadlhuber.com/test2.pkpass");
+              //_addPassIntoWallet();
               ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Hello there!')));
             },
