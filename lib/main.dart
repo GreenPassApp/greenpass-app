@@ -1,10 +1,12 @@
 import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
 import 'package:greenpass_app/green_validator/model/validation_result.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/views/demo_page.dart';
 import 'package:greenpass_app/views/qr_code_scanner.dart';
+import 'package:pass_flutter/pass_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,6 +47,19 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
   int _currentPageIdx = 0;
 
   late TabController _tabController;
+  static const platform = const MethodChannel('eu.greenpassapp.wallet');
+
+  Future<void> _addPassIntoWallet() async {
+    String batteryLevel;
+    try {
+      var result = await platform.invokeMethod('addPassIntoWallet', {"uri": "https://jakobstadlhuber.com/test2.pkpass"});
+      batteryLevel = 'Success $result % .';
+      print(batteryLevel);
+    } on PlatformException catch (e) {
+      batteryLevel = "Failed to add pass: '${e.message}'.";
+    }
+
+  }
 
   @override
   void initState() {
@@ -79,7 +94,8 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
             icon: const Icon(Icons.info_outline),
             tooltip: 'Information',
             color: _currentPageIdx == 0 ? Colors.black : Colors.white,
-            onPressed: () {
+            onPressed: () async {
+              _addPassIntoWallet();
               ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Hello there!')));
             },
