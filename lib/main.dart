@@ -1,9 +1,6 @@
 import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:greenpass_app/green_validator/green_validator.dart';
-import 'package:greenpass_app/green_validator/model/validation_result.dart';
-import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/views/demo_page.dart';
 import 'package:greenpass_app/views/qr_code_scanner.dart';
 import 'package:url_launcher/url_launcher.dart';
