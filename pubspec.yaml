@@ -33,6 +33,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   qr_mobile_vision: ^3.0.0
+  app_settings: ^4.1.0
+  flutter_statusbarcolor_ns: ^0.3.0-nullsafety
 
 dev_dependencies:
   flutter_test:
