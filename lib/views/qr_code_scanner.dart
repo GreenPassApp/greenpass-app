@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:qr_mobile_vision/qr_mobile_vision.dart';
 import 'package:vibration/vibration.dart';
 import 'package:qr_mobile_vision/qr_camera.dart';
@@ -75,6 +76,11 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
         showDialog(
           context: context,
           builder: (context) {
+            showCupertinoModalBottomSheet(
+              context: context,
+              expand: true,
+              builder: (context) => Container(child: Text('Hello there!'),),
+            );
             return AlertDialog(
               content: Text(GreenValidator.validate(code!).certificate!.certificateType.toString()),
             );
