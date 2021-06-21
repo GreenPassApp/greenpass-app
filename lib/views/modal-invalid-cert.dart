@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
+import 'package:greenpass_app/green_validator/model/validation_error_code.dart';
+import 'package:greenpass_app/green_validator/model/validation_result.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-class ModalValidCert extends StatelessWidget {
-  final String cert;
+class ModalInvalidCert extends StatelessWidget {
+  final ValidationErrorCode errorCode;
 
-  const ModalValidCert({Key? key, required this.cert}) : super(key: key);
+  const ModalInvalidCert({Key? key, required this.errorCode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +18,10 @@ class ModalValidCert extends StatelessWidget {
             leading: Container(), middle: Text('Modal Page')),
         child: SafeArea(
           bottom: false,
-          child: Text(GreenValidator.validate(cert)
-              .certificate!
-              .certificateType
-              .toString()
-            , ),
+          child: Container(
+            child: Text(errorCode.toString() + 'hksbdjkhabsdjhbsajdhbasjdbasbd'),
+            constraints: BoxConstraints.expand(),
+          ),
         ),
       ),
     );
