@@ -2,6 +2,7 @@ import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/pub_certs/pub_certs.dart';
 import 'package:greenpass_app/views/my_passes_page.dart';
 import 'package:greenpass_app/views/scan_others_pass.dart';
@@ -137,12 +138,12 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
 
           if (_currentPageIdx == 0) ...[
             IconButton(
-                icon: const Icon(Icons.add),
+                icon: const Icon(FontAwesome5Solid.plus),
                 color: Colors.black,
                 onPressed: () {}
             ),
             IconButton(
-              icon: const Icon(Icons.more_vert),
+              icon: const Icon(FontAwesome5Solid.ellipsis_v),
               color: Colors.black,
               onPressed: () {}
             ),
@@ -170,11 +171,17 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
         },
         items: const <BottomNavigationBarItem> [
           BottomNavigationBarItem(
-            icon: Icon(Icons.task),
+            icon: Padding(
+              padding: EdgeInsets.all(2.0),
+              child: Icon(FontAwesome5Solid.file_alt),
+            ),
             label: 'My Pass',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.qr_code_scanner),
+            icon: Padding(
+              padding: EdgeInsets.all(2.0),
+              child: Icon(FontAwesome5Solid.qrcode),
+            ),
             label: 'Scan Pass',
           ),
         ],

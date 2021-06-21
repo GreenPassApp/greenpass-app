@@ -38,6 +38,7 @@ dependencies:
   flutter_statusbarcolor_ns: ^0.3.0-nullsafety
   modal_bottom_sheet: ^2.0.0
   flutter_secure_storage: ^4.2.0
+  flutter_vector_icons: ^1.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
