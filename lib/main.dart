@@ -2,16 +2,15 @@ import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
-import 'package:greenpass_app/views/demo_page.dart';
-import 'package:greenpass_app/views/qr_code_scanner.dart';
+import 'package:greenpass_app/pub_certs/pub_certs.dart';
+import 'package:greenpass_app/views/my_passes_page.dart';
 import 'package:greenpass_app/views/scan_others_pass.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:vibration/vibration.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CountryCodes.init();
+  await PubCerts.initAppStart();
   runApp(App());
 }
 
@@ -19,6 +18,10 @@ class App extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -97,7 +100,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     List<Widget> _tabPages = [
-      DemoPage(),
+      MyPassesPage(),
       ScanOthersPassView(context: context),
     ];
 
@@ -118,7 +121,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         actions: [
-          IconButton(
+          /*IconButton(
             icon: const Icon(Icons.info_outline),
             tooltip: 'Information',
             color: _currentPageIdx == 0 ? Colors.black : Colors.white,
@@ -130,7 +133,29 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
               ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Hello there!')));
             },
-          ),
+          ),*/
+
+          if (_currentPageIdx == 0) ...[
+            IconButton(
+                icon: const Icon(Icons.add),
+                color: Colors.black,
+                onPressed: () {}
+            ),
+            IconButton(
+              icon: const Icon(Icons.more_vert),
+              color: Colors.black,
+              onPressed: () {}
+            ),
+          ] else if (_currentPageIdx == 1) ...[
+            /*
+            TODO add flashlight
+            IconButton(
+              icon: const Icon(Icons.flashlight_on),
+              color: Colors.white,
+              onPressed: () {}
+            ),
+           */
+          ],
         ],
       ),
       extendBodyBehindAppBar: true,
