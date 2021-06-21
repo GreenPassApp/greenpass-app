@@ -1,4 +1,5 @@
 import 'package:country_codes/country_codes.dart';
+import 'package:greenpass_app/green_validator/payload/disease_type.dart';
 
 abstract class CertEntry {
   final String certificateIdentifier;
@@ -12,4 +13,9 @@ abstract class CertEntry {
     required this.country,
     required this.targetedDiseaseCode,
   });
+
+  DiseaseType get targetedDisease {
+    if (targetedDiseaseCode == '840539006') return DiseaseType.sars_cov_2;
+    return DiseaseType.unknown;
+  }
 }

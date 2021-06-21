@@ -1,4 +1,6 @@
 import 'package:country_codes/country_codes.dart';
+import 'package:greenpass_app/green_validator/payload/test_result.dart';
+import 'package:greenpass_app/green_validator/payload/test_type.dart';
 
 import 'cert_entry.dart';
 
@@ -30,4 +32,16 @@ class CertEntryTest extends CertEntry {
     country: country,
     targetedDiseaseCode: targetedDiseaseCode,
   );
+
+  TestType get testType {
+    if (testTypeCode == 'LP217198-3') return TestType.rapid;
+    if (testTypeCode == 'LP6464-4') return TestType.pcr;
+    return TestType.unknown;
+  }
+
+  TestResult get testResult {
+    if (testResultCode == '260415000') return TestResult.negative;
+    if (testResultCode == '260373001') return TestResult.positive;
+    return TestResult.unknown;
+  }
 }
