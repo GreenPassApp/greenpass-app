@@ -107,6 +107,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           'GreenPass',
           style: TextStyle(

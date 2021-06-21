@@ -80,6 +80,22 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
       qrCodeCallback: (code) {
         this.callback(code!);
       },
+      child: SafeArea(
+        child: Container(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+            child: Text(
+              'Hold your camera in front of the QR code.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          color: Colors.black45,
+          width: double.infinity,
+        ),
+      ),
     );
   }
 
