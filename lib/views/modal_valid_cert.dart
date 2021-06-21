@@ -179,14 +179,20 @@ class ModalValidCert extends StatelessWidget {
   String getDate(ValidationResult cert) {
     switch (cert.certificate!.certificateType) {
       case CertificateType.vaccination:
-        var vac = (cert.certificate!.entryList[0] as CertEntryVaccination);
+        var vacs = cert.certificate!.entryList;
+        vacs.sort((e1, e2) {
+          e1 as CertEntryVaccination;
+          e2 as CertEntryVaccination;
+          return e1.doseNumber.compareTo(e2.doseNumber);
+        });
+        var vac = (vacs[0] as CertEntryVaccination);
         return DateFormat('dd.MM.yyyy').format(vac.dateOfVaccination);
       case CertificateType.recovery:
         var rec = (cert.certificate!.entryList[0] as CertEntryRecovery);
         return DateFormat('dd.MM.yyyy').format(rec.validUntil);
       case CertificateType.test:
         var test = (cert.certificate!.entryList[0] as CertEntryTest);
-        return DateFormat('dd.MM.yyyy').format(test.timeSampleCollection);
+        return DateFormat('dd.MM.yyyy | hh:mm').format(test.timeSampleCollection);
       case CertificateType.unknown:
         return "Unknown";
     }
