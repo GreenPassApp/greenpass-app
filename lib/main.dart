@@ -1,4 +1,5 @@
 import 'package:country_codes/country_codes.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
@@ -12,11 +13,18 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CountryCodes.init();
   await PubCerts.initAppStart();
-  runApp(App());
+  await EasyLocalization.ensureInitialized();
+  runApp(
+    EasyLocalization(
+      supportedLocales: [Locale('en'), Locale('de')],
+      path: 'assets/translations',
+      fallbackLocale: Locale('en'),
+      child: App()
+    )
+  );
 }
 
 class App extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -24,21 +32,20 @@ class App extends StatelessWidget {
     ]);
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'GreenPass',
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       theme: ThemeData(
         primarySwatch: Colors.green,
         fontFamily: 'Inter',
       ),
-      home: MyHomePage(title: 'EU green certificate Demo'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({required this.title});
-
-  final String title;
-
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -169,20 +176,20 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
         onTap: (newIdx) {
           _tabController.animateTo(newIdx);
         },
-        items: const <BottomNavigationBarItem> [
+        items: <BottomNavigationBarItem> [
           BottomNavigationBarItem(
             icon: Padding(
-              padding: EdgeInsets.all(2.0),
+              padding: const EdgeInsets.all(2.0),
               child: Icon(FontAwesome5Solid.file_alt),
             ),
-            label: 'My Pass',
+            label: 'My Pass'.tr(),
           ),
           BottomNavigationBarItem(
             icon: Padding(
-              padding: EdgeInsets.all(2.0),
+              padding: const EdgeInsets.all(2.0),
               child: Icon(FontAwesome5Solid.qrcode),
             ),
-            label: 'Scan Pass',
+            label: 'Scan Pass'.tr(),
           ),
         ],
       ),

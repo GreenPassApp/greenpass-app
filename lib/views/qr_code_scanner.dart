@@ -1,11 +1,8 @@
 import 'package:app_settings/app_settings.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:greenpass_app/green_validator/green_validator.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:qr_mobile_vision/qr_mobile_vision.dart';
-import 'package:vibration/vibration.dart';
 import 'package:qr_mobile_vision/qr_camera.dart';
 
 class QRCodeScanner extends StatefulWidget {
@@ -37,14 +34,8 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.videocam_off,
-                    color: Theme.of(context).disabledColor,
-                    size: 60.0
-                  ),
-                  const Padding(padding: const EdgeInsets.symmetric(vertical: 6.0)),
                   Text(
-                    'No Permission',
+                    'No Permission'.tr(),
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -52,12 +43,12 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
                   ),
                   const Padding(padding: const EdgeInsets.symmetric(vertical: 2.0)),
                   Text(
-                    'Please allow GreenPass to access your camera in order to scan QR codes.',
+                    'Please allow GreenPass to access your camera in order to scan QR codes.'.tr(),
                     textAlign: TextAlign.center,
                   ),
                   const Padding(padding: const EdgeInsets.symmetric(vertical: 6.0)),
                   OutlinedButton(
-                    child: Text('Go to app settings'),
+                    child: Text('Go to app settings'.tr()),
                     onPressed: () => AppSettings.openAppSettings(),
                   ),
                 ],
@@ -69,7 +60,7 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
             minimum: const EdgeInsets.all(25.0),
             child: Center(
               child: Text(
-                "We're sorry, but there seems to be a problem to access your camera.",
+                "We're sorry, but there seems to be a problem to access your camera.".tr(),
                 textAlign: TextAlign.center,
               ),
             )
@@ -85,7 +76,7 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
             child: Text(
-              'Hold your camera in front of the QR code.',
+              'Hold your camera in front of the QR code.'.tr(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,

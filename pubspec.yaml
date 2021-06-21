@@ -39,6 +39,7 @@ dependencies:
   modal_bottom_sheet: ^2.0.0
   flutter_secure_storage: ^4.2.0
   flutter_vector_icons: ^1.0.0
+  easy_localization: ^3.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -56,7 +57,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/pubCerts.json
+    - assets/
+    - assets/fonts/
+    - assets/translations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
