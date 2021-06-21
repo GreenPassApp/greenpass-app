@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
 import 'package:greenpass_app/green_validator/model/validation_error_code.dart';
-import 'package:greenpass_app/views/modal-invalid-cert.dart';
+import 'package:greenpass_app/views/modal_invalid_cert.dart';
 import 'package:greenpass_app/views/qr_code_scanner.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:vibration/vibration.dart';
 
-import 'modal-valid-cert.dart';
+import 'modal_valid_cert.dart';
 
 class ScanOthersPassView extends StatefulWidget {
   final BuildContext context;
