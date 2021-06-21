@@ -4,7 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:greenpass_app/views/demo_page.dart';
 import 'package:greenpass_app/views/qr_code_scanner.dart';
+import 'package:greenpass_app/views/scan_others_pass.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vibration/vibration.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -95,16 +98,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
   Widget build(BuildContext context) {
     List<Widget> _tabPages = [
       DemoPage(),
-      Stack(
-        children: [
-          QRCodeScanner(),
-          Container(
-            color: Colors.black45,
-            alignment: Alignment.topCenter,
-            height: MediaQuery.of(context).padding.top + kToolbarHeight,
-          ),
-        ],
-      ),
+      ScanOthersPassView(context: context),
     ];
 
     FlutterStatusbarcolor.setStatusBarColor(Colors.transparent);

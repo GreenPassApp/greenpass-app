@@ -9,13 +9,19 @@ import 'package:vibration/vibration.dart';
 import 'package:qr_mobile_vision/qr_camera.dart';
 
 class QRCodeScanner extends StatefulWidget {
-  const QRCodeScanner({Key? key}) : super(key: key);
+  final void Function(String code) callback;
+
+  const QRCodeScanner({Key? key, required this.callback}) : super(key: key);
 
   @override
-  _QRCodeScannerState createState() => _QRCodeScannerState();
+  _QRCodeScannerState createState() => _QRCodeScannerState(callback: this.callback);
 }
 
 class _QRCodeScannerState extends State<QRCodeScanner> {
+  final void Function(String code) callback;
+
+  _QRCodeScannerState({required this.callback});
+
   @override
   Widget build(BuildContext context) {
     return QrCamera(
@@ -72,20 +78,7 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
       },
       notStartedBuilder: (context) => Container(color: Theme.of(context).scaffoldBackgroundColor),
       qrCodeCallback: (code) {
-        Vibration.vibrate(pattern: [0, 50]);
-        showDialog(
-          context: context,
-          builder: (context) {
-            showCupertinoModalBottomSheet(
-              context: context,
-              expand: true,
-              builder: (context) => Container(child: Text('Hello there!'),),
-            );
-            return AlertDialog(
-              content: Text(GreenValidator.validate(code!).certificate!.certificateType.toString()),
-            );
-          },
-        );
+        this.callback(code!);
       },
     );
   }
