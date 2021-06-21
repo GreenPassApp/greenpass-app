@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
 import 'package:greenpass_app/green_validator/model/validation_error_code.dart';
-import 'package:greenpass_app/views/ModalInvalidCert.dart';
+import 'package:greenpass_app/views/modal-invalid-cert.dart';
 import 'package:greenpass_app/views/qr_code_scanner.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:vibration/vibration.dart';
 
-import 'ModalValidCert.dart';
+import 'modal-valid-cert.dart';
 
 class ScanOthersPassView extends StatefulWidget {
   final BuildContext context;
@@ -43,7 +43,7 @@ class _ScanOthersPassViewState extends State<ScanOthersPassView> {
                   validateCert(code),
                   Positioned(
                     top: 0,
-                    right: 0,
+                    left: 0,
                     child: MaterialButton(
                       onPressed: () => Navigator.of(context).pop(),
                       child: Icon(Icons.cancel),
@@ -71,7 +71,7 @@ class _ScanOthersPassViewState extends State<ScanOthersPassView> {
         if(cert.errorCode != ValidationErrorCode.none){
           return ModalInvalidCert(errorCode: cert.errorCode);
         }
-        return ModalValidCert(cert: code);
+        return ModalValidCert(cert: cert);
       } on Exception catch (e) {
         return ModalInvalidCert(errorCode: ValidationErrorCode.unable_to_parse);
       }
