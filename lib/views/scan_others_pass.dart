@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
 import 'package:greenpass_app/green_validator/model/validation_error_code.dart';
 import 'package:greenpass_app/views/modal_invalid_cert.dart';
@@ -46,7 +47,7 @@ class _ScanOthersPassViewState extends State<ScanOthersPassView> {
                     left: 0,
                     child: MaterialButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: Icon(Icons.cancel),
+                      child: Icon(FontAwesome5Solid.times),
                     ),
                   )
                 ],
