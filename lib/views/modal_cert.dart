@@ -21,12 +21,6 @@ class ModalCert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color cardColor = cert.success ? GPColors.blue : GPColors.red;
-    
-    // special case: recovery certificate not valid anymore
-    if (cert.success && cert.certificate!.certificateType == CertificateType.recovery
-      && (cert.certificate!.entryList[0] as CertEntryRecovery).validUntil.isBefore(DateTime.now())) {
-      cardColor = GPColors.red;
-    }
 
     return Material(
       child: CupertinoPageScaffold(

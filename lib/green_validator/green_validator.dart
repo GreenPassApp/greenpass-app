@@ -10,8 +10,10 @@ import 'package:greenpass_app/green_validator/payload/cert_entry_recovery.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_test.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_vaccination.dart';
 import 'package:greenpass_app/green_validator/payload/certificate_type.dart';
+import 'package:greenpass_app/green_validator/payload/disease_type.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/green_validator/payload/person_info.dart';
+import 'package:greenpass_app/green_validator/payload/test_result.dart';
 import 'package:greenpass_app/green_validator/utils/dgc_country_parser.dart';
 import 'package:greenpass_app/green_validator/utils/dgc_date_parser.dart';
 import 'package:greenpass_app/pub_certs/pub_certs.dart';
@@ -50,9 +52,25 @@ class GreenValidator {
 
     GreenCertificate greenCert = _parseCoseResultPayload(result.payload);
 
+    // check if the certificate helps against SARS-CoV-2
+    if (!greenCert.entryList.any((entry) => entry.targetedDisease == DiseaseType.sars_cov_2))
+      return ValidationResult(errorCode: ValidationErrorCode.not_against_sars_cov_2);
+
+    // check if test certificate contains negative test
+    if (greenCert.certificateType == CertificateType.test
+        && (greenCert.entryList[0] as CertEntryTest).testResult != TestResult.negative) {
+      return ValidationResult(errorCode: ValidationErrorCode.not_against_sars_cov_2);
+    }
+
     // check if the certificate has expired
     if (greenCert.expiresAt.isBefore(DateTime.now()))
       return ValidationResult(errorCode: ValidationErrorCode.certificate_expired);
+
+    // check if recovery certificate has expired
+    if (greenCert.certificateType == CertificateType.recovery
+      && (greenCert.entryList[0] as CertEntryRecovery).validUntil.isBefore(DateTime.now())) {
+      return ValidationResult(errorCode: ValidationErrorCode.certificate_expired);
+    }
 
     // all good
     return ValidationResult(certificate: greenCert);
