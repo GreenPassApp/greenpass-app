@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
-import 'package:greenpass_app/green_validator/model/validation_error_code.dart';
-import 'package:greenpass_app/views/modal_invalid_cert.dart';
 import 'package:greenpass_app/views/qr_code_scanner.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:vibration/vibration.dart';
 
-import 'modal_valid_cert.dart';
+import 'modal_cert.dart';
 
 class ScanOthersPassView extends StatefulWidget {
   final BuildContext context;
@@ -21,8 +18,7 @@ class ScanOthersPassView extends StatefulWidget {
 
 class _ScanOthersPassViewState extends State<ScanOthersPassView> {
   final BuildContext context;
-  DateTime lastScan = DateTime.now().subtract(Duration(seconds: 10));
-  String lastCode = "";
+  List<String> lastCodes = [];
 
   _ScanOthersPassViewState({required this.context});
 
@@ -31,29 +27,15 @@ class _ScanOthersPassViewState extends State<ScanOthersPassView> {
     return Stack(
       children: [
         QRCodeScanner(callback: (code) {
-          //if (lastScan.isBefore(DateTime.now().subtract(Duration(seconds: 4)))) {
-          if (lastCode != code) {
-            //lastScan = DateTime.now();
-            lastCode = code;
+          if (!lastCodes.contains(code)) {
+            lastCodes.add(code);
             Vibration.vibrate(pattern: [0, 50]);
             showCupertinoModalBottomSheet(
               context: this.context,
               expand: true,
-              builder: (context) => Stack(
-                children: <Widget>[
-                  validateCert(code),
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    child: MaterialButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: Icon(FontAwesome5Solid.times),
-                    ),
-                  )
-                ],
-              ),
+              builder: (context) => ModalCert(cert: GreenValidator.validate(code)),
             ).then((value) {
-              this.lastCode = "";
+              lastCodes.remove(code);
             });
           }
         }),
@@ -64,17 +46,5 @@ class _ScanOthersPassViewState extends State<ScanOthersPassView> {
         ),
       ],
     );
-  }
-
-  validateCert(String code) {
-      try {
-        var cert = GreenValidator.validate(code);
-        if(cert.errorCode != ValidationErrorCode.none){
-          return ModalInvalidCert(errorCode: cert.errorCode);
-        }
-        return ModalValidCert(cert: cert);
-      } on Exception catch (e) {
-        return ModalInvalidCert(errorCode: ValidationErrorCode.unable_to_parse);
-      }
   }
 }

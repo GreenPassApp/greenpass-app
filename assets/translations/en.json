@@ -5,5 +5,37 @@
   "Please allow GreenPass to access your camera in order to scan QR codes.": "Please allow GreenPass to access your camera in order to scan QR codes.",
   "Go to app settings": "Go to app settings",
   "We're sorry, but there seems to be a problem to access your camera.": "We're sorry, but there seems to be a problem to access your camera.",
-  "Hold your camera in front of the QR code.": "Hold your camera in front of the QR code."
+  "Hold your camera in front of the QR code.": "Hold your camera in front of the QR code.",
+
+  "Certificate": "Certificate",
+  "Vaccinated": "Vaccinated",
+  "Recovered": "Recovered",
+  "Tested negative": "Tested negative",
+  "Tested positive": "Tested positive",
+  "Unknown": "Unknown",
+  "PCR test": "PCR test",
+  "Rapid test": "Rapid test",
+  "Unknown test": "Unknown test",
+  "Unknown time": "Unknown time",
+  "{} days ago": {
+    "zero": "Today",
+    "one": "Yesterday",
+    "many": "{} days ago",
+    "other": "{} days ago"
+  },
+  "{} hours ago": {
+    "zero": "Less than an hour ago",
+    "one": "One hour ago",
+    "many": "{} hours ago",
+    "other": "{} hours ago"
+  },
+  "Since {} days": {
+    "zero": "Since today",
+    "one": "Since yesterday",
+    "many": "Since {} days",
+    "other": "Since {} days"
+  },
+
+  "Invalid": "Invalid",
+  "This QR code is invalid. Please try to scan another one.": "This QR code is invalid. Please try to scan another one."
 }

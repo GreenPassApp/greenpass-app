@@ -4,6 +4,38 @@
   "No Permission": "Keine Berechtigung",
   "Please allow GreenPass to access your camera in order to scan QR codes.": "Bitte erlaube GreenPass auf deine Kamera zuzugreifen, um QR-Codes scannen zu können.",
   "Go to app settings": "App-Einstellungen öffnen",
-  "We're sorry, but there seems to be a problem to access your camera.": "Tut uns leid, aber scheint ein Problem dabei zu geben, auf deine Kamera zuzugreifen.",
-  "Hold your camera in front of the QR code.": "Halte die Kamera vor den QR-Code."
+  "We're sorry, but there seems to be a problem to access your camera.": "Tut uns leid, aber es scheint ein Problem dabei zu geben, auf deine Kamera zuzugreifen.",
+  "Hold your camera in front of the QR code.": "Halte die Kamera vor den QR-Code.",
+
+  "Certificate": "Zertifikat",
+  "Vaccinated": "Geimpft",
+  "Recovered": "Genesen",
+  "Tested negative": "Negativ getestet",
+  "Tested positive": "Positiv getestet",
+  "Unknown": "Unbekannt",
+  "PCR test": "PCR-Test",
+  "Rapid test": "Schnelltest",
+  "Unknown test": "Unbekannter Test",
+  "Unknown time": "Unbekannte Zeit",
+  "{} days ago": {
+    "zero": "Heute",
+    "one": "Gestern",
+    "many": "Vor {} Tagen",
+    "other": "Vor {} Tagen"
+  },
+  "{} hours ago": {
+    "zero": "Vor unter einer Stunde",
+    "one": "Vor einer Stunde",
+    "many": "Vor {} Stunden",
+    "other": "Vor {} Stunden"
+  },
+  "Since {} days": {
+    "zero": "Seit heute",
+    "one": "Seit gestern",
+    "many": "Seit {} Tagen",
+    "other": "Seit {} Tagen"
+  },
+
+  "Invalid": "Ungültig",
+  "This QR code is invalid. Please try to scan another one.": "Dieser QR-Code ist ungültig. Bitte versuche es mit einem anderen."
 }

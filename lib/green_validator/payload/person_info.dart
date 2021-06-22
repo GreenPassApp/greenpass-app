@@ -8,4 +8,8 @@ class PersonInfo {
     required this.lastName,
     required this.dateOfBirth,
   });
+
+  String get fullName {
+    return firstName + ' ' + lastName;
+  }
 }

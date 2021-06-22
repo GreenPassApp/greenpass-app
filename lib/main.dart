@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/pub_certs/pub_certs.dart';
 import 'package:greenpass_app/views/my_passes_page.dart';
 import 'package:greenpass_app/views/scan_others_pass.dart';
@@ -37,7 +38,7 @@ class App extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: GPColors.createMaterialColor(GPColors.blue),
         fontFamily: 'Inter',
       ),
       home: MyHomePage(),
