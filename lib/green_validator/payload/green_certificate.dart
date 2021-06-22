@@ -5,6 +5,8 @@ import 'package:greenpass_app/green_validator/payload/person_info.dart';
 import 'cert_entry.dart';
 
 class GreenCertificate {
+  final String rawData;
+
   final DateTime issuedAt;
   final DateTime expiresAt;
   final CountryDetails issuer;
@@ -14,6 +16,7 @@ class GreenCertificate {
   final List<CertEntry> entryList;
 
   GreenCertificate({
+    required this.rawData,
     required this.issuedAt,
     required this.expiresAt,
     required this.issuer,

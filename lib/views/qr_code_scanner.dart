@@ -41,12 +41,12 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Padding(padding: const EdgeInsets.symmetric(vertical: 2.0)),
+                  const Padding(padding: const EdgeInsets.symmetric(vertical: 6.0)),
                   Text(
                     'Please allow GreenPass to access your camera in order to scan QR codes.'.tr(),
                     textAlign: TextAlign.center,
                   ),
-                  const Padding(padding: const EdgeInsets.symmetric(vertical: 6.0)),
+                  const Padding(padding: const EdgeInsets.symmetric(vertical: 12.0)),
                   OutlinedButton(
                     child: Text('Go to app settings'.tr()),
                     onPressed: () => AppSettings.openAppSettings(),

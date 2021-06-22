@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:greenpass_app/consts/vibration.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
 import 'package:greenpass_app/views/qr_code_scanner.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:vibration/vibration.dart';
 
 import 'modal_cert.dart';
 
@@ -29,7 +29,6 @@ class _ScanOthersPassViewState extends State<ScanOthersPassView> {
         QRCodeScanner(callback: (code) {
           if (!lastCodes.contains(code)) {
             lastCodes.add(code);
-            Vibration.vibrate(pattern: [0, 50]);
             showCupertinoModalBottomSheet(
               context: this.context,
               expand: true,

@@ -7,6 +7,8 @@ class GPColors {
   static const Color red = Color(0xFFFF5048);
   static const Color green = Color(0xFF50AF64);
 
+  static const Color light_grey = Color(0xFFEDEDED);
+  static const Color dark_grey = Color(0xFF8A8A8A);
   static const Color almost_black = Color(0xFF333333);
 
   static MaterialColor createMaterialColor(Color color) {

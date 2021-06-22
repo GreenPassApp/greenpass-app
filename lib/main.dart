@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/consts/colors.dart';
+import 'package:greenpass_app/my_certs/my_certs.dart';
 import 'package:greenpass_app/pub_certs/pub_certs.dart';
+import 'package:greenpass_app/views/add_my_pass_page.dart';
 import 'package:greenpass_app/views/my_passes_page.dart';
 import 'package:greenpass_app/views/scan_others_pass.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,6 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CountryCodes.init();
   await PubCerts.initAppStart();
+  await MyCerts.initAppStart();
   await EasyLocalization.ensureInitialized();
   runApp(
     EasyLocalization(
@@ -146,9 +149,11 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
 
           if (_currentPageIdx == 0) ...[
             IconButton(
-                icon: const Icon(FontAwesome5Solid.plus),
-                color: Colors.black,
-                onPressed: () {}
+              icon: const Icon(FontAwesome5Solid.plus),
+              color: Colors.black,
+              onPressed: () => Navigator.push(context, MaterialPageRoute(
+                builder: (context) => AddMyPassPage()
+              )).then((_) => FlutterStatusbarcolor.setStatusBarWhiteForeground(false)),
             ),
             IconButton(
               icon: const Icon(FontAwesome5Solid.ellipsis_v),
@@ -169,6 +174,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
       ),
       extendBodyBehindAppBar: true,
       body: TabBarView(
+        physics: NeverScrollableScrollPhysics(),
         controller: _tabController,
         children: _tabPages,
       ),

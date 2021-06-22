@@ -343,6 +343,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.2"
+  pretty_qr_code:
+    dependency: "direct main"
+    description:
+      name: pretty_qr_code
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   process:
     dependency: transitive
     description:
@@ -350,6 +357,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.1"
+  qr:
+    dependency: transitive
+    description:
+      name: qr
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   qr_mobile_vision:
     dependency: "direct main"
     description:
@@ -411,6 +425,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  smooth_page_indicator:
+    dependency: "direct main"
+    description:
+      name: smooth_page_indicator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0-nullsafety.0"
   source_span:
     dependency: transitive
     description:

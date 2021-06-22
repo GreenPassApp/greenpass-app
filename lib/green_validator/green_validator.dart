@@ -50,7 +50,7 @@ class GreenValidator {
     if (result.errorCode != CoseErrorCode.none || !result.verified)
       return ValidationResult(errorCode: ValidationErrorCode.unable_to_parse);
 
-    GreenCertificate greenCert = _parseCoseResultPayload(result.payload);
+    GreenCertificate greenCert = _parseCoseResultPayload(rawInput, result.payload);
 
     // check if the certificate helps against SARS-CoV-2
     if (!greenCert.entryList.any((entry) => entry.targetedDisease == DiseaseType.sars_cov_2))
@@ -76,7 +76,7 @@ class GreenValidator {
     return ValidationResult(certificate: greenCert);
   }
 
-  static GreenCertificate _parseCoseResultPayload(var payload) {
+  static GreenCertificate _parseCoseResultPayload(String rawInput, var payload) {
     Map body = payload[_res_body][_res_body_dgc_v1];
 
     CertificateType type;
@@ -96,6 +96,7 @@ class GreenValidator {
     );
 
     return GreenCertificate(
+      rawData: rawInput,
       issuedAt: DGCDateParser.fromCwtSeconds(payload[_res_issued_at]),
       expiresAt: DGCDateParser.fromCwtSeconds(payload[_res_expires_at]),
       issuer: DGCCountryParser.fromCountryCode(payload[_res_issued_by]),
