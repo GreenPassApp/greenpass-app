@@ -5,6 +5,7 @@ import 'package:greenpass_app/connectivity/apple_wallet.dart';
 import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/elements/colored_card.dart';
 import 'package:greenpass_app/elements/pass_info.dart';
+import 'package:greenpass_app/elements/platform_alert_dialog.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_recovery.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_test.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_vaccination.dart';
@@ -111,11 +112,20 @@ class PassDetails extends StatelessWidget {
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0))),
                     ),
                     onPressed: () {
-                      // TODO refactor
-                      AppleWallet.pkPassDownload(url: 'https://api.greenpassapp.eu/api/user/pass?cert='
-                        + Uri.encodeQueryComponent(cert.rawData)
-                        + '&serialNumber='
-                        + Uri.encodeQueryComponent(cert.personInfo.pseudoIdentifier)
+                      PlatformAlertDialog.showAlertDialog(
+                        context: context,
+                        title: 'Hinweis',
+                        text: 'Das Zertifikat wird aus technischen Gründen an uns gesendet, um einen Apple Wallet-Pass erzeugen zu können.'
+                            '\nWir speichern dieses Zertifikat nicht länger, als für die Erzeugung notwendig, was im Normalfall wenige Sekunden dauert.',
+                        dismissButtonText: 'Abbruch',
+                        actionButtonText: 'Pass erzeugen',
+                        action: () {
+                          AppleWallet.pkPassDownload(url: 'https://api.greenpassapp.eu/api/user/pass?cert='
+                              + Uri.encodeQueryComponent(cert.rawData)
+                              + '&serialNumber='
+                              + Uri.encodeQueryComponent(cert.personInfo.pseudoIdentifier)
+                          );
+                        }
                       );
                     }
                   ),

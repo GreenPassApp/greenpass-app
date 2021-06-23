@@ -4,7 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PlatformAlertDialog {
-  static Future showAlertDialog({required BuildContext context, required String title, required String text, required String dismissButtonText}) {
+  static Future showAlertDialog({
+    required BuildContext context,
+    required String title,
+    required String text,
+    required String dismissButtonText,
+    String? actionButtonText,
+    VoidCallback action = _defaultFunc,
+  }) {
     Widget dialog;
     if (Platform.isIOS) {
       dialog = CupertinoAlertDialog(
@@ -14,7 +21,13 @@ class PlatformAlertDialog {
           CupertinoDialogAction(
             child: Text(dismissButtonText),
             onPressed: () => Navigator.of(context).pop(),
-          )
+          ),
+          if (actionButtonText != null) ...[
+            CupertinoDialogAction(
+              child: Text(actionButtonText),
+              onPressed: action,
+            )
+          ],
         ],
       );
     } else {
@@ -25,7 +38,13 @@ class PlatformAlertDialog {
           TextButton(
             child: Text(dismissButtonText),
             onPressed: () => Navigator.of(context).pop(),
-          )
+          ),
+          if (actionButtonText != null) ...[
+            TextButton(
+              child: Text(actionButtonText),
+              onPressed: () => action,
+            )
+          ],
         ],
       );
     }
@@ -35,4 +54,6 @@ class PlatformAlertDialog {
       builder: (_) => dialog,
     );
   }
+
+  static void _defaultFunc() {}
 }
