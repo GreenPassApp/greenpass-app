@@ -128,12 +128,36 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
               color: Colors.black,
               onPressed: () => Navigator.push(context, MaterialPageRoute(
                 builder: (context) => AddMyPassPage()
-              )).then((_) => FlutterStatusbarcolor.setStatusBarWhiteForeground(false)),
+              )).then((data) => FlutterStatusbarcolor.setStatusBarWhiteForeground(false)),
             ),
-            IconButton(
-              icon: const Icon(FontAwesome5Solid.ellipsis_v),
-              color: Colors.black,
-              onPressed: () {}
+            PopupMenuButton(
+              icon: const Icon(
+                FontAwesome5Solid.ellipsis_v,
+                color: Colors.black,
+              ),
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: Text('Datenschutz'),
+                  value: 1,
+                ),
+                PopupMenuItem(
+                  child: Text('Impressum'),
+                  value: 2,
+                ),
+                PopupMenuItem(
+                  child: Text('Open-Source-Lizenzen'),
+                  value: 3,
+                ),
+              ],
+              onSelected: (val) {
+                // TODO refactor
+                if (val == 1)
+                  launch('https://greenpassapp.eu/privacy');
+                if (val == 2)
+                  launch('https://greenpassapp.eu/imprint');
+                if (val == 3)
+                  launch('https://greenpassapp.eu/legal/opensource');
+              },
             ),
           ] else if (_currentPageIdx == 1) ...[
             /*
