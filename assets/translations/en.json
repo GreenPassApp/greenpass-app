@@ -15,8 +15,13 @@
   "Unknown": "Unknown",
   "PCR test": "PCR test",
   "Rapid test": "Rapid test",
+  "Antigen": "Antigen",
+  "mRNA": "mRNA",
+  "Negative": "Negative",
+  "Positive": "Positive",
   "Unknown test": "Unknown test",
   "Unknown time": "Unknown time",
+  "Other": "Other",
   "{} days ago": {
     "zero": "Today",
     "one": "Yesterday",
@@ -36,6 +41,61 @@
     "other": "Since {} days"
   },
 
+  "Ok": "Ok",
+
   "Invalid": "Invalid",
-  "This QR code is invalid. Please try to scan another one.": "This QR code is invalid. Please try to scan another one."
+  "This QR code is invalid. Please try to scan another one.": "This QR code is invalid. Please try to scan another one.",
+
+  "Add QR code": "Add QR code",
+  "Invalid QR code": "Invalid QR code",
+  "The QR code you scanned is invalid. Please try again.": "The QR code you scanned is invalid. Please try again.",
+  "Already added": "Already added",
+  "You have already added this QR code. Please scan another one.": "You have already added this QR code. Please scan another one.",
+
+  "Information": "Information",
+  "{} certificates were deleted due to their expiration.": "{} certificates were deleted due to their expiration.",
+  "No passes added yet": "No passes added yet",
+  "Add your proof of vaccination, past infection or negative test now!": "Add your proof of vaccination, past infection or negative test now!",
+
+  "Privacy": "Privacy",
+  "Impress": "Impress",
+  "Open Source Licenses": "Open Source Licenses",
+
+  "Certificate details": "Certificate details",
+  "Delete pass?": "Delete pass?",
+  "Are you sure you want to delete this pass? The restoration of the pass will not be possible.": "Are you sure you want to delete this pass? The restoration of the pass will not be possible.",
+  "Cancel": "Cancel",
+  "Delete": "Delete",
+  "Add to Apple Wallet": "Add to Apple Wallet",
+  "Notice": "Notice",
+  "The certificate is sent to us for technical reasons in order to generate an Apple Wallet pass. This certificate is not stored longer than necessary for generation, which normally takes a few seconds.": "The certificate is sent to us for technical reasons in order to generate an Apple Wallet pass. This certificate is not stored longer than necessary for generation, which normally takes a few seconds.",
+  "Create pass": "Create pass",
+
+  "Person info": "Person info",
+  "Full name": "Full name",
+  "Date of birth": "Date of birth",
+
+  "Test": "Test",
+  "Test type": "Test type",
+  "Test result": "Test result",
+  "Testing centre": "Testing centre",
+  "Time of sample collection": "Time of sample collection",
+  "Time of test result": "Time of test result",
+  "Test name": "Test name",
+  "Test manufacturer": "Test manufacturer",
+
+  "Recovery": "Recovery",
+  "First positive test result": "First positive test result",
+  "Certificate valid from": "Certificate valid from",
+  "Certificate valid until": "Certificate valid until",
+
+  "Certificate info": "Certificate info",
+  "Issuer": "Issuer",
+  "Issuing country": "Issuing country",
+  "Certificate identifier": "Certificate identifier",
+
+  "Vaccination ({}/{})": "Vaccination ({}/{})",
+  "Vaccine type": "Vaccine type",
+  "Vaccine": "Vaccine",
+  "Manufacturer": "Manufacturer"
 }

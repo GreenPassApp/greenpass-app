@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:greenpass_app/consts/vibration.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
 import 'package:greenpass_app/views/qr_code_scanner.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';

@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -29,7 +29,7 @@ class PassDetails extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Certificate details',
+          'Certificate details'.tr(),
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.black,
@@ -53,10 +53,10 @@ class PassDetails extends StatelessWidget {
             onPressed: () {
               PlatformAlertDialog.showAlertDialog(
                 context: context,
-                title: 'Pass löschen?',
-                text: 'Bist du sicher, dass du diesen Pass löschen möchtest? Die Wiederherstellung der Daten ist nicht möglich.',
-                dismissButtonText: 'Abbruch',
-                actionButtonText: 'Löschen',
+                title: 'Delete pass?'.tr(),
+                text: 'Are you sure you want to delete this pass? The restoration of the pass will not be possible.'.tr(),
+                dismissButtonText: 'Cancel'.tr(),
+                actionButtonText: 'Delete'.tr(),
                 action: () async {
                   await MyCerts.removeQrCode(cert.rawData);
                   Navigator.of(context).pop();
@@ -123,7 +123,7 @@ class PassDetails extends StatelessWidget {
                           ),
                           Padding(padding: const EdgeInsets.symmetric(horizontal: 6.0)),
                           Text(
-                            'Add to Apple Wallet',
+                            'Add to Apple Wallet'.tr(),
                             style: TextStyle(
                             ),
                           ),
@@ -139,10 +139,10 @@ class PassDetails extends StatelessWidget {
                       onPressed: () {
                         PlatformAlertDialog.showAlertDialog(
                           context: context,
-                          title: 'Hinweis',
-                          text: 'Das Zertifikat wird aus technischen Gründen an uns gesendet, um einen Apple Wallet-Pass erzeugen zu können. Dabei speichern dieses Zertifikat nicht länger, als für die Erzeugung notwendig, was im Normalfall wenige Sekunden dauert.',
-                          dismissButtonText: 'Abbruch',
-                          actionButtonText: 'Pass erzeugen',
+                          title: 'Notice'.tr(),
+                          text: 'Das Zertifikat wird aus technischen Gründen an uns gesendet, um einen Apple Wallet-Pass erzeugen zu können. Dabei speichern dieses Zertifikat nicht länger, als für die Erzeugung notwendig, was im Normalfall wenige Sekunden dauert.'.tr(),
+                          dismissButtonText: 'Cancel'.tr(),
+                          actionButtonText: 'Create pass'.tr(),
                           action: () => AppleWallet.getAppleWalletPass(rawCert: cert.rawData, serialNumber: cert.personInfo.pseudoIdentifier),
                         );
                       }
@@ -152,68 +152,68 @@ class PassDetails extends StatelessWidget {
               ),
             ],
             Padding(padding: const EdgeInsets.symmetric(vertical: 14.0)),
-            _listPadding(_groupText('Person info')),
+            _listPadding(_groupText('Person info'.tr())),
             _horizontalLine(),
-            _entryText('Full name', cert.personInfo.fullName),
+            _entryText('Full name'.tr(), cert.personInfo.fullName),
             _horizontalLine(),
-            _entryText('Date of birth', DateFormat('dd.MM.yyyy').format(cert.personInfo.dateOfBirth)),
+            _entryText('Date of birth'.tr(), DateFormat('dd.MM.yyyy').format(cert.personInfo.dateOfBirth)),
             Padding(padding: const EdgeInsets.symmetric(vertical: 30.0)),
 
             if (cert.certificateType == CertificateType.test) ...[
-              _listPadding(_groupText('Test')),
+              _listPadding(_groupText('Test'.tr())),
               _horizontalLine(),
-              _entryText('Test type', PassInfo.testType((cert.entryList[0] as CertEntryTest).testType)),
+              _entryText('Test type'.tr(), PassInfo.testType((cert.entryList[0] as CertEntryTest).testType)),
               _horizontalLine(),
-              _entryText('Test result', _testResult((cert.entryList[0] as CertEntryTest).testResult)),
+              _entryText('Test result'.tr(), _testResult((cert.entryList[0] as CertEntryTest).testResult)),
               _horizontalLine(),
-              _entryText('Testing centre', (cert.entryList[0] as CertEntryTest).testingCentreName),
+              _entryText('Testing centre'.tr(), (cert.entryList[0] as CertEntryTest).testingCentreName),
               _horizontalLine(),
-              _entryText('Time of sample collection', DateFormat('hh:mm, dd.MM.yyyy').format((cert.entryList[0] as CertEntryTest).timeSampleCollection)),
+              _entryText('Time of sample collection'.tr(), DateFormat('hh:mm, dd.MM.yyyy').format((cert.entryList[0] as CertEntryTest).timeSampleCollection)),
               if ((cert.entryList[0] as CertEntryTest).timeTestResult != null) ...[
                 _horizontalLine(),
-                _entryText('Time of test result', DateFormat('hh:mm, dd.MM.yyyy').format((cert.entryList[0] as CertEntryTest).timeTestResult!)),
+                _entryText('Time of test result'.tr(), DateFormat('hh:mm, dd.MM.yyyy').format((cert.entryList[0] as CertEntryTest).timeTestResult!)),
               ],
               if ((cert.entryList[0] as CertEntryTest).testName != null) ...[
                 _horizontalLine(),
-                _entryText('Test name', (cert.entryList[0] as CertEntryTest).testName!),
+                _entryText('Test name'.tr(), (cert.entryList[0] as CertEntryTest).testName!),
               ],
               if ((cert.entryList[0] as CertEntryTest).manufacturerName != null) ...[
                 _horizontalLine(),
-                _entryText('Test manufacturer', (cert.entryList[0] as CertEntryTest).manufacturerName!),
+                _entryText('Test manufacturer'.tr(), (cert.entryList[0] as CertEntryTest).manufacturerName!),
               ],
             ],
 
             if (cert.certificateType == CertificateType.recovery) ...[
-              _listPadding(_groupText('Recovery')),
+              _listPadding(_groupText('Recovery'.tr())),
               _horizontalLine(),
-              _entryText('First positive test result', DateFormat('dd.MM.yyyy').format((cert.entryList[0] as CertEntryRecovery).firstPositiveTestResult)),
+              _entryText('First positive test result'.tr(), DateFormat('dd.MM.yyyy').format((cert.entryList[0] as CertEntryRecovery).firstPositiveTestResult)),
               _horizontalLine(),
-              _entryText('Certificate valid from', DateFormat('dd.MM.yyyy').format((cert.entryList[0] as CertEntryRecovery).validFrom)),
+              _entryText('Certificate valid from'.tr(), DateFormat('dd.MM.yyyy').format((cert.entryList[0] as CertEntryRecovery).validFrom)),
               _horizontalLine(),
-              _entryText('Certificate valid until', DateFormat('dd.MM.yyyy').format((cert.entryList[0] as CertEntryRecovery).validUntil)),
+              _entryText('Certificate valid until'.tr(), DateFormat('dd.MM.yyyy').format((cert.entryList[0] as CertEntryRecovery).validUntil)),
               _horizontalLine(),
             ],
 
             if (cert.certificateType == CertificateType.vaccination) ...[
               for (CertEntryVaccination vac in cert.entryList.map((e) => e as CertEntryVaccination)) ...[
-                _listPadding(_groupText('Vaccination (' + vac.doseNumber.toString() + '/' + vac.dosesNeeded.toString() + ')')),
+                _listPadding(_groupText('Vaccination ({}/{})'.tr(args: [vac.doseNumber.toString(), vac.dosesNeeded.toString()]))),
                 _horizontalLine(),
-                _entryText('Vaccine type', _vaccineType(vac.vaccine)),
+                _entryText('Vaccine type'.tr(), _vaccineType(vac.vaccine)),
                 _horizontalLine(),
-                _entryText('Vaccine', vac.medicalProduct),
+                _entryText('Vaccine'.tr(), vac.medicalProduct),
                 _horizontalLine(),
-                _entryText('Manufacturer', vac.manufacturer),
+                _entryText('Manufacturer'.tr(), vac.manufacturer),
               ],
             ],
 
             Padding(padding: const EdgeInsets.symmetric(vertical: 30.0)),
-            _listPadding(_groupText('Certificate info')),
+            _listPadding(_groupText('Certificate info'.tr())),
             _horizontalLine(),
-            _entryText('Issuer', cert.entryList[0].certificateIssuer),
+            _entryText('Issuer'.tr(), cert.entryList[0].certificateIssuer),
             _horizontalLine(),
-            _entryText('Issuing country', cert.entryList[0].country.localizedName!),
+            _entryText('Issuing country'.tr(), cert.entryList[0].country.localizedName!),
             _horizontalLine(),
-            _entryText('Certificate identifier', cert.entryList[0].certificateIdentifier),
+            _entryText('Certificate identifier'.tr(), cert.entryList[0].certificateIdentifier),
             Padding(padding: const EdgeInsets.symmetric(vertical: 20.0)),
           ],
         ),
@@ -222,15 +222,15 @@ class PassDetails extends StatelessWidget {
   }
 
   String _vaccineType(VaccineType vaccineType) {
-    if (vaccineType == VaccineType.antigen) return 'Antigen';
-    if (vaccineType == VaccineType.mRna) return 'mRNA';
-    return 'Other';
+    if (vaccineType == VaccineType.antigen) return 'Antigen'.tr();
+    if (vaccineType == VaccineType.mRna) return 'mRNA'.tr();
+    return 'Other'.tr();
   }
 
   String _testResult(TestResult testResult) {
-    if (testResult == TestResult.negative) return 'Negative';
-    if (testResult == TestResult.positive) return 'Positive';
-    return 'Unknown';
+    if (testResult == TestResult.negative) return 'Negative'.tr();
+    if (testResult == TestResult.positive) return 'Positive'.tr();
+    return 'Unknown'.tr();
   }
 
   Widget _horizontalLine() {

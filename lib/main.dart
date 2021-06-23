@@ -60,7 +60,6 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
   static const int _pageCount = 2;
 
   late TabController _tabController;
-  static const platform = const MethodChannel('eu.greenpassapp.wallet');
 
   @override
   void initState() {
@@ -137,15 +136,15 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
               ),
               itemBuilder: (context) => [
                 PopupMenuItem(
-                  child: Text('Datenschutz'),
+                  child: Text('Privacy'.tr()),
                   value: 1,
                 ),
                 PopupMenuItem(
-                  child: Text('Impressum'),
+                  child: Text('Impress'.tr()),
                   value: 2,
                 ),
                 PopupMenuItem(
-                  child: Text('Open-Source-Lizenzen'),
+                  child: Text('Open Source Licenses'.tr()),
                   value: 3,
                 ),
               ],

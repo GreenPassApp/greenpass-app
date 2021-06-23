@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:greenpass_app/consts/vibration.dart';
 import 'package:greenpass_app/elements/platform_alert_dialog.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
@@ -25,7 +26,7 @@ class _AddMyPassPageState extends State<AddMyPassPage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          'Add QR Code',
+          'Add QR code'.tr(),
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -50,18 +51,18 @@ class _AddMyPassPageState extends State<AddMyPassPage> {
                 GPVibration.error();
                 PlatformAlertDialog.showAlertDialog(
                   context: context,
-                  title: 'Invalid QR code',
-                  text: 'The QR code you scanned is invalid. Please try again.',
-                  dismissButtonText: 'Ok'
+                  title: 'Invalid QR code'.tr(),
+                  text: 'The QR code you scanned is invalid. Please try again.'.tr(),
+                  dismissButtonText: 'Ok'.tr()
                 ).then((_) => stopScanning = false);
               } else {
                 if (MyCerts.getCurrentQrCodes().contains(code)) {
                   GPVibration.error();
                   PlatformAlertDialog.showAlertDialog(
                     context: context,
-                    title: 'Already added',
-                    text: 'You have already added this QR code. Please scan another one.',
-                    dismissButtonText: 'Ok'
+                    title: 'Already added'.tr(),
+                    text: 'You have already added this QR code. Please scan another one.'.tr(),
+                    dismissButtonText: 'Ok'.tr()
                   ).then((_) => stopScanning = false);
                 } else {
                   await MyCerts.addQrCode(code);

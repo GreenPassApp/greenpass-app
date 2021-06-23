@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/elements/colored_card.dart';
 import 'package:greenpass_app/elements/pass_info.dart';
@@ -57,9 +56,9 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
               Future.delayed(Duration.zero, () =>
                 PlatformAlertDialog.showAlertDialog(
                   context: context,
-                  title: 'Information',
-                  text: res.invalidCertificatesDeleted.toString() + ' certificates were deleted due to their expiration.',
-                  dismissButtonText: 'Ok'
+                  title: 'Information'.tr(),
+                  text:  '{} certificates were deleted due to their expiration.'.tr(args: [res.invalidCertificatesDeleted.toString()]),
+                  dismissButtonText: 'Ok'.tr()
                 )
               );
 
@@ -84,7 +83,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'No passes added yet',
+            'No passes added yet'.tr(),
             style: TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.bold,
@@ -92,7 +91,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
           ),
           const Padding(padding: const EdgeInsets.symmetric(vertical: 6.0)),
           Text(
-            'Add your proof of vaccination, past infection or negative test now!',
+            'Add your proof of vaccination, past infection or negative test now!'.tr(),
             textAlign: TextAlign.center,
           ),
           const Padding(padding: const EdgeInsets.symmetric(vertical: 12.0)),
@@ -100,7 +99,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Text(
-                'Add QR code',
+                'Add QR code'.tr(),
                 style: TextStyle(
                   fontWeight: FontWeight.bold
                 ),
