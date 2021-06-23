@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -13,6 +15,7 @@ import 'package:greenpass_app/green_validator/payload/certificate_type.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/green_validator/payload/test_result.dart';
 import 'package:greenpass_app/green_validator/payload/vaccine_type.dart';
+import 'package:greenpass_app/my_certs/my_certs.dart';
 import 'package:intl/intl.dart';
 
 class PassDetails extends StatelessWidget {
@@ -41,6 +44,27 @@ class PassDetails extends StatelessWidget {
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              FontAwesome5Solid.trash_alt,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              PlatformAlertDialog.showAlertDialog(
+                context: context,
+                title: 'Pass löschen?',
+                text: 'Bist du sicher, dass du diesen Pass löschen möchtest? Die Wiederherstellung der Daten ist nicht möglich.',
+                dismissButtonText: 'Abbruch',
+                actionButtonText: 'Löschen',
+                action: () async {
+                  await MyCerts.removeQrCode(cert.rawData);
+                  Navigator.of(context).pop();
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -82,56 +106,51 @@ class PassDetails extends StatelessWidget {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 23.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  OutlinedButton(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image(
-                          height: 40.0,
-                          width: 40.0,
-                          image: AssetImage('assets/images/AppleWallet.png'),
-                        ),
-                        Padding(padding: const EdgeInsets.symmetric(horizontal: 6.0)),
-                        Text(
-                          'Add to Apple Wallet',
-                          style: TextStyle(
+            if (Platform.isIOS) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 23.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    OutlinedButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image(
+                            height: 40.0,
+                            width: 40.0,
+                            image: AssetImage('assets/images/AppleWallet.png'),
                           ),
-                        ),
-                      ],
+                          Padding(padding: const EdgeInsets.symmetric(horizontal: 6.0)),
+                          Text(
+                            'Add to Apple Wallet',
+                            style: TextStyle(
+                            ),
+                          ),
+                        ],
+                      ),
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0)),
+                        foregroundColor: MaterialStateProperty.all(Colors.white),
+                        backgroundColor: MaterialStateProperty.all(Colors.black),
+                        overlayColor: MaterialStateProperty.all(GPColors.dark_grey),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0))),
+                      ),
+                      onPressed: () {
+                        PlatformAlertDialog.showAlertDialog(
+                          context: context,
+                          title: 'Hinweis',
+                          text: 'Das Zertifikat wird aus technischen Gründen an uns gesendet, um einen Apple Wallet-Pass erzeugen zu können. Dabei speichern dieses Zertifikat nicht länger, als für die Erzeugung notwendig, was im Normalfall wenige Sekunden dauert.',
+                          dismissButtonText: 'Abbruch',
+                          actionButtonText: 'Pass erzeugen',
+                          action: () => AppleWallet.getAppleWalletPass(rawCert: cert.rawData, serialNumber: cert.personInfo.pseudoIdentifier),
+                        );
+                      }
                     ),
-                    style: ButtonStyle(
-                      padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0)),
-                      foregroundColor: MaterialStateProperty.all(Colors.white),
-                      backgroundColor: MaterialStateProperty.all(Colors.black),
-                      overlayColor: MaterialStateProperty.all(GPColors.dark_grey),
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0))),
-                    ),
-                    onPressed: () {
-                      PlatformAlertDialog.showAlertDialog(
-                        context: context,
-                        title: 'Hinweis',
-                        text: 'Das Zertifikat wird aus technischen Gründen an uns gesendet, um einen Apple Wallet-Pass erzeugen zu können.'
-                            '\nWir speichern dieses Zertifikat nicht länger, als für die Erzeugung notwendig, was im Normalfall wenige Sekunden dauert.',
-                        dismissButtonText: 'Abbruch',
-                        actionButtonText: 'Pass erzeugen',
-                        action: () {
-                          AppleWallet.pkPassDownload(url: 'https://api.greenpassapp.eu/api/user/pass?cert='
-                              + Uri.encodeQueryComponent(cert.rawData)
-                              + '&serialNumber='
-                              + Uri.encodeQueryComponent(cert.personInfo.pseudoIdentifier)
-                          );
-                        }
-                      );
-                    }
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
+            ],
             Padding(padding: const EdgeInsets.symmetric(vertical: 14.0)),
             _listPadding(_groupText('Person info')),
             _horizontalLine(),
@@ -195,7 +214,7 @@ class PassDetails extends StatelessWidget {
             _entryText('Issuing country', cert.entryList[0].country.localizedName!),
             _horizontalLine(),
             _entryText('Certificate identifier', cert.entryList[0].certificateIdentifier),
-            Padding(padding: const EdgeInsets.symmetric(vertical: 10.0)),
+            Padding(padding: const EdgeInsets.symmetric(vertical: 20.0)),
           ],
         ),
       ),

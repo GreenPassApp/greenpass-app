@@ -1,7 +1,15 @@
 import 'package:url_launcher/url_launcher.dart';
 
 class AppleWallet {
-  static Future<void> pkPassDownload({required String url}) async {
+
+  // TODO refactor
+  static Future<void> getAppleWalletPass({required String rawCert, required String serialNumber}) async {
+    await _pkPassDownload(url: 'https://api.greenpassapp.eu/user/pass?'
+      + 'cert=' + Uri.encodeQueryComponent(rawCert)
+      + '&serialNumber=' + Uri.encodeQueryComponent(serialNumber));
+  }
+
+  static Future<void> _pkPassDownload({required String url}) async {
     assert(url.isNotEmpty);
     if (await canLaunch(url)) {
       try{

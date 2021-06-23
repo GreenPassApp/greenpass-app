@@ -25,7 +25,10 @@ class PlatformAlertDialog {
           if (actionButtonText != null) ...[
             CupertinoDialogAction(
               child: Text(actionButtonText),
-              onPressed: action,
+              onPressed: () {
+                Navigator.of(context).pop();
+                action();
+              },
             )
           ],
         ],
@@ -42,7 +45,10 @@ class PlatformAlertDialog {
           if (actionButtonText != null) ...[
             TextButton(
               child: Text(actionButtonText),
-              onPressed: () => action,
+              onPressed: () {
+                Navigator.of(context).pop();
+                action();
+              },
             )
           ],
         ],

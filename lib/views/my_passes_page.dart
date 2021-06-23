@@ -23,14 +23,14 @@ class MyPassesPage extends StatefulWidget {
   _MyPassesPageState createState() => _MyPassesPageState();
 }
 
-class _MyPassesPageState extends State<MyPassesPage> {
+class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClientMixin<MyPassesPage> {
   late PageController controller;
   int currentPage = 0;
 
   @override
   void initState() {
     controller = PageController(
-      initialPage: 0,
+      initialPage: currentPage,
       viewportFraction: 0.9,
     );
     super.initState();
@@ -247,4 +247,7 @@ class _MyPassesPageState extends State<MyPassesPage> {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
