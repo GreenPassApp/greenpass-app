@@ -12,6 +12,7 @@ class PassInfo {
   static Widget getTypeText(GreenCertificate cert, {
     double textSize = 25.0,
     double additionalTextSize = 20.0,
+    bool showTestType = true,
   }) {
     String firstText;
     switch (cert.certificateType) {
@@ -40,7 +41,7 @@ class PassInfo {
               firstText,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 25.0,
+                fontSize: textSize,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -65,7 +66,7 @@ class PassInfo {
             ],
           ],
         ),
-        if (cert.certificateType == CertificateType.test) ...[
+        if (cert.certificateType == CertificateType.test && showTestType) ...[
           (){
             var test = (cert.entryList[0] as CertEntryTest);
             return Text(

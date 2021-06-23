@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+
 class PersonInfo {
   final String firstName;
   final String lastName;
@@ -11,5 +13,9 @@ class PersonInfo {
 
   String get fullName {
     return firstName + ' ' + lastName;
+  }
+
+  String get pseudoIdentifier {
+    return this.firstName + '_' + DateFormat('yyyy-MM-dd').format(this.dateOfBirth) + '_' + this.lastName;
   }
 }

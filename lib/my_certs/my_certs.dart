@@ -26,7 +26,7 @@ class MyCerts {
   }
 
   static Future<void> addQrCode(String qrCode) async {
-    _myQrCodes!.add(qrCode);
+    _myQrCodes!.insert(0, qrCode);
     await _saveCurrentList();
   }
 

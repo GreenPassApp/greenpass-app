@@ -65,6 +65,7 @@ class _AddMyPassPageState extends State<AddMyPassPage> {
                   ).then((_) => stopScanning = false);
                 } else {
                   await MyCerts.addQrCode(code);
+                  GPVibration.success();
                   Navigator.of(context).pop();
                 }
               }

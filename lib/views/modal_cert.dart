@@ -6,13 +6,6 @@ import 'package:greenpass_app/consts/vibration.dart';
 import 'package:greenpass_app/elements/colored_card.dart';
 import 'package:greenpass_app/elements/pass_info.dart';
 import 'package:greenpass_app/green_validator/model/validation_result.dart';
-import 'package:greenpass_app/green_validator/payload/cert_entry_recovery.dart';
-import 'package:greenpass_app/green_validator/payload/cert_entry_test.dart';
-import 'package:greenpass_app/green_validator/payload/cert_entry_vaccination.dart';
-import 'package:greenpass_app/green_validator/payload/certificate_type.dart';
-import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
-import 'package:greenpass_app/green_validator/payload/test_result.dart';
-import 'package:greenpass_app/green_validator/payload/test_type.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:intl/intl.dart';
 
@@ -44,7 +37,7 @@ class ModalCert extends StatelessWidget {
             constraints: BoxConstraints.expand(),
             child: Column(
               children: [
-                ColoredCard.build(
+                ColoredCard.buildCard(
                   backgroundColor: cardColor,
                   padding: const EdgeInsets.all(20.0),
                   child: Padding(
@@ -55,20 +48,8 @@ class ModalCert extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Container(
-                                  margin: const EdgeInsets.all(20.0),
-                                  padding: const EdgeInsets.all(20.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(150),
-                                    border: Border.all(width: 4, color: Colors.white),
-                                  ),
-                                  child: Icon(
-                                    _getCertIcon(cert),
-                                    color: Colors.white,
-                                    size: 40.0,
-                                  ),
-                                )
+                              padding: const EdgeInsets.all(20.0),
+                              child: ColoredCard.buildIcon(cert),
                             ),
                           ],
                         ),
@@ -183,20 +164,4 @@ class ModalCert extends StatelessWidget {
       ),
     );
   }
-
-  IconData _getCertIcon(ValidationResult cert) {
-    if (!cert.success)
-      return FontAwesome5Solid.times;
-    switch (cert.certificate!.certificateType) {
-      case CertificateType.vaccination:
-        return FontAwesome5Solid.syringe;
-      case CertificateType.recovery:
-        return FontAwesome5Solid.child;
-      case CertificateType.test:
-        return FontAwesome5Solid.vial;
-      case CertificateType.unknown:
-        return FontAwesome5Solid.times;
-    }
-  }
-
 }

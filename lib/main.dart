@@ -62,31 +62,6 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
   late TabController _tabController;
   static const platform = const MethodChannel('eu.greenpassapp.wallet');
 
-  Future<void> _addPassIntoWallet() async {
-    String batteryLevel;
-    try {
-      var result = await platform.invokeMethod('addPassIntoWallet', {"uri": "https://jakobstadlhuber.com/test2.pkpass"});
-      batteryLevel = 'Success $result % .';
-      print(batteryLevel);
-    } on PlatformException catch (e) {
-      batteryLevel = "Failed to add pass: '${e.message}'.";
-    }
-
-  }
-
-  Future<void> _pkPassDownload({required String url}) async {
-    assert(url.isNotEmpty);
-    if (await canLaunch(url)) {
-      try{
-        await launch(url);
-      }on Exception catch (_){
-        print('Launch problem');
-      }
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
   @override
   void initState() {
     super.initState();
