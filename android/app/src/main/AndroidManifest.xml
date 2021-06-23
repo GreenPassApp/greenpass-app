@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="eu.greenpassapp.greenpass_app">
+    package="eu.greenpassapp.greenpass">
    <application
-        android:label="greenpass_app"
+        android:label="GreenPass"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
