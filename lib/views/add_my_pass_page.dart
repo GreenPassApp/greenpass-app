@@ -6,6 +6,7 @@ import 'package:greenpass_app/consts/vibration.dart';
 import 'package:greenpass_app/elements/platform_alert_dialog.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
 import 'package:greenpass_app/green_validator/model/validation_result.dart';
+import 'package:greenpass_app/my_certs/my_cert.dart';
 import 'package:greenpass_app/my_certs/my_certs.dart';
 import 'package:greenpass_app/views/qr_code_scanner.dart';
 
@@ -56,7 +57,7 @@ class _AddMyPassPageState extends State<AddMyPassPage> {
                   dismissButtonText: 'Ok'.tr()
                 ).then((_) => stopScanning = false);
               } else {
-                if (MyCerts.getCurrentQrCodes().contains(code)) {
+                if (MyCerts.getCurrentCerts().any((c) => c.qrCode == code)) {
                   GPVibration.error();
                   PlatformAlertDialog.showAlertDialog(
                     context: context,
@@ -65,7 +66,9 @@ class _AddMyPassPageState extends State<AddMyPassPage> {
                     dismissButtonText: 'Ok'.tr()
                   ).then((_) => stopScanning = false);
                 } else {
-                  await MyCerts.addQrCode(code);
+                  await MyCerts.addCert(
+                    MyCert(qrCode: code),
+                  );
                   GPVibration.success();
                   Navigator.of(context).pop();
                 }

@@ -58,7 +58,7 @@ class PassDetails extends StatelessWidget {
                 dismissButtonText: 'Cancel'.tr(),
                 actionButtonText: 'Delete'.tr(),
                 action: () async {
-                  await MyCerts.removeQrCode(cert.rawData);
+                  await MyCerts.removeCert(cert.rawData);
                   Navigator.of(context).pop();
                 },
               );
@@ -140,7 +140,7 @@ class PassDetails extends StatelessWidget {
                         PlatformAlertDialog.showAlertDialog(
                           context: context,
                           title: 'Notice'.tr(),
-                          text: 'Das Zertifikat wird aus technischen Gründen an uns gesendet, um einen Apple Wallet-Pass erzeugen zu können. Dabei speichern dieses Zertifikat nicht länger, als für die Erzeugung notwendig, was im Normalfall wenige Sekunden dauert.'.tr(),
+                          text: 'The certificate is sent to us for technical reasons in order to generate an Apple Wallet pass. This certificate is not stored longer than necessary for generation, which normally takes a few seconds.'.tr(),
                           dismissButtonText: 'Cancel'.tr(),
                           actionButtonText: 'Create pass'.tr(),
                           action: () => AppleWallet.getAppleWalletPass(rawCert: cert.rawData, serialNumber: cert.personInfo.pseudoIdentifier),

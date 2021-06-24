@@ -140,7 +140,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
                   value: 1,
                 ),
                 PopupMenuItem(
-                  child: Text('Impress'.tr()),
+                  child: Text('Imprint'.tr()),
                   value: 2,
                 ),
                 PopupMenuItem(
