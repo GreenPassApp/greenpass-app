@@ -1,5 +1,6 @@
 import 'package:country_codes/country_codes.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
@@ -108,6 +109,13 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
         ),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
+        leading: IconButton(
+          icon: ClipRRect(
+            borderRadius: BorderRadius.circular(300),
+            child: Flag('AT', fit: BoxFit.cover, width: 28.0, height: 28.0),
+          ),
+          onPressed: () {  },
+        ),
         actions: [
           /*IconButton(
             icon: const Icon(Icons.info_outline),
