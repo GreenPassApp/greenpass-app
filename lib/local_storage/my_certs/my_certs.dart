@@ -1,22 +1,28 @@
 import 'dart:convert';
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
 import 'package:greenpass_app/green_validator/model/validation_result.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
-import 'package:greenpass_app/my_certs/my_cert.dart';
-import 'package:greenpass_app/my_certs/my_certs_result.dart';
+import 'package:greenpass_app/local_storage/my_certs/my_cert.dart';
+import 'package:greenpass_app/local_storage/my_certs/my_certs_result.dart';
+import 'package:hive/hive.dart';
+
+import 'package:greenpass_app/local_storage/hive_provider.dart';
 
 class MyCerts {
   static List<MyCert>? _myCerts;
 
+  static const String _hiveBoxName = 'myCerts';
+  static const String _hiveBoxKey = 'myCertsKey';
+
   static Future<void> initAppStart() async {
-    if (await FlutterSecureStorage().read(key: 'myCerts') == null) {
-      await FlutterSecureStorage().write(key: 'myCerts', value: jsonEncode([]));
-      await FlutterSecureStorage().write(key: 'myCertsVer', value: '1'); // in case something changes
+    Box box = await HiveProvider.getEncryptedBox(boxName: _hiveBoxName, boxKeyName: _hiveBoxKey);
+    if (await box.get('myCerts') == null) {
+      await box.put('myCerts', jsonEncode([]));
+      await box.put('myCertsVer', '1'); // in case something changes
     }
 
-    _myCerts = (jsonDecode((await FlutterSecureStorage().read(key: 'myCerts'))!) as List)
+    _myCerts = (jsonDecode((await box.get('myCerts'))!) as List)
       .map((e) => MyCert.fromJson(e)).toList();
   }
 
@@ -62,6 +68,8 @@ class MyCerts {
   }
 
   static Future<void> _saveCurrentList() async {
-    await FlutterSecureStorage().write(key: 'myCerts', value: jsonEncode(_myCerts));
+    Box box = await HiveProvider.getEncryptedBox(boxName: _hiveBoxName, boxKeyName: _hiveBoxKey);
+    await box.put('myCerts', jsonEncode(_myCerts));
+    await box.compact();
   }
 }

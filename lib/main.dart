@@ -5,15 +5,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/consts/colors.dart';
-import 'package:greenpass_app/my_certs/my_certs.dart';
-import 'package:greenpass_app/pub_certs/pub_certs.dart';
+import 'package:greenpass_app/local_storage/my_certs/my_certs.dart';
+import 'package:greenpass_app/local_storage/pub_certs/pub_certs.dart';
 import 'package:greenpass_app/views/add_my_pass_page.dart';
 import 'package:greenpass_app/views/my_passes_page.dart';
 import 'package:greenpass_app/views/scan_others_pass.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
   await CountryCodes.init();
   await PubCerts.initAppStart();
   await MyCerts.initAppStart();

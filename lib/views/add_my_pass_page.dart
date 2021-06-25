@@ -6,8 +6,8 @@ import 'package:greenpass_app/consts/vibration.dart';
 import 'package:greenpass_app/elements/platform_alert_dialog.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
 import 'package:greenpass_app/green_validator/model/validation_result.dart';
-import 'package:greenpass_app/my_certs/my_cert.dart';
-import 'package:greenpass_app/my_certs/my_certs.dart';
+import 'package:greenpass_app/local_storage/my_certs/my_cert.dart';
+import 'package:greenpass_app/local_storage/my_certs/my_certs.dart';
 import 'package:greenpass_app/views/qr_code_scanner.dart';
 
 class AddMyPassPage extends StatefulWidget {

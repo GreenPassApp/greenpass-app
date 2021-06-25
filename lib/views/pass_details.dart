@@ -15,7 +15,7 @@ import 'package:greenpass_app/green_validator/payload/certificate_type.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/green_validator/payload/test_result.dart';
 import 'package:greenpass_app/green_validator/payload/vaccine_type.dart';
-import 'package:greenpass_app/my_certs/my_certs.dart';
+import 'package:greenpass_app/local_storage/my_certs/my_certs.dart';
 import 'package:intl/intl.dart';
 
 class PassDetails extends StatelessWidget {
