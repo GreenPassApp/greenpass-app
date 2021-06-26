@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/local_storage/country_regulations/regulation.dart';
+import 'package:greenpass_app/local_storage/country_regulations/regulation_result.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 
@@ -9,11 +12,13 @@ import 'package:greenpass_app/local_storage/hive_provider.dart';
 
 class RegulationsProvider {
   static const String _regulationsUrl = 'https://raw.githubusercontent.com/GreenPassApp/shared-data/main/validationByCountry.json';
+  static const String defaultCountry = 'EU';
 
   static const Duration regulationsOutdatedAfter = Duration(days: 1);
   static const String bundledRegulationsLocation = 'assets/validationByCountry.json';
 
   static Map<String, Regulation>? _currentRegulations;
+  static String? _userSetting;
 
   static const String _hiveBoxName = 'regulations';
   static const String _hiveBoxKey = 'regulationsKey';
@@ -27,9 +32,12 @@ class RegulationsProvider {
       await box.put('regulationsJson', jsonString);
       await box.put('regulationsJsonLastUpdate', DateTime.fromMicrosecondsSinceEpoch(0).toIso8601String());
       await box.put('regulationsJsonVer', '1'); // in case something changes
+
+      await box.put('regulationsUserSetting', defaultCountry);
     }
 
     _currentRegulations = _parseRegulationsJson(jsonDecode(await box.get('regulationsJson')));
+    _userSetting = await box.get('regulationsUserSetting');
 
     // can happen in the background, no need for async
     tryUpdateIfOutdated();
@@ -61,7 +69,7 @@ class RegulationsProvider {
       DateTime? currentRegulationValidFrom;
 
       value.forEach((element) {
-        element as Map<String, String>;
+        element as Map<String, dynamic>;
         DateTime validFrom = DateTime.parse(element['validFrom']!);
         if (validFrom.isBefore(DateTime.now())) {
           if (currentRegulationValidFrom == null || validFrom.isAfter(currentRegulationValidFrom!)) {
@@ -72,7 +80,7 @@ class RegulationsProvider {
       });
 
       if (currentRegulation != null)
-        parsedRegulations[key] = Regulation(currentRegulation);
+        parsedRegulations[key] = Regulation(key.toUpperCase(), currentRegulation);
     });
 
     return parsedRegulations;
@@ -81,5 +89,35 @@ class RegulationsProvider {
   static Future<Map<String, dynamic>> _fetchRegulations() async {
     Response res = await get(Uri.parse(_regulationsUrl));
     return jsonDecode(res.body);
+  }
+
+  static Map<String, Regulation> getCurrentRegulations() {
+    return _currentRegulations!;
+  }
+
+  static String getUserSetting() {
+    return _userSetting!;
+  }
+
+  static Regulation getUserRegulation() {
+    return getCurrentRegulations()[getUserSetting()]!;
+  }
+
+  static Future<void> setUserSetting(String newCountry) async {
+    _userSetting = newCountry;
+    Box box = await HiveProvider.getEncryptedBox(boxName: _hiveBoxName, boxKeyName: _hiveBoxKey);
+    await box.put('regulationsUserSetting', newCountry);
+    await box.compact();
+  }
+
+  static Color getCardTextColor(RegulationResult result) {
+    if (result == RegulationResult.not_valid_yet) return GPColors.almost_black;
+    return Colors.white;
+  }
+
+  static Color getCardColor(RegulationResult result) {
+    if (result == RegulationResult.not_valid_anymore) return GPColors.red;
+    if (result == RegulationResult.not_valid_yet) return GPColors.yellow;
+    return GPColors.green;
   }
 }

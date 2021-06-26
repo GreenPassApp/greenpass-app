@@ -66,6 +66,7 @@
   "Are you sure you want to delete this pass? The restoration of the pass will not be possible.": "Bist du sicher, dass du diesen Pass löschen möchtest? Die Wiederherstellung der Daten ist nicht möglich.",
   "Cancel": "Abbruch",
   "Delete": "Löschen",
+  "Delete certificate": "Zertifikat löschen",
   "Add to Apple Wallet": "Zu Apple Wallet hinzufügen",
   "Notice": "Hinweis",
   "The certificate is sent to us for technical reasons in order to generate an Apple Wallet pass. This certificate is not stored longer than necessary for generation, which normally takes a few seconds.": "Das Zertifikat wird aus technischen Gründen an uns gesendet, um einen Apple Wallet-Pass erzeugen zu können. Dabei speichern dieses Zertifikat nicht länger, als für die Erzeugung notwendig, was im Normalfall wenige Sekunden dauert.",
@@ -97,5 +98,14 @@
   "Vaccination ({}/{})": "Impfung ({}/{})",
   "Vaccine type": "Impfstofftyp",
   "Vaccine": "Impfstoff",
-  "Manufacturer": "Hersteller"
+  "Manufacturer": "Hersteller",
+
+  "Country selection": "Länderauswahl",
+  "Based on your current country selection, your QR codes will be validated according to that country's specifications.": "Basierend auf deiner aktuellen Länderauswahl werden deine QR-Codes nach den Vorgaben dieses Landes validiert.",
+  "Current selection": "Aktuelle Auswahl",
+  "European Union": "Europäische Union",
+  "Work is currently underway to add the regulations for all other EU countries!": "Es wird aktuell daran gearbeitet, die Regelungen für alle anderen EU-Staaten nachzuziehen!",
+
+  "Validation according to the regulations in {} (Last update: {})": "Validierung gemäß den Regelungen in {} (Stand: {})",
+  "All information without guarantee": "Alle Informationen ohne Gewähr"
 }

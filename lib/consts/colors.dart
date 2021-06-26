@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class GPColors {
   static const Color blue = Color(0xFF135ACF);
-  static const Color red = Color(0xFFF5433B);
+  static const Color red = Color(0xFFFF5048);
   static const Color yellow = Color(0xFFFFCF26);
   static const Color green = Color(0xFF50AF64);
 

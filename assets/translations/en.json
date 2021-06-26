@@ -66,6 +66,7 @@
   "Are you sure you want to delete this pass? The restoration of the pass will not be possible.": "Are you sure you want to delete this pass? The restoration of the pass will not be possible.",
   "Cancel": "Cancel",
   "Delete": "Delete",
+  "Delete certificate": "Delete certificate",
   "Add to Apple Wallet": "Add to Apple Wallet",
   "Notice": "Notice",
   "The certificate is sent to us for technical reasons in order to generate an Apple Wallet pass. This certificate is not stored longer than necessary for generation, which normally takes a few seconds.": "The certificate is sent to us for technical reasons in order to generate an Apple Wallet pass. This certificate is not stored longer than necessary for generation, which normally takes a few seconds.",
@@ -97,5 +98,14 @@
   "Vaccination ({}/{})": "Vaccination ({}/{})",
   "Vaccine type": "Vaccine type",
   "Vaccine": "Vaccine",
-  "Manufacturer": "Manufacturer"
+  "Manufacturer": "Manufacturer",
+
+  "Country selection": "Country selection",
+  "Based on your current country selection, your QR codes will be validated according to that country's specifications.": "Based on your current country selection, your QR codes will be validated according to that country's specifications.",
+  "Current selection": "Current selection",
+  "European Union": "European Union",
+  "Work is currently underway to add the regulations for all other EU countries!": "Work is currently underway to add the regulations for all other EU countries!",
+
+  "Validation according to the regulations in {} (Last update: {})": "Validation according to the regulations in {} (Last update: {})",
+  "All information without guarantee": "All information without guarantee"
 }

@@ -7,9 +7,10 @@ import 'package:greenpass_app/green_validator/payload/test_type.dart';
 import 'package:greenpass_app/local_storage/country_regulations/regulation_result.dart';
 
 class Regulation {
-  Map<String, String> _regulationEntry;
+  String countryCode;
+  Map<String, dynamic> _regulationEntry;
 
-  Regulation(this._regulationEntry);
+  Regulation(this.countryCode, this._regulationEntry);
 
   RegulationResult validate(GreenCertificate cert) {
     if (cert.certificateType == CertificateType.recovery) {
@@ -64,6 +65,10 @@ class Regulation {
       }
     }
     return RegulationResult.valid;
+  }
+
+  DateTime get validFrom {
+    return DateTime.parse(_regulationEntry['validFrom']);
   }
 
   static Duration _durationFromISO8601(String duration) {

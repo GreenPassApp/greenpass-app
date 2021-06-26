@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/green_validator/model/validation_result.dart';
 import 'package:greenpass_app/green_validator/payload/certificate_type.dart';
-import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 
 class ColoredCard {
   static Widget buildCard({
@@ -36,21 +35,23 @@ class ColoredCard {
     );
   }
 
-  static Widget buildIcon(dynamic res, {
+  static Widget buildIcon({
+    required IconData icon,
     double size = 40.0,
     double circlePadding = 20.0,
     double circleBorder = 4.0,
+    Color color = Colors.white,
   }) {
     return Container(
       margin: const EdgeInsets.all(20.0),
       padding: EdgeInsets.all(circlePadding),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(150),
-        border: Border.all(width: circleBorder, color: Colors.white),
+        border: Border.all(width: circleBorder, color: color),
       ),
       child: Icon(
-        getValidationIcon(res),
-        color: Colors.white,
+        icon,
+        color: color,
         size: size,
       ),
     );

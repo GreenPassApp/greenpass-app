@@ -6,9 +6,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/consts/colors.dart';
+import 'package:greenpass_app/elements/flag_element.dart';
+import 'package:greenpass_app/local_storage/country_regulations/regulations_provider.dart';
 import 'package:greenpass_app/local_storage/my_certs/my_certs.dart';
 import 'package:greenpass_app/local_storage/pub_certs/pub_certs.dart';
 import 'package:greenpass_app/views/add_my_pass_page.dart';
+import 'package:greenpass_app/views/country_selection_page.dart';
 import 'package:greenpass_app/views/my_passes_page.dart';
 import 'package:greenpass_app/views/scan_others_pass.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -19,6 +22,7 @@ void main() async {
   await Hive.initFlutter();
   await CountryCodes.init();
   await PubCerts.initAppStart();
+  await RegulationsProvider.initAppStart();
   await MyCerts.initAppStart();
   await EasyLocalization.ensureInitialized();
   runApp(
@@ -44,7 +48,7 @@ class App extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       theme: ThemeData(
-        primarySwatch: GPColors.createMaterialColor(GPColors.blue),
+        primarySwatch: GPColors.createMaterialColor(GPColors.green),
         fontFamily: 'Inter',
       ),
       home: MyHomePage(),
@@ -109,13 +113,12 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
         ),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: ClipRRect(
-            borderRadius: BorderRadius.circular(300),
-            child: Flag('AT', fit: BoxFit.cover, width: 28.0, height: 28.0),
-          ),
-          onPressed: () {  },
-        ),
+        leading: _currentPageIdx == 0 ? IconButton(
+          icon: FlagElement.buildFlag(flag: RegulationsProvider.getUserSetting()),
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => CountrySelectionPage()
+          )),
+        ) : null,
         actions: [
           /*IconButton(
             icon: const Icon(Icons.info_outline),
@@ -141,7 +144,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
             ),
             PopupMenuButton(
               icon: const Icon(
-                FontAwesome5Solid.ellipsis_v,
+                FontAwesome5Solid.info,
                 color: Colors.black,
               ),
               itemBuilder: (context) => [

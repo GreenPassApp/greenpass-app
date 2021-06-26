@@ -7,6 +7,8 @@ import 'package:greenpass_app/elements/colored_card.dart';
 import 'package:greenpass_app/elements/pass_info.dart';
 import 'package:greenpass_app/elements/platform_alert_dialog.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
+import 'package:greenpass_app/local_storage/country_regulations/regulation_result.dart';
+import 'package:greenpass_app/local_storage/country_regulations/regulations_provider.dart';
 import 'package:greenpass_app/local_storage/my_certs/my_certs.dart';
 import 'package:greenpass_app/local_storage/my_certs/my_certs_result.dart';
 import 'package:greenpass_app/views/pass_details.dart';
@@ -128,12 +130,21 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
           },
           itemCount: certs.length,
           itemBuilder: (context, idx) {
+            Color cardColor = GPColors.blue;
+            Color textColor = Colors.white;
+            RegulationResult? regRes;
+            if (RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry) {
+              regRes = RegulationsProvider.getUserRegulation().validate(certs[idx]);
+              cardColor = RegulationsProvider.getCardColor(regRes);
+              textColor = RegulationsProvider.getCardTextColor(regRes);
+            }
+
             return AnimatedBuilder(
               animation: controller,
               builder: (context, child) {
                 return ColoredCard.buildCard(
                   padding: EdgeInsets.fromLTRB(4.0, 8.0, 4.0, 65.0),
-                  backgroundColor: GPColors.blue,
+                  backgroundColor: cardColor,
                   child: InkWell(
                     child: Center(
                       child: child,
@@ -158,7 +169,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                           certs[idx].personInfo.fullName,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: textColor,
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
                           ),
@@ -168,7 +179,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                           DateFormat('dd.MM.yyyy').format(certs[idx].personInfo.dateOfBirth),
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: textColor,
                             fontSize: 15.0,
                           ),
                         ),
@@ -200,13 +211,15 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                           certs[idx],
                           textSize: 25.0,
                           additionalTextSize: 15.0,
+                          color: textColor,
+                          regulationResult: regRes,
                         ),
                         Padding(padding: const EdgeInsets.symmetric(vertical: 2.0)),
                         Text(
                           PassInfo.getDate(certs[idx]),
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: textColor,
                             fontSize: 15.0,
                           ),
                         ),
@@ -214,7 +227,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                         Text(
                           PassInfo.getDuration(certs[idx]),
                           style: TextStyle(
-                            color: Colors.white,
+                            color: textColor,
                             fontSize: 15.0,
                             fontWeight: FontWeight.bold,
                           ),

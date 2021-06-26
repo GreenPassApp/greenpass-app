@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_recovery.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_test.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_vaccination.dart';
@@ -7,12 +8,16 @@ import 'package:greenpass_app/green_validator/payload/certificate_type.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/green_validator/payload/test_result.dart';
 import 'package:greenpass_app/green_validator/payload/test_type.dart';
+import 'package:greenpass_app/local_storage/country_regulations/regulation_result.dart';
+import 'package:greenpass_app/local_storage/country_regulations/regulations_provider.dart';
 
 class PassInfo {
   static Widget getTypeText(GreenCertificate cert, {
     double textSize = 25.0,
     double additionalTextSize = 20.0,
     bool showTestType = true,
+    Color color = Colors.white,
+    RegulationResult? regulationResult,
   }) {
     String firstText;
     switch (cert.certificateType) {
@@ -36,11 +41,22 @@ class PassInfo {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            if (regulationResult != null && RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry) ...[
+              regulationResult == RegulationResult.valid ? Padding(
+                padding: const EdgeInsets.only(bottom: 2.0),
+                child: Icon(FontAwesome5Solid.check_circle, color: color, size: 22.0),
+              ) : Padding(
+                padding: const EdgeInsets.only(bottom: 2.0),
+                child: Icon(FontAwesome5Solid.times_circle, color: color, size: 22.0),
+              ),
+              Padding(padding: const EdgeInsets.symmetric(horizontal: 4.0)),
+            ],
             Text(
               firstText,
               style: TextStyle(
-                color: Colors.white,
+                color: color,
                 fontSize: textSize,
                 fontWeight: FontWeight.bold,
               ),
@@ -58,7 +74,7 @@ class PassInfo {
                 return Text(
                   '(' + vac.doseNumber.toString() + '/' + vac.dosesNeeded.toString() + ')',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: color,
                     fontSize: textSize,
                   ),
                 );
@@ -72,7 +88,7 @@ class PassInfo {
             return Text(
               '(' + testType(test.testType) + ')',
               style: TextStyle(
-                color: Colors.white,
+                color: color,
                 fontSize: additionalTextSize,
               ),
             );
