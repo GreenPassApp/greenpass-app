@@ -54,7 +54,7 @@ class PassInfo {
                   e2 as CertEntryVaccination;
                   return e1.doseNumber.compareTo(e2.doseNumber);
                 });
-                var vac = (vacs[0] as CertEntryVaccination);
+                var vac = (vacs.last as CertEntryVaccination);
                 return Text(
                   '(' + vac.doseNumber.toString() + '/' + vac.dosesNeeded.toString() + ')',
                   style: TextStyle(

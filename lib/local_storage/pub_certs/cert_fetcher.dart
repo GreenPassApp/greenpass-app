@@ -25,7 +25,7 @@ class CertFetcher {
   }
 
   static bool _validateSignature(String rawJson, String signature) {
-    // TODO check signature in
+    // TODO check signature
     return true;
   }
 }

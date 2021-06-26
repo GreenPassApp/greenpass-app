@@ -1,0 +1,20 @@
+{
+  "AT": [
+    {
+      "validFrom": "2021-06-26T12:00:00",
+      "rapidTestDuration": "P1D",
+      "PCRTestDuration": "P2D",
+      "validFromPartialVac": "P22D",
+      "validUntilPartialVac": "P90D",
+      "validUntilFullVac": "P270D"
+    }
+  ],
+  "DE": [
+    {
+      "validFrom": "2021-06-26T12:00:00",
+      "rapidTestDuration": "P1D",
+      "PCRTestDuration": "P1D",
+      "validFromFullVac": "P14D"
+    }
+  ]
+}
