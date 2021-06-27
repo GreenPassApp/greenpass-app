@@ -59,7 +59,7 @@
 
   "Privacy": "Datenschutz",
   "Imprint": "Impressum",
-  "Open Source Licenses": "Open-Source-Lizenzen",
+  "Open Source Licenses": "Open Source-Lizenzen",
 
   "Certificate details": "Zertifikatsdetails",
   "Delete pass?": "Pass löschen?",
@@ -111,9 +111,8 @@
 
   "Legal": "Rechtliches",
   "General information": "Allgemeinte Informationen",
-  "What can the app do?": "Was kann diese App?",
-  "FAQ about the app": "FAQ zur App",
-  "Country information": "Länderinformationen",
+  "Visit our website": "Besuche unsere Webseite",
+  "About the app": "Über die App",
   "Go through the tutorial again": "Tutorial erneut ansehen",
   "App version: {}": "App-Version: {}",
 
