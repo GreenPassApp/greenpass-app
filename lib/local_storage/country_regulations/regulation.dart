@@ -5,8 +5,13 @@ import 'package:greenpass_app/green_validator/payload/certificate_type.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/green_validator/payload/test_type.dart';
 import 'package:greenpass_app/local_storage/country_regulations/regulation_result.dart';
+import 'package:greenpass_app/local_storage/country_regulations/regulation_result_type.dart';
 
 class Regulation {
+  // for better if checks
+  static final DateTime never = DateTime.utc(9999);
+  static final DateTime forever = never;
+
   String countryCode;
   Map<String, dynamic> _regulationEntry;
 
@@ -16,9 +21,11 @@ class Regulation {
     if (cert.certificateType == CertificateType.recovery) {
       CertEntryRecovery rec = cert.entryList[0] as CertEntryRecovery;
       if (rec.validFrom.isAfter(DateTime.now()))
-        return RegulationResult.not_valid_yet;
+        return RegulationResult(type: RegulationResultType.not_valid_yet, relevantTime: rec.validFrom);
       if (rec.validUntil.isBefore(DateTime.now()))
-        return RegulationResult.not_valid_anymore;
+        return RegulationResult(type: RegulationResultType.not_valid_anymore, relevantTime: rec.validUntil);
+
+      return RegulationResult(type: RegulationResultType.valid, relevantTime: rec.validUntil);
     } else if (cert.certificateType == CertificateType.test) {
       CertEntryTest test = cert.entryList[0] as CertEntryTest;
       Duration validity;
@@ -28,7 +35,9 @@ class Regulation {
         validity = _durationFromISO8601(_regulationEntry['rapidTestDuration']!);
 
       if (test.timeSampleCollection.isBefore(DateTime.now().subtract(validity)))
-        return RegulationResult.not_valid_anymore;
+        return RegulationResult(type: RegulationResultType.not_valid_anymore, relevantTime: test.timeSampleCollection.add(validity));
+
+      return RegulationResult(type: RegulationResultType.valid, relevantTime: test.timeSampleCollection.add(validity));
     } else if (cert.certificateType == CertificateType.vaccination) {
       bool fullyVaccinated = cert.entryList.any((vac) => (vac as CertEntryVaccination).doseNumber == vac.dosesNeeded);
       var vacs = cert.entryList;
@@ -41,30 +50,42 @@ class Regulation {
       if (fullyVaccinated) {
         CertEntryVaccination lastVac = vacs.last as CertEntryVaccination;
         if (_regulationEntry.containsKey('validFromFullVac')) {
-          if (lastVac.dateOfVaccination.isAfter(DateTime.now().subtract(_durationFromISO8601(_regulationEntry['validFromFullVac']!))))
-            return RegulationResult.not_valid_yet;
+          Duration validFrom = _durationFromISO8601(_regulationEntry['validFromFullVac']!);
+          if (lastVac.dateOfVaccination.isAfter(DateTime.now().subtract(validFrom)))
+            return RegulationResult(type: RegulationResultType.not_valid_yet, relevantTime: lastVac.dateOfVaccination.add(validFrom));
         }
         if (_regulationEntry.containsKey('validUntilFullVac')) {
-          if (lastVac.dateOfVaccination.isBefore(DateTime.now().subtract(_durationFromISO8601(_regulationEntry['validUntilFullVac']!))))
-            return RegulationResult.not_valid_anymore;
+          Duration validUntil = _durationFromISO8601(_regulationEntry['validUntilFullVac']!);
+          if (lastVac.dateOfVaccination.isBefore(DateTime.now().subtract(validUntil)))
+            return RegulationResult(type: RegulationResultType.not_valid_anymore, relevantTime: lastVac.dateOfVaccination.add(validUntil));
+
+          return RegulationResult(type: RegulationResultType.valid, relevantTime: lastVac.dateOfVaccination.add(validUntil));
         }
+
+        return RegulationResult(type: RegulationResultType.valid, relevantTime: forever);
       } else {
         CertEntryVaccination firstKnownVac = vacs.first as CertEntryVaccination;
         if (_regulationEntry.containsKey('validFromPartialVac')) {
-          if (firstKnownVac.dateOfVaccination.isAfter(DateTime.now().subtract(_durationFromISO8601(_regulationEntry['validFromPartialVac']!))))
-            return RegulationResult.not_valid_yet;
+          Duration validFrom = _durationFromISO8601(_regulationEntry['validFromPartialVac']!);
+          if (firstKnownVac.dateOfVaccination.isAfter(DateTime.now().subtract(validFrom)))
+            return RegulationResult(type: RegulationResultType.not_valid_yet, relevantTime: firstKnownVac.dateOfVaccination.add(validFrom));
         }
         if (_regulationEntry.containsKey('validUntilPartialVac')) {
-          if (firstKnownVac.dateOfVaccination.isBefore(DateTime.now().subtract(_durationFromISO8601(_regulationEntry['validUntilPartialVac']!))))
-            return RegulationResult.not_valid_anymore;
+          Duration validUntil = _durationFromISO8601(_regulationEntry['validUntilPartialVac']!);
+          if (firstKnownVac.dateOfVaccination.isBefore(DateTime.now().subtract(validUntil)))
+            return RegulationResult(type: RegulationResultType.not_valid_anymore, relevantTime: firstKnownVac.dateOfVaccination.add(validUntil));
+
+          return RegulationResult(type: RegulationResultType.valid, relevantTime: firstKnownVac.dateOfVaccination.add(validUntil));
         }
 
         // special case: if the country haven't set a date for partial vaccinations, it is considered as invalid
         if (!_regulationEntry.containsKey('validFromPartialVac') && !_regulationEntry.containsKey('validUntilPartialVac'))
-          return RegulationResult.not_valid_yet;
+          return RegulationResult(type: RegulationResultType.not_valid_yet, relevantTime: never);
+
+        return RegulationResult(type: RegulationResultType.valid, relevantTime: forever);
       }
     }
-    return RegulationResult.valid;
+    throw 'An unknown certificate type was passed';
   }
 
   DateTime get validFrom {

@@ -10,6 +10,7 @@ import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/green_validator/payload/test_result.dart';
 import 'package:greenpass_app/green_validator/payload/test_type.dart';
 import 'package:greenpass_app/local_storage/country_regulations/regulation_result.dart';
+import 'package:greenpass_app/local_storage/country_regulations/regulation_result_type.dart';
 import 'package:greenpass_app/local_storage/country_regulations/regulations_provider.dart';
 
 import 'colored_card.dart';
@@ -47,7 +48,7 @@ class PassInfo {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if (regulationResult != null && RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry) ...[
-              regulationResult == RegulationResult.valid ? Padding(
+              regulationResult.type == RegulationResultType.valid ? Padding(
                 padding: const EdgeInsets.only(bottom: 2.0),
                 child: Icon(FontAwesome5Solid.check_circle, color: color, size: 22.0),
               ) : Padding(

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/local_storage/country_regulations/regulation.dart';
 import 'package:greenpass_app/local_storage/country_regulations/regulation_result.dart';
+import 'package:greenpass_app/local_storage/country_regulations/regulation_result_type.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 
@@ -111,13 +112,13 @@ class RegulationsProvider {
   }
 
   static Color getCardTextColor(RegulationResult result) {
-    if (result == RegulationResult.not_valid_yet) return GPColors.almost_black;
+    if (result.type == RegulationResultType.not_valid_yet) return GPColors.almost_black;
     return Colors.white;
   }
 
   static Color getCardColor(RegulationResult result) {
-    if (result == RegulationResult.not_valid_anymore) return GPColors.red;
-    if (result == RegulationResult.not_valid_yet) return GPColors.yellow;
+    if (result.type == RegulationResultType.not_valid_anymore) return GPColors.red;
+    if (result.type == RegulationResultType.not_valid_yet) return GPColors.yellow;
     return GPColors.green;
   }
 }
