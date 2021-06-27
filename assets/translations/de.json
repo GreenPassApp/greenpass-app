@@ -34,7 +34,7 @@
     "many": "Vor {} Stunden",
     "other": "Vor {} Stunden"
   },
-  "Since {} days": {
+  "For {} days": {
     "zero": "Seit heute",
     "one": "Seit gestern",
     "many": "Seit {} Tagen",
@@ -115,5 +115,28 @@
   "FAQ about the app": "FAQ zur App",
   "Country information": "Länderinformationen",
   "Go through the tutorial again": "Tutorial erneut ansehen",
-  "App version: {}": "App-Version: {}"
+  "App version: {}": "App-Version: {}",
+
+  "Share certificate": "Nachweis teilen",
+  "Shared certificate": "Geteilter Nachweis",
+  "Error": "Fehler",
+  "An error occurred while deleting the share link associated to this pass. You need an internet connection in order to delete your share link first.": "Beim Löschen des zu diesem Pass gehörenden Freigabelinks ist ein Fehler aufgetreten. Stelle zunächst eine Internetverbindung her, um auch den Freigabelink löschen zu können.",
+  "When sharing a certificate, the most necessary information is stored on a server for a freely selectable period of time.": "Beim Teilen des Zertifikats werden die notwendigen Informationen für einen frei wählbaren Zeitraum auf einem Server gespeichert.",
+  "Information about the shared certificate": "Informationen zum geteilten Nachweis",
+  "Share link": "Link zum Teilen",
+  "Copied link to clipboard.": "Link in die Zwischenablage kopiert.",
+  "Link valid until": "Link gültig bis",
+  "Delete share link": "Link zum Teilen löschen",
+  "Delete share link?": "Link zum Teilen löschen?",
+  "Are you sure you want to delete the share link? You can create a new link at any time.": "Bist du sicher, dass du diesen Link zum Teilen löschen möchtest? Du kannst jederzeit einen neuen Link erstellen.",
+  "An error occurred while deleting the share link. Please try again later.": "Beim Löschen des Links zum Teilen ist ein Fehler aufgetreten. Bitte versuche es später erneut.",
+  "No link generated yet": "Noch keinen Link generiert",
+  "By when should the shared certificate be available?": "Bis wann soll das geteilte Zertifikat verfügbar sein?",
+  "Date and time": "Datum und Uhrzeit",
+  "Generate link": "Link generieren",
+  "Change expiration time": "Ablaufzeitpunkt ändern",
+  "An error occurred while generating the share link. Please try again later.": "Beim Generieren des Links zum Teilen ist ein Fehler aufgetreten. Bitte versuche es später erneut.",
+  "An error occurred while updating the expiration time. Please try again later.": "Beim Ändern des Ablaufzeitpunkts ist ein Fehler aufgetreten. Bitte versuche es später erneut.",
+  "The selected time must be in the future.": "Der ausgewählte Zeitpunkt muss in der Zukunft liegen.",
+  "The selected time must not be after the expiration date of the certificate. Please select an earlier date!": "Der ausgewählte Zeitpunkt darf nicht nach dem Ablaufdatum des Zertifikats liegen. Bitte wähle ein früheres Datum!"
 }

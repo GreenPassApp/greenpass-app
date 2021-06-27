@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_recovery.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_test.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_vaccination.dart';
@@ -10,6 +11,8 @@ import 'package:greenpass_app/green_validator/payload/test_result.dart';
 import 'package:greenpass_app/green_validator/payload/test_type.dart';
 import 'package:greenpass_app/local_storage/country_regulations/regulation_result.dart';
 import 'package:greenpass_app/local_storage/country_regulations/regulations_provider.dart';
+
+import 'colored_card.dart';
 
 class PassInfo {
   static Widget getTypeText(GreenCertificate cert, {
@@ -148,7 +151,7 @@ class PassInfo {
         int timeDiff = DateTime.now()
             .difference(rec.validFrom)
             .inDays;
-        return 'Since {} days'.plural(timeDiff, args: [timeDiff.toString()]);
+        return 'For {} days'.plural(timeDiff, args: [timeDiff.toString()]);
       case CertificateType.test:
         var test = (cert.entryList[0] as CertEntryTest);
         int timeDiff = DateTime.now()
@@ -158,5 +161,53 @@ class PassInfo {
       case CertificateType.unknown:
         return 'Unknown'.tr();
     }
+  }
+
+  static Widget getSmallPassCard(GreenCertificate cert) {
+    Color cardColor = GPColors.blue;
+    Color textColor = Colors.white;
+    if (RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry) {
+      RegulationResult res = RegulationsProvider.getUserRegulation().validate(cert);
+      cardColor = RegulationsProvider.getCardColor(res);
+      textColor = RegulationsProvider.getCardTextColor(res);
+    }
+
+    return Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
+            child: ColoredCard.buildCard(
+              backgroundColor: cardColor,
+              child: Row(
+                children: [
+                  ColoredCard.buildIcon(icon: ColoredCard.getValidationIcon(cert), size: 25.0, circleBorder: 3, circlePadding: 15.0, color: textColor),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      PassInfo.getTypeText(
+                        cert,
+                        textSize: 20.0,
+                        additionalTextSize: 15.0,
+                        showTestType: false,
+                        color: textColor,
+                      ),
+                      Padding(padding: const EdgeInsets.symmetric(vertical: 2.0)),
+                      Text(
+                        PassInfo.getDate(cert),
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: 15.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

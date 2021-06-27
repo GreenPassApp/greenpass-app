@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/connectivity/apple_wallet.dart';
+import 'package:greenpass_app/connectivity/share_certificate.dart';
 import 'package:greenpass_app/consts/colors.dart';
-import 'package:greenpass_app/elements/colored_card.dart';
 import 'package:greenpass_app/elements/list_elements.dart';
 import 'package:greenpass_app/elements/pass_info.dart';
 import 'package:greenpass_app/elements/platform_alert_dialog.dart';
@@ -16,27 +16,29 @@ import 'package:greenpass_app/green_validator/payload/certificate_type.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/green_validator/payload/test_result.dart';
 import 'package:greenpass_app/green_validator/payload/vaccine_type.dart';
-import 'package:greenpass_app/local_storage/country_regulations/regulation_result.dart';
-import 'package:greenpass_app/local_storage/country_regulations/regulations_provider.dart';
+import 'package:greenpass_app/local_storage/my_certs/my_cert_share.dart';
 import 'package:greenpass_app/local_storage/my_certs/my_certs.dart';
+import 'package:greenpass_app/views/share_info_page.dart';
+import 'package:greenpass_app/views/share_page.dart';
 import 'package:intl/intl.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
-class PassDetails extends StatelessWidget {
+class PassDetails extends StatefulWidget {
   final GreenCertificate cert;
 
   const PassDetails({Key? key, required this.cert}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    Color cardColor = GPColors.blue;
-    Color textColor = Colors.white;
-    if (RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry) {
-      RegulationResult res = RegulationsProvider.getUserRegulation().validate(cert);
-      cardColor = RegulationsProvider.getCardColor(res);
-      textColor = RegulationsProvider.getCardTextColor(res);
-    }
+  _PassDetailsState createState() => _PassDetailsState(cert: cert);
+}
 
+class _PassDetailsState extends State<PassDetails> {
+  final GreenCertificate cert;
+
+  _PassDetailsState({required this.cert});
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -70,43 +72,7 @@ class PassDetails extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
-                    child: ColoredCard.buildCard(
-                      backgroundColor: cardColor,
-                      child: Row(
-                        children: [
-                          ColoredCard.buildIcon(icon: ColoredCard.getValidationIcon(cert), size: 25.0, circleBorder: 3, circlePadding: 15.0, color: textColor),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              PassInfo.getTypeText(
-                                cert,
-                                textSize: 20.0,
-                                additionalTextSize: 15.0,
-                                showTestType: false,
-                                color: textColor,
-                              ),
-                              Padding(padding: const EdgeInsets.symmetric(vertical: 2.0)),
-                              Text(
-                                PassInfo.getDate(cert),
-                                style: TextStyle(
-                                  color: textColor,
-                                  fontSize: 15.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            PassInfo.getSmallPassCard(cert),
             if (Platform.isIOS) ...[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 23.0),
@@ -123,11 +89,7 @@ class PassDetails extends StatelessWidget {
                             image: AssetImage('assets/images/AppleWallet.png'),
                           ),
                           Padding(padding: const EdgeInsets.symmetric(horizontal: 6.0)),
-                          Text(
-                            'Add to Apple Wallet'.tr(),
-                            style: TextStyle(
-                            ),
-                          ),
+                          Text('Add to Apple Wallet'.tr()),
                         ],
                       ),
                       style: ButtonStyle(
@@ -151,7 +113,44 @@ class PassDetails extends StatelessWidget {
                   ],
                 ),
               ),
+              Padding(padding: const EdgeInsets.symmetric(vertical: 7.0)),
             ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 23.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  OutlinedButton(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(FontAwesome5Solid.share),
+                        Padding(padding: const EdgeInsets.symmetric(horizontal: 6.0)),
+                        if (MyCerts.getShareInfo(cert.rawData) == null) ...[
+                          Text('Share certificate'.tr()),
+                        ] else ...[
+                          Text('Shared certificate'.tr()),
+                        ],
+                      ],
+                    ),
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0)),
+                      foregroundColor: MaterialStateProperty.all(Colors.white),
+                      backgroundColor: MaterialStateProperty.all(Colors.black),
+                      overlayColor: MaterialStateProperty.all(GPColors.dark_grey),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0))),
+                    ),
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        if (MyCerts.getShareInfo(cert.rawData) == null)
+                          return SharePage(cert: cert);
+                        return ShareInfoPage(cert: cert);
+                      }
+                    )).then((_) => setState(() {})),
+                  ),
+                ],
+              ),
+            ),
             Padding(padding: const EdgeInsets.symmetric(vertical: 14.0)),
             ListElements.listPadding(ListElements.groupText('Person info'.tr())),
             ListElements.horizontalLine(),
@@ -248,15 +247,15 @@ class PassDetails extends StatelessWidget {
                     ElevatedButton.icon(
                       icon: Icon(FontAwesome5Solid.trash_alt, size: 18.0),
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(GPColors.red),
-                        padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 22.0, vertical: 8.0))
+                          backgroundColor: MaterialStateProperty.all(GPColors.red),
+                          padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 22.0, vertical: 8.0))
                       ),
                       label: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Text(
                           'Delete certificate'.tr(),
                           style: TextStyle(
-                            fontWeight: FontWeight.bold
+                              fontWeight: FontWeight.bold
                           ),
                         ),
                       ),
@@ -281,6 +280,18 @@ class PassDetails extends StatelessWidget {
       dismissButtonText: 'Cancel'.tr(),
       actionButtonText: 'Delete'.tr(),
       action: () async {
+        MyCertShare? share = MyCerts.getShareInfo(cert.rawData);
+        if (share != null) {
+          if (!await ShareCertificate.delete(share.token)) {
+            PlatformAlertDialog.showAlertDialog(
+              context: context,
+              title: 'Error'.tr(),
+              text: 'An error occurred while deleting the share link associated to this pass. You need an internet connection in order to delete your share link first.'.tr(),
+              dismissButtonText: 'Ok'.tr()
+            );
+            return;
+          }
+        }
         await MyCerts.removeCert(cert.rawData);
         Navigator.of(context).pop();
       },

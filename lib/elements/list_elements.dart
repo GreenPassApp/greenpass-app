@@ -51,15 +51,15 @@ class ListElements {
     );
   }
 
-  static Widget listElement({Widget? icon, required String mainText, String? secondaryText, GestureTapCallback? action, Widget? trailing}) {
+  static Widget listElement({Widget? icon, String? mainText, String? secondaryText, GestureTapCallback? action, Widget? trailing, Widget? content}) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
       leading: icon,
-      title: Row(
+      title: content ?? Row(
         children: [
           Flexible(
             child: Text(
-              mainText,
+              mainText!,
               style: TextStyle(
                 color: GPColors.almost_black,
                 fontWeight: FontWeight.bold,

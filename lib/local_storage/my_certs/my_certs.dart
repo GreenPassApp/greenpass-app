@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
 import 'package:greenpass_app/green_validator/model/validation_result.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/local_storage/my_certs/my_cert.dart';
+import 'package:greenpass_app/local_storage/my_certs/my_cert_share.dart';
 import 'package:greenpass_app/local_storage/my_certs/my_certs_result.dart';
 import 'package:hive/hive.dart';
 
@@ -65,6 +67,21 @@ class MyCerts {
       certificates: certs,
       invalidCertificatesDeleted: deleted,
     );
+  }
+
+  static MyCertShare? getShareInfo(String qrCode) {
+    MyCertShare? share = _myCerts!.firstWhereOrNull((c) => c.qrCode == qrCode)?.share;
+    if (share != null && share.validUntil.isBefore(DateTime.now())) {
+      setShareInfo(qrCode, null);
+      return null;
+    }
+    return share;
+  }
+
+  static Future<void> setShareInfo(String qrCode, MyCertShare? share) async {
+    MyCert? foundCert = _myCerts!.firstWhereOrNull((c) => c.qrCode == qrCode);
+    if (foundCert != null) foundCert.share = share;
+    await _saveCurrentList();
   }
 
   static Future<void> _saveCurrentList() async {

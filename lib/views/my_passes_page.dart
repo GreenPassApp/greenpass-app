@@ -45,6 +45,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SafeArea(
       child: FutureBuilder(
         future: MyCerts.getGreenCerts(),
