@@ -45,6 +45,7 @@ dependencies:
   hive_flutter: ^1.1.0
   flutter_secure_storage: ^4.2.0
   flag: ^5.0.0-nullsafety
+  package_info: ^2.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

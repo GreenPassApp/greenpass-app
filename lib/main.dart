@@ -1,6 +1,5 @@
 import 'package:country_codes/country_codes.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
@@ -12,10 +11,10 @@ import 'package:greenpass_app/local_storage/my_certs/my_certs.dart';
 import 'package:greenpass_app/local_storage/pub_certs/pub_certs.dart';
 import 'package:greenpass_app/views/add_my_pass_page.dart';
 import 'package:greenpass_app/views/country_selection_page.dart';
+import 'package:greenpass_app/views/info_page.dart';
 import 'package:greenpass_app/views/my_passes_page.dart';
 import 'package:greenpass_app/views/scan_others_pass.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -142,34 +141,14 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
                 builder: (context) => AddMyPassPage()
               )).then((data) => FlutterStatusbarcolor.setStatusBarWhiteForeground(false)),
             ),
-            PopupMenuButton(
+            IconButton(
               icon: const Icon(
                 FontAwesome5Solid.info,
                 color: Colors.black,
               ),
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  child: Text('Privacy'.tr()),
-                  value: 1,
-                ),
-                PopupMenuItem(
-                  child: Text('Imprint'.tr()),
-                  value: 2,
-                ),
-                PopupMenuItem(
-                  child: Text('Open Source Licenses'.tr()),
-                  value: 3,
-                ),
-              ],
-              onSelected: (val) {
-                // TODO refactor
-                if (val == 1)
-                  launch('https://greenpassapp.eu/privacy');
-                if (val == 2)
-                  launch('https://greenpassapp.eu/imprint');
-                if (val == 3)
-                  launch('https://greenpassapp.eu/legal/opensource');
-              },
+              onPressed: () => Navigator.push(context, MaterialPageRoute(
+                builder: (context) => InfoPage()
+              )),
             ),
           ] else if (_currentPageIdx == 1) ...[
             /*

@@ -107,5 +107,13 @@
   "Work is currently underway to add the regulations for all other EU countries!": "Es wird aktuell daran gearbeitet, die Regelungen für alle anderen EU-Staaten nachzuziehen!",
 
   "Validation according to the regulations in {} (Last update: {})": "Validierung gemäß den Regelungen in {} (Stand: {})",
-  "All information without guarantee": "Alle Informationen ohne Gewähr"
+  "All information without guarantee": "Alle Informationen ohne Gewähr",
+
+  "Legal": "Rechtliches",
+  "General information": "Allgemeinte Informationen",
+  "What can the app do?": "Was kann diese App?",
+  "FAQ about the app": "FAQ zur App",
+  "Country information": "Länderinformationen",
+  "Go through the tutorial again": "Tutorial erneut ansehen",
+  "App version: {}": "App-Version: {}"
 }

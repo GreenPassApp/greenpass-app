@@ -84,36 +84,6 @@ class _CountrySelectionPageState extends State<CountrySelectionPage> {
     );
   }
 
-  static Widget _listElement({Widget? icon, required String mainText, String? secondaryText, GestureTapCallback? action}) {
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-      leading: icon,
-      title: Row(
-        children: [
-          Flexible(
-            child: Text(
-              mainText,
-              style: TextStyle(
-                color: GPColors.almost_black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          if (secondaryText != null) ...[
-            Padding(padding: const EdgeInsets.symmetric(horizontal: 3.0)),
-            Text(
-              secondaryText,
-              style: TextStyle(
-                color: GPColors.almost_black,
-              ),
-            )
-          ],
-        ],
-      ),
-      onTap: action,
-    );
-  }
-
   Widget _countryListElement({required String code, GestureTapCallback? action}) {
     Locale l = Locale.fromSubtags(countryCode: code);
     CountryDetails? c;
@@ -129,7 +99,7 @@ class _CountrySelectionPageState extends State<CountrySelectionPage> {
     else
       name = c.localizedName!;
 
-    return _listElement(
+    return ListElements.listElement(
       icon: FlagElement.buildFlag(flag: code),
       mainText: name,
       secondaryText: '(' + code.toUpperCase() + ')',

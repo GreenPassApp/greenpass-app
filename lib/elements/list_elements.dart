@@ -50,4 +50,35 @@ class ListElements {
       child: child,
     );
   }
+
+  static Widget listElement({Widget? icon, required String mainText, String? secondaryText, GestureTapCallback? action, Widget? trailing}) {
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+      leading: icon,
+      title: Row(
+        children: [
+          Flexible(
+            child: Text(
+              mainText,
+              style: TextStyle(
+                color: GPColors.almost_black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          if (secondaryText != null) ...[
+            Padding(padding: const EdgeInsets.symmetric(horizontal: 3.0)),
+            Text(
+              secondaryText,
+              style: TextStyle(
+                color: GPColors.almost_black,
+              ),
+            )
+          ],
+        ],
+      ),
+      trailing: trailing,
+      onTap: action,
+    );
+  }
 }
