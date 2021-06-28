@@ -1,6 +1,6 @@
 {
-  "My Pass": "My Pass",
-  "Scan Pass": "Scan Pass",
+  "Show Pass": "Show Pass",
+  "Check Pass": "Check Pass",
   "No Permission": "No Permission",
   "Please allow GreenPass to access your camera in order to scan QR codes.": "Please allow GreenPass to access your camera in order to scan QR codes.",
   "Go to app settings": "Go to app settings",
@@ -137,5 +137,26 @@
   "An error occurred while generating the share link. Please try again later.": "An error occurred while generating the share link. Please try again later.",
   "An error occurred while updating the expiration time. Please try again later.": "An error occurred while updating the expiration time. Please try again later.",
   "The selected time must be in the future.": "The selected time must be in the future.",
-  "The selected time must not be after the expiration date of the certificate. Please select an earlier date!": "The selected time must not be after the expiration date of the certificate. Please select an earlier date!"
+  "The selected time must not be after the expiration date of the certificate. Please select an earlier date!": "The selected time must not be after the expiration date of the certificate. Please select an earlier date!",
+
+  "Welcome!": "Welcome!",
+  "Glad to have you here! First click on **\"Add QR code\"** on the home screen": "Glad to have you here! First click on **\"Add QR code\"** on the home screen",
+  "Scan your certificate": "Scan your certificate",
+  "**Scan the QR code** of your proof of vaccination, past infection or negative test": "**Scan the QR code** of your proof of vaccination, past infection or negative test",
+  "All information at a glance": "All information at a glance",
+  "**Click on your pass** to get to the detailed information of your certificate": "**Click on your pass** to get to the detailed information of your certificate",
+  "Share your certificates": "Share your certificates",
+  "To share your pass with other people, you can select **\"Share certificate\"**": "To share your pass with other people, you can select **\"Share certificate\"**",
+  "Validate other people's certificates": "Validate other people's certificates",
+  "Select **\"Check Pass\"** from the menu to validate QR codes from other people": "Select **\"Check Pass\"** from the menu to validate QR codes from other people",
+
+  "Privacy policy": "Privacy policy",
+  "Your data is only stored and processed **locally and offline on your device** and will be deleted when you uninstall the app.": "Your data is only stored and processed **locally and offline on your device** and will be deleted when you uninstall the app.",
+  "When using the **Apple Wallet** and **Share** feature, personal data is stored and processed online for the shortest possible period of time. Of course, you will be informed about this in the app before using these features.": "When using the **Apple Wallet** and **Share** feature, personal data is stored and processed online for the shortest possible period of time. Of course, you will be informed about this in the app before using these features.",
+  "When using the **Share** feature, personal data is stored and processed online for the shortest possible period of time. Of course, you will be informed about this in the app before using these features.": "When using the **Share** feature, personal data is stored and processed online for the shortest possible period of time. Of course, you will be informed about this in the app before using these features.",
+  "All further information can be found in the [privacy policy]().": "All further information can be found in the [privacy policy]().",
+  "I accept the privacy policy": "I accept the privacy policy",
+  "Next": "Next",
+  "Done": "Done",
+  "Skip": "Skip"
 }

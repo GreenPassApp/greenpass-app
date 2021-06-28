@@ -1,6 +1,6 @@
 {
-  "My Pass": "Mein Pass",
-  "Scan Pass": "Pass Scannen",
+  "Show Pass": "Pass vorzeigen",
+  "Check Pass": "Pass prüfen",
   "No Permission": "Keine Berechtigung",
   "Please allow GreenPass to access your camera in order to scan QR codes.": "Bitte erlaube GreenPass auf deine Kamera zuzugreifen, um QR-Codes scannen zu können.",
   "Go to app settings": "App-Einstellungen öffnen",
@@ -137,5 +137,26 @@
   "An error occurred while generating the share link. Please try again later.": "Beim Generieren des Links zum Teilen ist ein Fehler aufgetreten. Bitte versuche es später erneut.",
   "An error occurred while updating the expiration time. Please try again later.": "Beim Ändern des Ablaufzeitpunkts ist ein Fehler aufgetreten. Bitte versuche es später erneut.",
   "The selected time must be in the future.": "Der ausgewählte Zeitpunkt muss in der Zukunft liegen.",
-  "The selected time must not be after the expiration date of the certificate. Please select an earlier date!": "Der ausgewählte Zeitpunkt darf nicht nach dem Ablaufdatum des Zertifikats liegen. Bitte wähle ein früheres Datum!"
+  "The selected time must not be after the expiration date of the certificate. Please select an earlier date!": "Der ausgewählte Zeitpunkt darf nicht nach dem Ablaufdatum des Zertifikats liegen. Bitte wähle ein früheres Datum!",
+
+  "Welcome!": "Herzlich willkommen!",
+  "Glad to have you here! First click on **\"Add QR code\"** on the home screen": "Schön, dass du da bist! Klicke als erstes auf dem Startbildschirm auf **\"QR-Code hinzufügen\"**",
+  "Scan your certificate": "Scanne dein Zertifikat",
+  "**Scan the QR code** of your proof of vaccination, past infection or negative test": "**Scanne den QR-Code** deines Impf-, Test- oder Genesenheitszertifikats",
+  "All information at a glance": "Alle Informationen auf einen Blick",
+  "**Click on your pass** to get to the detailed information of your certificate": "**Klicke auf deinen Pass**, um zu den Detail-Informationen deines Zertifikats zu gelangen",
+  "Share your certificates": "Teile deine Zertifikate",
+  "To share your pass with other people, you can select **\"Share certificate\"**": "Um deinen Pass mit anderen Personen zu teilen, kannst du **\"Nachweis teilen\"** auswählen",
+  "Validate other people's certificates": "Validiere Zertifikate anderer",
+  "Select **\"Check Pass\"** from the menu to validate QR codes from other people": "Wähle im Menü **\"Pass prüfen\"** aus, um QR-Codes von anderen Personen zu validieren",
+
+  "Privacy policy": "Datenschutzerklärung",
+  "Your data is only stored and processed **locally and offline on your device** and will be deleted when you uninstall the app.": "Deine Daten werden ausschließlich **lokal und offline auf deinem Gerät** gespeichert und verarbeitet und werden beim Deinstallieren der App unwiderruflich gelöscht.",
+  "When using the **Apple Wallet** and **Share** feature, personal data is stored and processed online for the shortest possible period of time. Of course, you will be informed about this in the app before using these features.": "Beim Verwenden der Funktionen **Apple Wallet** und **Teilen** werden deine Daten für den kürzest-notwendigen Zeitraum online gespeichert. Selbstverständlich wirst du davor noch einmal darüber aufgeklärt.",
+  "When using the **Share** feature, personal data is stored and processed online for the shortest possible period of time. Of course, you will be informed about this in the app before using these features.": "Beim Verwenden der Funktion **Teilen** werden deine Daten für den kürzest-notwendigen Zeitraum online gespeichert. Selbstverständlich wirst du davor noch einmal darüber aufgeklärt.",
+  "All further information can be found in the [privacy policy]().": "Alle weiteren Infos findest du in der [Datenschutzerklärung]().",
+  "I accept the privacy policy": "Ich akzeptiere die Datenschutzerklärung",
+  "Next": "Weiter",
+  "Done": "Fertig",
+  "Skip": "Überspringen"
 }

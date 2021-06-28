@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:greenpass_app/connectivity/detect_country.dart';
 import 'package:greenpass_app/consts/colors.dart';
+import 'package:greenpass_app/elements/first_app_launch.dart';
 import 'package:greenpass_app/elements/flag_element.dart';
 import 'package:greenpass_app/local_storage/country_regulations/regulations_provider.dart';
 import 'package:greenpass_app/local_storage/my_certs/my_certs.dart';
@@ -24,17 +26,22 @@ void main() async {
   await RegulationsProvider.initAppStart();
   await MyCerts.initAppStart();
   await EasyLocalization.ensureInitialized();
+  DetectCountry.getCountryCode();
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('de')],
       path: 'assets/translations',
       fallbackLocale: Locale('en'),
-      child: App()
+      child: App(await FirstAppLaunch.isFirstLaunch())
     )
   );
 }
 
 class App extends StatelessWidget {
+  final bool firstAppLaunch;
+
+  App(this.firstAppLaunch);
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -50,7 +57,7 @@ class App extends StatelessWidget {
         primarySwatch: GPColors.createMaterialColor(GPColors.green),
         fontFamily: 'Inter',
       ),
-      home: MyHomePage(),
+      home: firstAppLaunch ? FirstAppLaunch.getFirstLaunchScreen() : MyHomePage(),
     );
   }
 }
@@ -179,14 +186,14 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
               padding: const EdgeInsets.all(2.0),
               child: Icon(FontAwesome5Solid.file_alt),
             ),
-            label: 'My Pass'.tr(),
+            label: 'Show Pass'.tr(),
           ),
           BottomNavigationBarItem(
             icon: Padding(
               padding: const EdgeInsets.all(2.0),
               child: Icon(FontAwesome5Solid.qrcode),
             ),
-            label: 'Scan Pass'.tr(),
+            label: 'Check Pass'.tr(),
           ),
         ],
       ),

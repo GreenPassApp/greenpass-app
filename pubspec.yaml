@@ -50,6 +50,9 @@ dependencies:
   datetime_picker_formfield: ^2.0.0
   clipboard: ^0.1.3
   share_plus: ^2.1.4
+  introduction_screen: ^2.1.0
+  shared_preferences: ^2.0.6
+  flutter_markdown: ^0.6.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -70,6 +73,7 @@ flutter:
     - assets/
     - assets/fonts/
     - assets/images/
+    - assets/images/tutorial/
     - assets/translations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
