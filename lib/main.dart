@@ -57,7 +57,7 @@ class App extends StatelessWidget {
         primarySwatch: GPColors.createMaterialColor(GPColors.green),
         fontFamily: 'Inter',
       ),
-      home: firstAppLaunch ? FirstAppLaunch.getFirstLaunchScreen() : MyHomePage(),
+      home: firstAppLaunch ? FirstAppLaunch.getFirstLaunchScreen(true) : MyHomePage(),
     );
   }
 }

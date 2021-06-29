@@ -27,7 +27,7 @@ class FirstAppLaunch {
     await prefs.setBool(_firstAppLaunchKey, true);
   }
 
-  static Widget getFirstLaunchScreen() {
+  static Widget getFirstLaunchScreen(bool isFirstLaunch) {
     bool accepted = false;
 
     return StatefulBuilder(
@@ -38,33 +38,35 @@ class FirstAppLaunch {
           _getPageViewModel('All information at a glance'.tr(), '**Click on your pass** to get to the detailed information of your certificate'.tr(), 'tutorial-3-show.png'),
           _getPageViewModel('Share your certificates'.tr(), 'To share your pass with other people, you can select **"Share certificate"**'.tr(), 'tutorial-4-share.png'),
           _getPageViewModel("Validate other people's certificates".tr(), 'Select **"Check Pass"** from the menu to validate QR codes from other people'.tr(), 'tutorial-5-validate.png'),
-          PageViewModel(
-            title: 'Privacy policy'.tr(),
-            bodyWidget: Center(
-              child:  MarkdownBody(
-                onTapLink: (text, href, title) => launch('https://greenpassapp.eu/privacy'),
-                data: 'Your data is only stored and processed **locally and offline on your device** and will be deleted when you uninstall the app.'.tr() + '\n\n'
-                    + _getFeaturesText() + '\n\n'
-                    + 'All further information can be found in the [privacy policy]().'.tr(),
-                styleSheet: MarkdownStyleSheet(
-                  p: TextStyle(fontSize: 16.0),
-                  a: TextStyle(color: Theme.of(context).primaryColor),
-                  blockSpacing: 20.0,
+          if (isFirstLaunch) ...[
+            PageViewModel(
+              title: 'Privacy policy'.tr(),
+              bodyWidget: Center(
+                child:  MarkdownBody(
+                  onTapLink: (text, href, title) => launch('https://greenpassapp.eu/privacy'),
+                  data: 'Your data is only stored and processed **locally and offline on your device** and will be deleted when you uninstall the app.'.tr() + '\n\n'
+                      + _getFeaturesText() + '\n\n'
+                      + 'All further information can be found in the [privacy policy]().'.tr(),
+                  styleSheet: MarkdownStyleSheet(
+                    p: TextStyle(fontSize: 16.0),
+                    a: TextStyle(color: Theme.of(context).primaryColor),
+                    blockSpacing: 20.0,
+                  ),
                 ),
               ),
+              footer: CheckboxListTile(
+                title: Text('I accept the privacy policy'.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
+                controlAffinity: ListTileControlAffinity.leading,
+                onChanged: (_) => setState(() => accepted = !accepted),
+                value: accepted,
+              ),
+              decoration: PageDecoration(
+                  bodyAlignment: Alignment.center,
+                  descriptionPadding: const EdgeInsets.all(30.0),
+                  titleTextStyle: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold)
+              ),
             ),
-            footer: CheckboxListTile(
-              title: Text('I accept the privacy policy'.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
-              controlAffinity: ListTileControlAffinity.leading,
-              onChanged: (_) => setState(() => accepted = !accepted),
-              value: accepted,
-            ),
-            decoration: PageDecoration(
-              bodyAlignment: Alignment.center,
-              descriptionPadding: const EdgeInsets.all(30.0),
-              titleTextStyle: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold)
-            ),
-          ),
+          ],
         ],
         next: Text('Next'.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
         done: Text('Done'.tr(), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0)),
@@ -73,22 +75,26 @@ class FirstAppLaunch {
         dotsDecorator: DotsDecorator(
           activeColor: Theme.of(context).primaryColor
         ),
-        showDoneButton: accepted,
+        showDoneButton: accepted || !isFirstLaunch,
         onDone: () async {
-          await FirstAppLaunch.setFirstLaunchFlag();
-          String? countryCode = DetectCountry.countryCode;
-          if (countryCode == null || !RegulationsProvider.getCurrentRegulations().containsKey(countryCode)) {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => MyHomePage()
-            ));
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => CountrySelectionPage()
-            ));
+          if (isFirstLaunch) {
+            await FirstAppLaunch.setFirstLaunchFlag();
+            String? countryCode = DetectCountry.countryCode;
+            if (countryCode == null || !RegulationsProvider.getCurrentRegulations().containsKey(countryCode)) {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => MyHomePage()
+              ));
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => CountrySelectionPage()
+              ));
+            } else {
+              await RegulationsProvider.setUserSetting(countryCode);
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => MyHomePage()
+              ));
+            }
           } else {
-            await RegulationsProvider.setUserSetting(countryCode);
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => MyHomePage()
-            ));
+            Navigator.of(context).pop();
           }
         },
       ),
