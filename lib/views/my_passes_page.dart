@@ -200,6 +200,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                                     padding: const EdgeInsets.all(4.0),
                                     child: PrettyQr(
                                       data: certs[idx].rawData,
+                                      errorCorrectLevel: QrErrorCorrectLevel.L,
                                     ),
                                   ),
                                 ),

@@ -230,6 +230,7 @@ class _PassDetailsState extends State<PassDetails> {
                           padding: const EdgeInsets.all(4.0),
                           child: PrettyQr(
                             data: cert.rawData,
+                            errorCorrectLevel: QrErrorCorrectLevel.L,
                           ),
                         ),
                       ),
@@ -247,8 +248,8 @@ class _PassDetailsState extends State<PassDetails> {
                     ElevatedButton.icon(
                       icon: Icon(FontAwesome5Solid.trash_alt, size: 18.0),
                       style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(GPColors.red),
-                          padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 22.0, vertical: 8.0))
+                        backgroundColor: MaterialStateProperty.all(GPColors.red),
+                        padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 22.0, vertical: 8.0))
                       ),
                       label: Padding(
                         padding: const EdgeInsets.all(12.0),
