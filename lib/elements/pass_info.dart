@@ -48,12 +48,10 @@ class PassInfo {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if (regulationResult != null && RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry) ...[
-              regulationResult.type == RegulationResultType.valid ? Padding(
+              Padding(
                 padding: const EdgeInsets.only(bottom: 2.0),
-                child: Icon(FontAwesome5Solid.check_circle, color: color, size: 22.0),
-              ) : Padding(
-                padding: const EdgeInsets.only(bottom: 2.0),
-                child: Icon(FontAwesome5Solid.times_circle, color: color, size: 22.0),
+                child: Icon(regulationResult.type == RegulationResultType.valid ? FontAwesome5Solid.check_circle
+                    : regulationResult.type == RegulationResultType.not_valid_yet ? FontAwesome5Solid.hourglass_half : FontAwesome5Solid.times_circle, color: color, size: 22.0),
               ),
               Padding(padding: const EdgeInsets.symmetric(horizontal: 4.0)),
             ],
