@@ -1,16 +1,40 @@
-# greenpass_app
 
-GreenPass App
+[![Logo](https://greenpassapp.eu/assets/presskit/logos/GreenPass_Logo.svg)](https://greenpassapp.eu/)
+# GreenPass - App
 
-## Getting Started
+This repository contains the mobile application of GreenPass. It is realized using Flutter.
 
-This project is a starting point for a Flutter application.
+## How to run
 
-A few resources to get you started if this is your first Flutter project:
+Clone the project
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+```bash
+git clone https://github.com/GreenPassApp/greenpass-app
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Go to the project directory
+
+```bash
+cd greenpass-app
+```
+
+Install dependencies
+
+```bash
+flutter pub get
+```
+
+Run the app
+
+```bash
+flutter run
+```
+
+  
+## Feedback
+
+If you have any feedback, please reach out to us at team@greenpassapp.eu
+
+## License
+
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/GPL-3.0)
