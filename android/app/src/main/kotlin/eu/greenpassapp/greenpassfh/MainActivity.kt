@@ -1,4 +1,4 @@
-package eu.greenpassapp.greenpass
+package eu.greenpassapp.greenpassfh
 
 import io.flutter.embedding.android.FlutterActivity
 
