@@ -125,7 +125,7 @@ class PassInfo {
         return DateFormat('dd.MM.yyyy').format(rec.validFrom);
       case CertificateType.test:
         var test = (cert.entryList[0] as CertEntryTest);
-        return DateFormat('dd.MM.yyyy | hh:mm').format(test.timeSampleCollection);
+        return DateFormat('dd.MM.yyyy | HH:mm').format(test.timeSampleCollection);
       case CertificateType.unknown:
         return 'Unknown time'.tr();
     }

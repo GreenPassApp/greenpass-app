@@ -168,10 +168,10 @@ class _PassDetailsState extends State<PassDetails> {
               ListElements.horizontalLine(),
               ListElements.entryText('Testing centre'.tr(), (cert.entryList[0] as CertEntryTest).testingCentreName),
               ListElements.horizontalLine(),
-              ListElements.entryText('Time of sample collection'.tr(), DateFormat('hh:mm, dd.MM.yyyy').format((cert.entryList[0] as CertEntryTest).timeSampleCollection)),
+              ListElements.entryText('Time of sample collection'.tr(), DateFormat('HH:mm, dd.MM.yyyy').format((cert.entryList[0] as CertEntryTest).timeSampleCollection)),
               if ((cert.entryList[0] as CertEntryTest).timeTestResult != null) ...[
                 ListElements.horizontalLine(),
-                ListElements.entryText('Time of test result'.tr(), DateFormat('hh:mm, dd.MM.yyyy').format((cert.entryList[0] as CertEntryTest).timeTestResult!)),
+                ListElements.entryText('Time of test result'.tr(), DateFormat('HH:mm, dd.MM.yyyy').format((cert.entryList[0] as CertEntryTest).timeTestResult!)),
               ],
               if ((cert.entryList[0] as CertEntryTest).testName != null) ...[
                 ListElements.horizontalLine(),
