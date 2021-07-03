@@ -84,14 +84,14 @@ packages:
       name: convert
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.1"
   country_codes:
     dependency: "direct main"
     description:
       name: country_codes
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   crypto:
     dependency: transitive
     description:
@@ -461,7 +461,7 @@ packages:
       name: pointycastle
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.2"
+    version: "3.1.3"
   pretty_qr_code:
     dependency: "direct main"
     description:
@@ -482,13 +482,15 @@ packages:
       name: qr
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.1.0"
   qr_mobile_vision:
     dependency: "direct main"
     description:
-      name: qr_mobile_vision
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "1f2bb8271680728eb9f91966227b4021b5ccc5a5"
+      url: "https://github.com/kevinhaendel/flutter_qr_mobile_vision"
+    source: git
     version: "3.0.0"
   quiver:
     dependency: transitive
@@ -648,7 +650,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.6"
+    version: "6.0.8"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -711,7 +713,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.2"
+    version: "2.2.4"
   x509b:
     dependency: transitive
     description:
