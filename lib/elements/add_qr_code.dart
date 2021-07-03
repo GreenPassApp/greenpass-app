@@ -190,7 +190,7 @@ class AddQrCode {
   static void _permissionError(BuildContext context) {
     PlatformAlertDialog.showAlertDialog(
       context: context,
-      title: 'No permission'.tr(),
+      title: 'No Permission'.tr(),
       text: 'Please give the app permission to access your files to be able to select one.'.tr(),
       dismissButtonText: 'Cancel'.tr(),
       actionButtonText: 'Go to app settings'.tr(),
