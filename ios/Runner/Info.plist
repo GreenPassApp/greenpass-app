@@ -48,5 +48,7 @@
 	<false/>
 	<key>NSCameraUsageDescription</key>
     <string>Camera permission is required for scanning qr codes of green certificates.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>This permission is required for reading qr codes of green certificates from images</string>
 </dict>
 </plist>

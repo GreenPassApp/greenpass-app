@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:greenpass_app/consts/colors.dart';
+import 'package:greenpass_app/elements/add_qr_code.dart';
 import 'package:greenpass_app/elements/colored_card.dart';
 import 'package:greenpass_app/elements/pass_info.dart';
 import 'package:greenpass_app/elements/platform_alert_dialog.dart';
@@ -108,9 +109,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                 ),
               ),
             ),
-            onPressed: () => Navigator.push(context, MaterialPageRoute(
-                builder: (context) => AddMyPassPage()
-            )).then((_) => FlutterStatusbarcolor.setStatusBarWhiteForeground(false)),
+            onPressed: () => AddQrCode.openDialog(context),
           ),
         ],
       ),

@@ -6,12 +6,12 @@ import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/connectivity/detect_country.dart';
 import 'package:greenpass_app/consts/colors.dart';
+import 'package:greenpass_app/elements/add_qr_code.dart';
 import 'package:greenpass_app/elements/first_app_launch.dart';
 import 'package:greenpass_app/elements/flag_element.dart';
 import 'package:greenpass_app/local_storage/country_regulations/regulations_provider.dart';
 import 'package:greenpass_app/local_storage/my_certs/my_certs.dart';
 import 'package:greenpass_app/local_storage/pub_certs/pub_certs.dart';
-import 'package:greenpass_app/views/add_my_pass_page.dart';
 import 'package:greenpass_app/views/country_selection_page.dart';
 import 'package:greenpass_app/views/info_page.dart';
 import 'package:greenpass_app/views/my_passes_page.dart';
@@ -144,9 +144,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
             IconButton(
               icon: const Icon(FontAwesome5Solid.plus),
               color: Colors.black,
-              onPressed: () => Navigator.push(context, MaterialPageRoute(
-                builder: (context) => AddMyPassPage()
-              )).then((data) => FlutterStatusbarcolor.setStatusBarWhiteForeground(false)),
+              onPressed: () => AddQrCode.openDialog(context).then((_) => setState(() {})),
             ),
             IconButton(
               icon: const Icon(

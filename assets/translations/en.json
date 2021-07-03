@@ -158,5 +158,14 @@
   "I accept the privacy policy": "I accept the privacy policy",
   "Next": "Next",
   "Done": "Done",
-  "Skip": "Skip"
+  "Skip": "Skip",
+
+  "Scan with camera": "Scan with camera",
+  "Select image": "Select image",
+  "Select PDF document": "Select PDF document",
+  "Nothing found": "Nothing found",
+  "No QR code was found in the selected file. Please try another one.": "No QR code was found in the selected file. Please try another one.",
+  "The QR code in the selected file is invalid. Please try again.": "The QR code in the selected file is invalid. Please try again.",
+  "You have already added this QR code. Please select another file.": "You have already added this QR code. Please select another file.",
+  "Please give the app permission to access your files to be able to select one.": "Please give the app permission to access your files to be able to select one."
 }
