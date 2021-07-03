@@ -69,7 +69,7 @@
   "Delete certificate": "Zertifikat löschen",
   "Add to Apple Wallet": "Zu Apple Wallet hinzufügen",
   "Notice": "Hinweis",
-  "The certificate is sent to us for technical reasons in order to generate an Apple Wallet pass. This certificate is not stored longer than necessary for generation, which normally takes a few seconds.": "Das Zertifikat wird aus technischen Gründen an uns gesendet, um einen Apple Wallet-Pass erzeugen zu können. Dabei speichern dieses Zertifikat nicht länger, als für die Erzeugung notwendig, was im Normalfall wenige Sekunden dauert.",
+  "The certificate is sent to us for technical reasons in order to generate an Apple Wallet pass. This certificate is not stored longer than necessary for generation, which normally takes a few seconds.": "Das Zertifikat wird aus technischen Gründen an uns gesendet, um einen Apple Wallet-Pass erzeugen zu können. Dabei speichern wir dieses Zertifikat nicht länger, als für die Erzeugung notwendig, was im Normalfall wenige Sekunden dauert.",
   "Create pass": "Pass erzeugen",
 
   "Person info": "Persönliche Daten",
