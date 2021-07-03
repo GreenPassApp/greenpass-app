@@ -10,6 +10,11 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>de</string>
+	</array>
 	<key>CFBundleName</key>
 	<string>greenpass_app</string>
 	<key>CFBundlePackageType</key>
@@ -20,13 +25,12 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>CFBundleLocalizations</key>
-    <array>
-    	<string>en</string>
-    	<string>de</string>
-    </array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera permission is required for scanning qr codes of green certificates.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This permission is required for reading qr codes of green certificates from images</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -46,9 +50,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSCameraUsageDescription</key>
-    <string>Camera permission is required for scanning qr codes of green certificates.</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>This permission is required for reading qr codes of green certificates from images</string>
 </dict>
 </plist>
