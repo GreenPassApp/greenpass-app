@@ -109,7 +109,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                 ),
               ),
             ),
-            onPressed: () => AddQrCode.openDialog(context),
+            onPressed: () => AddQrCode.openDialog(context).then((_) => setState(() {})),
           ),
         ],
       ),
