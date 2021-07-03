@@ -130,7 +130,7 @@ class AddQrCode {
 
         for (int pageNum = 1; pageNum <= doc.pagesCount; pageNum++) {
           PdfPage page = await doc.getPage(pageNum);
-          PdfPageImage? pageImage = await page.render(width: page.width, height: page.height, format: PdfPageFormat.PNG);
+          PdfPageImage? pageImage = await page.render(width: page.width * 2, height: page.height * 2, format: PdfPageFormat.PNG);
           page.close();
 
           Directory tmpDir = Directory.systemTemp.createTempSync();
