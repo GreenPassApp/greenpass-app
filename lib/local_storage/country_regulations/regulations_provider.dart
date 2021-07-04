@@ -12,7 +12,7 @@ import 'package:http/http.dart';
 import 'package:greenpass_app/local_storage/hive_provider.dart';
 
 class RegulationsProvider {
-  static const String _regulationsUrl = 'https://raw.githubusercontent.com/GreenPassApp/shared-data/main/validationByCountry.json';
+  static const String _regulationsUrl = 'https://raw.githubusercontent.com/GreenPassApp/shared-data/main/validation-by-country.json';
   static const String defaultCountry = 'EU';
 
   static const Duration regulationsOutdatedAfter = Duration(days: 1);
