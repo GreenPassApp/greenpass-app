@@ -25,18 +25,21 @@
   "{} days ago": {
     "zero": "Today",
     "one": "Yesterday",
+    "two": "{} days ago",
     "many": "{} days ago",
     "other": "{} days ago"
   },
   "{} hours ago": {
     "zero": "Less than an hour ago",
     "one": "One hour ago",
+    "two": "{} hours ago",
     "many": "{} hours ago",
     "other": "{} hours ago"
   },
   "For {} days": {
     "zero": "Since today",
     "one": "Since yesterday",
+    "two": "For {} days",
     "many": "For {} days",
     "other": "For {} days"
   },

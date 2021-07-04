@@ -25,18 +25,21 @@
   "{} days ago": {
     "zero": "Heute",
     "one": "Gestern",
+    "two": "Vor {} Tagen",
     "many": "Vor {} Tagen",
     "other": "Vor {} Tagen"
   },
   "{} hours ago": {
     "zero": "Vor unter einer Stunde",
     "one": "Vor einer Stunde",
+    "two": "Vor {} Stunden",
     "many": "Vor {} Stunden",
     "other": "Vor {} Stunden"
   },
   "For {} days": {
     "zero": "Seit heute",
     "one": "Seit gestern",
+    "two": "Seit {} Tagen",
     "many": "Seit {} Tagen",
     "other": "Seit {} Tagen"
   },

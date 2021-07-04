@@ -144,19 +144,19 @@ class PassInfo {
         int timeDiff = DateTime.now()
             .difference(vac.dateOfVaccination)
             .inDays;
-        return '{} days ago'.plural(timeDiff, args: [timeDiff.toString()]);
+        return '{} days ago'.plural(timeDiff);
       case CertificateType.recovery:
         var rec = (cert.entryList[0] as CertEntryRecovery);
         int timeDiff = DateTime.now()
             .difference(rec.validFrom)
             .inDays;
-        return 'For {} days'.plural(timeDiff, args: [timeDiff.toString()]);
+        return 'For {} days'.plural(timeDiff);
       case CertificateType.test:
         var test = (cert.entryList[0] as CertEntryTest);
         int timeDiff = DateTime.now()
             .difference(test.timeSampleCollection)
             .inHours;
-        return '{} hours ago'.plural(timeDiff, args: [timeDiff.toString()]);
+        return '{} hours ago'.plural(timeDiff);
       case CertificateType.unknown:
         return 'Unknown'.tr();
     }
