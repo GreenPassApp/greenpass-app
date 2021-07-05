@@ -233,6 +233,14 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        Padding(padding: const EdgeInsets.symmetric(vertical: 2.0)),
+                        Text(
+                          PassInfo.getRemaining(certs[idx]),
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 15.0,
+                          ),
+                        ),
                       ],
                     ),
                   ),

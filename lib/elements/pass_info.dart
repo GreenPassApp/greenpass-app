@@ -162,6 +162,37 @@ class PassInfo {
     }
   }
 
+  static String getRemaining(GreenCertificate cert) {
+    RegulationResult? result;
+    result = RegulationsProvider.getUserRegulation().validate(cert);
+    if (result == null)
+      return '';
+   
+    if (result.type == RegulationResultType.not_valid_yet) {
+      switch (cert.certificateType) {
+        case CertificateType.vaccination:
+          return 'Valid from {}'.tr(args: [DateFormat('dd.MM.yyyy').format(result.relevantTime)]);
+        case CertificateType.recovery:
+          return 'Valid from {}'.tr(args: [DateFormat('dd.MM.yyyy').format(result.relevantTime)]);
+        case CertificateType.test:
+          return 'Valid from {}'.tr(args: [DateFormat('dd.MM.yyyy | HH:mm').format(result.relevantTime)]);
+        case CertificateType.unknown:
+          return 'Unknown'.tr();
+      }   
+    } else {
+      switch (cert.certificateType) {
+        case CertificateType.vaccination:
+          return 'Valid till {}'.tr(args: [DateFormat('dd.MM.yyyy').format(result.relevantTime)]);
+        case CertificateType.recovery:
+          return 'Valid till {}'.tr(args: [DateFormat('dd.MM.yyyy').format(result.relevantTime)]);
+        case CertificateType.test:
+          return 'Valid till {}'.tr(args: [DateFormat('dd.MM.yyyy | HH:mm').format(result.relevantTime)]);
+        case CertificateType.unknown:
+          return 'Unknown'.tr();
+      }
+    }
+  }
+
   static Widget getSmallPassCard(GreenCertificate cert) {
     Color cardColor = GPColors.blue;
     Color textColor = Colors.white;
