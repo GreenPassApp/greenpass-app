@@ -15,7 +15,7 @@ abstract class CertEntry {
   });
 
   DiseaseType get targetedDisease {
-    if (targetedDiseaseCode == '840539006') return DiseaseType.sars_cov_2;
+    if (targetedDiseaseCode == '840539006') return DiseaseType.covid_19;
     return DiseaseType.unknown;
   }
 }

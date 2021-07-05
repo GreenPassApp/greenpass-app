@@ -1,4 +1,4 @@
 enum DiseaseType {
-  sars_cov_2,
+  covid_19,
   unknown,
 }

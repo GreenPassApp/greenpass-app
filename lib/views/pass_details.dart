@@ -13,6 +13,7 @@ import 'package:greenpass_app/green_validator/payload/cert_entry_recovery.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_test.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_vaccination.dart';
 import 'package:greenpass_app/green_validator/payload/certificate_type.dart';
+import 'package:greenpass_app/green_validator/payload/disease_type.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/green_validator/payload/test_result.dart';
 import 'package:greenpass_app/green_validator/payload/vaccine_type.dart';
@@ -163,6 +164,8 @@ class _PassDetailsState extends State<PassDetails> {
             if (cert.certificateType == CertificateType.test) ...[
               ListElements.listPadding(ListElements.groupText(Settings.translateTravelMode('Test'))),
               ListElements.horizontalLine(),
+              ListElements.entryText(Settings.translateTravelMode('Tested for'), _targetedDisease(cert.entryList[0].targetedDisease)),
+              ListElements.horizontalLine(),
               ListElements.entryText(Settings.translateTravelMode('Test type'), PassInfo.testType((cert.entryList[0] as CertEntryTest).testType, travelMode: Settings.getTravelMode())),
               ListElements.horizontalLine(),
               ListElements.entryText(Settings.translateTravelMode('Test result'), _testResult((cert.entryList[0] as CertEntryTest).testResult)),
@@ -187,6 +190,8 @@ class _PassDetailsState extends State<PassDetails> {
             if (cert.certificateType == CertificateType.recovery) ...[
               ListElements.listPadding(ListElements.groupText(Settings.translateTravelMode('Recovery'))),
               ListElements.horizontalLine(),
+              ListElements.entryText(Settings.translateTravelMode('Recovered from'), _targetedDisease(cert.entryList[0].targetedDisease)),
+              ListElements.horizontalLine(),
               ListElements.entryText(Settings.translateTravelMode('First positive test result'), DateFormat('dd.MM.yyyy').format((cert.entryList[0] as CertEntryRecovery).firstPositiveTestResult)),
               ListElements.horizontalLine(),
               ListElements.entryText(Settings.translateTravelMode('Certificate valid from'), DateFormat('dd.MM.yyyy').format((cert.entryList[0] as CertEntryRecovery).validFrom)),
@@ -197,6 +202,8 @@ class _PassDetailsState extends State<PassDetails> {
             if (cert.certificateType == CertificateType.vaccination) ...[
               for (CertEntryVaccination vac in cert.entryList.map((e) => e as CertEntryVaccination)) ...[
                 ListElements.listPadding(ListElements.groupText(Settings.translateTravelMode('Vaccination ({}/{})', args: [vac.doseNumber.toString(), vac.dosesNeeded.toString()]))),
+                ListElements.horizontalLine(),
+                ListElements.entryText(Settings.translateTravelMode('Vaccinated against'), _targetedDisease(vac.targetedDisease)),
                 ListElements.horizontalLine(),
                 ListElements.entryText(Settings.translateTravelMode('Vaccine type'), _vaccineType(vac.vaccine)),
                 ListElements.horizontalLine(),
@@ -298,6 +305,11 @@ class _PassDetailsState extends State<PassDetails> {
         Navigator.of(context).pop();
       },
     );
+  }
+
+  String _targetedDisease(DiseaseType targetedDisease) {
+    if (targetedDisease == DiseaseType.covid_19) return Settings.translateTravelMode('COVID-19');
+    return Settings.translateTravelMode('Other');
   }
 
   String _vaccineType(VaccineType vaccineType) {

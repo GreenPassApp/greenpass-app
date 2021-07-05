@@ -53,7 +53,7 @@ class GreenValidator {
     GreenCertificate greenCert = _parseCoseResultPayload(rawInput, result.payload);
 
     // check if the certificate helps against SARS-CoV-2
-    if (!greenCert.entryList.any((entry) => entry.targetedDisease == DiseaseType.sars_cov_2))
+    if (!greenCert.entryList.any((entry) => entry.targetedDisease == DiseaseType.covid_19))
       return ValidationResult(errorCode: ValidationErrorCode.not_against_sars_cov_2);
 
     // check if test certificate contains negative test
