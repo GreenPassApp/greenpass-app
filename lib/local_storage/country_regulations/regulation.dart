@@ -49,6 +49,12 @@ class Regulation {
 
       if (fullyVaccinated) {
         CertEntryVaccination lastVac = vacs.last as CertEntryVaccination;
+
+        if (lastVac.dosesNeeded == 1 && _regulationEntry.containsKey('validFromPartialVac')) {
+          Duration validFrom = _durationFromISO8601(_regulationEntry['validFromPartialVac']!);
+          if (lastVac.dateOfVaccination.isAfter(DateTime.now().subtract(validFrom)))
+            return RegulationResult(type: RegulationResultType.not_valid_yet, relevantTime: lastVac.dateOfVaccination.add(validFrom));
+        }
         if (_regulationEntry.containsKey('validFromFullVac')) {
           Duration validFrom = _durationFromISO8601(_regulationEntry['validFromFullVac']!);
           if (lastVac.dateOfVaccination.isAfter(DateTime.now().subtract(validFrom)))
