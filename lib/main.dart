@@ -12,8 +12,9 @@ import 'package:greenpass_app/elements/flag_element.dart';
 import 'package:greenpass_app/local_storage/country_regulations/regulations_provider.dart';
 import 'package:greenpass_app/local_storage/my_certs/my_certs.dart';
 import 'package:greenpass_app/local_storage/pub_certs/pub_certs.dart';
+import 'package:greenpass_app/local_storage/settings.dart';
 import 'package:greenpass_app/views/country_selection_page.dart';
-import 'package:greenpass_app/views/info_page.dart';
+import 'package:greenpass_app/views/settings_page.dart';
 import 'package:greenpass_app/views/my_passes_page.dart';
 import 'package:greenpass_app/views/scan_others_pass.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -25,6 +26,7 @@ void main() async {
   await PubCerts.initAppStart();
   await RegulationsProvider.initAppStart();
   await MyCerts.initAppStart();
+  await Settings.initAppStart();
   await EasyLocalization.ensureInitialized();
   DetectCountry.getCountryCode();
   runApp(
@@ -148,12 +150,12 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
             ),
             IconButton(
               icon: const Icon(
-                FontAwesome5Solid.info,
+                FontAwesome5Solid.ellipsis_v,
                 color: Colors.black,
               ),
               onPressed: () => Navigator.push(context, MaterialPageRoute(
-                builder: (context) => InfoPage()
-              )),
+                builder: (context) => SettingsPage()
+              )).then((_) => setState(() {})),
             ),
           ] else if (_currentPageIdx == 1) ...[
             /*

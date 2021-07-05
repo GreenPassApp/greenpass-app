@@ -12,6 +12,7 @@ import 'package:greenpass_app/green_validator/payload/test_type.dart';
 import 'package:greenpass_app/local_storage/country_regulations/regulation_result.dart';
 import 'package:greenpass_app/local_storage/country_regulations/regulation_result_type.dart';
 import 'package:greenpass_app/local_storage/country_regulations/regulations_provider.dart';
+import 'package:greenpass_app/local_storage/settings.dart';
 
 import 'colored_card.dart';
 
@@ -20,23 +21,25 @@ class PassInfo {
     double textSize = 25.0,
     double additionalTextSize = 20.0,
     bool showTestType = true,
+    bool hideDetails = false,
     Color color = Colors.white,
     RegulationResult? regulationResult,
+    bool travelMode = false,
   }) {
     String firstText;
     switch (cert.certificateType) {
       case CertificateType.vaccination:
-        firstText = 'Vaccinated'.tr();
+        firstText = Settings.translateTravelMode('Vaccinated', travelMode: travelMode);
         break;
       case CertificateType.recovery:
-        firstText = 'Recovered'.tr();
+        firstText = Settings.translateTravelMode('Recovered', travelMode: travelMode);
         break;
       case CertificateType.test:
         var test = (cert.entryList[0] as CertEntryTest);
-        firstText = test.testResult == TestResult.negative ? 'Tested negative'.tr() : 'Tested positive'.tr();
+        firstText = test.testResult == TestResult.negative ? Settings.translateTravelMode('Tested negative', travelMode: travelMode) : Settings.translateTravelMode('Tested positive', travelMode: travelMode);
         break;
       case CertificateType.unknown:
-        firstText = 'Unknown'.tr();
+        firstText = Settings.translateTravelMode('Unknown', travelMode: travelMode);
     }
 
     return Column(
@@ -51,40 +54,44 @@ class PassInfo {
               Padding(
                 padding: const EdgeInsets.only(bottom: 2.0),
                 child: Icon(regulationResult.type == RegulationResultType.valid ? FontAwesome5Solid.check_circle
-                    : regulationResult.type == RegulationResultType.not_valid_yet ? FontAwesome5Solid.hourglass_half : FontAwesome5Solid.times_circle, color: color, size: 22.0),
+                  : regulationResult.type == RegulationResultType.not_valid_yet ? FontAwesome5Solid.hourglass_half : FontAwesome5Solid.times_circle, color: color, size: 22.0),
               ),
-              Padding(padding: const EdgeInsets.symmetric(horizontal: 4.0)),
+              if (!hideDetails) ...[
+                Padding(padding: const EdgeInsets.symmetric(horizontal: 4.0)),
+              ],
             ],
-            Text(
-              firstText,
-              style: TextStyle(
-                color: color,
-                fontSize: textSize,
-                fontWeight: FontWeight.bold,
+            if (!hideDetails) ...[
+              Text(
+                firstText,
+                style: TextStyle(
+                  color: color,
+                  fontSize: textSize,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            if (cert.certificateType == CertificateType.vaccination) ...[
-              Padding(padding: EdgeInsets.symmetric(horizontal: 2.0)),
-              (){
-                var vacs = cert.entryList;
-                vacs.sort((e1, e2) {
-                  e1 as CertEntryVaccination;
-                  e2 as CertEntryVaccination;
-                  return e1.doseNumber.compareTo(e2.doseNumber);
-                });
-                var vac = (vacs.last as CertEntryVaccination);
-                return Text(
-                  '(' + vac.doseNumber.toString() + '/' + vac.dosesNeeded.toString() + ')',
-                  style: TextStyle(
-                    color: color,
-                    fontSize: textSize,
-                  ),
-                );
-              }(),
+              if (cert.certificateType == CertificateType.vaccination) ...[
+                Padding(padding: EdgeInsets.symmetric(horizontal: 2.0)),
+                (){
+                  var vacs = cert.entryList;
+                  vacs.sort((e1, e2) {
+                    e1 as CertEntryVaccination;
+                    e2 as CertEntryVaccination;
+                    return e1.doseNumber.compareTo(e2.doseNumber);
+                  });
+                  var vac = (vacs.last as CertEntryVaccination);
+                  return Text(
+                    '(' + vac.doseNumber.toString() + '/' + vac.dosesNeeded.toString() + ')',
+                    style: TextStyle(
+                      color: color,
+                      fontSize: textSize,
+                    ),
+                  );
+                }(),
+              ],
             ],
           ],
         ),
-        if (cert.certificateType == CertificateType.test && showTestType) ...[
+        if (cert.certificateType == CertificateType.test && showTestType && !hideDetails) ...[
           (){
             var test = (cert.entryList[0] as CertEntryTest);
             return Text(
@@ -101,15 +108,15 @@ class PassInfo {
     );
   }
 
-  static String testType(TestType type) {
+  static String testType(TestType type, {bool travelMode = false}) {
     switch (type) {
-      case TestType.pcr: return 'PCR test'.tr();
-      case TestType.rapid: return 'Rapid test'.tr();
-      case TestType.unknown: return 'Unknown test'.tr();
+      case TestType.pcr: return Settings.translateTravelMode('PCR test', travelMode: travelMode);
+      case TestType.rapid: return Settings.translateTravelMode('Rapid test', travelMode: travelMode);
+      case TestType.unknown: return Settings.translateTravelMode('Unknown test', travelMode: travelMode);
     }
   }
 
-  static String getDate(GreenCertificate cert) {
+  static String getDate(GreenCertificate cert, {bool travelMode = false}) {
     switch (cert.certificateType) {
       case CertificateType.vaccination:
         var vacs = cert.entryList;
@@ -127,11 +134,11 @@ class PassInfo {
         var test = (cert.entryList[0] as CertEntryTest);
         return DateFormat('dd.MM.yyyy | HH:mm').format(test.timeSampleCollection);
       case CertificateType.unknown:
-        return 'Unknown time'.tr();
+        return Settings.translateTravelMode('Unknown time', travelMode: travelMode);
     }
   }
 
-  static String getDuration(GreenCertificate cert) {
+  static String getDuration(GreenCertificate cert, {bool travelMode = false}) {
     switch (cert.certificateType) {
       case CertificateType.vaccination:
         var vacs = cert.entryList;
@@ -144,25 +151,25 @@ class PassInfo {
         int timeDiff = DateTime.now()
             .difference(vac.dateOfVaccination)
             .inDays;
-        return '{} days ago'.plural(timeDiff);
+        return Settings.translatePluralTravelMode('{} days ago', timeDiff, travelMode: travelMode);
       case CertificateType.recovery:
         var rec = (cert.entryList[0] as CertEntryRecovery);
         int timeDiff = DateTime.now()
             .difference(rec.validFrom)
             .inDays;
-        return 'For {} days'.plural(timeDiff);
+        return Settings.translatePluralTravelMode('For {} days', timeDiff, travelMode: travelMode);
       case CertificateType.test:
         var test = (cert.entryList[0] as CertEntryTest);
         int timeDiff = DateTime.now()
             .difference(test.timeSampleCollection)
             .inHours;
-        return '{} hours ago'.plural(timeDiff);
+        return Settings.translatePluralTravelMode('{} hours ago', timeDiff, travelMode: travelMode);
       case CertificateType.unknown:
-        return 'Unknown'.tr();
+        return Settings.translateTravelMode('Unknown', travelMode: travelMode);
     }
   }
 
-  static Widget getSmallPassCard(GreenCertificate cert) {
+  static Widget getSmallPassCard(GreenCertificate cert, {bool travelMode = false}) {
     Color cardColor = GPColors.blue;
     Color textColor = Colors.white;
     if (RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry) {
@@ -190,10 +197,11 @@ class PassInfo {
                         additionalTextSize: 15.0,
                         showTestType: false,
                         color: textColor,
+                        travelMode: travelMode,
                       ),
                       Padding(padding: const EdgeInsets.symmetric(vertical: 2.0)),
                       Text(
-                        PassInfo.getDate(cert),
+                        PassInfo.getDate(cert, travelMode: travelMode),
                         style: TextStyle(
                           color: textColor,
                           fontSize: 15.0,

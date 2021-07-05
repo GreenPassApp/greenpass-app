@@ -170,5 +170,11 @@
   "No QR code was found in the selected file. Please try another one.": "Es wurde in der ausgewählten Datei kein QR-Code gefunden. Bitte versuche es mit einer anderen Datei.",
   "The QR code in the selected file is invalid. Please try again.": "Der QR-Code in der ausgewählten Datei ist ungültig. Bitte versuche es erneut.",
   "You have already added this QR code. Please select another file.": "Du hast diesen QR-Code bereits hinzugefügt. Bitte wähle eine andere Datei aus.",
-  "Please give the app permission to access your files to be able to select one.": "Bitte gebe der App die Erlaubnis, auf deine Dateien zuzugreifen, um eine auswählen zu können."
+  "Please give the app permission to access your files to be able to select one.": "Bitte gebe der App die Erlaubnis, auf deine Dateien zuzugreifen, um eine auswählen zu können.",
+
+  "Settings": "Einstellungen",
+  "Travel Mode": "Reisemodus",
+  "All certificate information is displayed in English": "Alle Passinformationen werden auf Englisch angezeigt",
+  "Only show QR code": "Nur QR-Code anzeigen",
+  "All detailed information about your certificate will be hidden": "Alle Detailinformationen zu deinem Zertifikat werden ausgeblendet"
 }

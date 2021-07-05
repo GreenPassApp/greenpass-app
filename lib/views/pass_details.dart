@@ -18,6 +18,7 @@ import 'package:greenpass_app/green_validator/payload/test_result.dart';
 import 'package:greenpass_app/green_validator/payload/vaccine_type.dart';
 import 'package:greenpass_app/local_storage/my_certs/my_cert_share.dart';
 import 'package:greenpass_app/local_storage/my_certs/my_certs.dart';
+import 'package:greenpass_app/local_storage/settings.dart';
 import 'package:greenpass_app/views/share_info_page.dart';
 import 'package:greenpass_app/views/share_page.dart';
 import 'package:intl/intl.dart';
@@ -72,7 +73,7 @@ class _PassDetailsState extends State<PassDetails> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PassInfo.getSmallPassCard(cert),
+            PassInfo.getSmallPassCard(cert, travelMode: Settings.getTravelMode()),
             if (Platform.isIOS) ...[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 23.0),
@@ -152,67 +153,67 @@ class _PassDetailsState extends State<PassDetails> {
               ),
             ),
             Padding(padding: const EdgeInsets.symmetric(vertical: 14.0)),
-            ListElements.listPadding(ListElements.groupText('Person info'.tr())),
+            ListElements.listPadding(ListElements.groupText(Settings.translateTravelMode('Person info'))),
             ListElements.horizontalLine(),
-            ListElements.entryText('Full name'.tr(), cert.personInfo.fullName),
+            ListElements.entryText(Settings.translateTravelMode('Full name'), cert.personInfo.fullName),
             ListElements.horizontalLine(),
-            ListElements.entryText('Date of birth'.tr(), DateFormat('dd.MM.yyyy').format(cert.personInfo.dateOfBirth)),
+            ListElements.entryText(Settings.translateTravelMode('Date of birth'), DateFormat('dd.MM.yyyy').format(cert.personInfo.dateOfBirth)),
             Padding(padding: const EdgeInsets.symmetric(vertical: 30.0)),
 
             if (cert.certificateType == CertificateType.test) ...[
-              ListElements.listPadding(ListElements.groupText('Test'.tr())),
+              ListElements.listPadding(ListElements.groupText(Settings.translateTravelMode('Test'))),
               ListElements.horizontalLine(),
-              ListElements.entryText('Test type'.tr(), PassInfo.testType((cert.entryList[0] as CertEntryTest).testType)),
+              ListElements.entryText(Settings.translateTravelMode('Test type'), PassInfo.testType((cert.entryList[0] as CertEntryTest).testType, travelMode: Settings.getTravelMode())),
               ListElements.horizontalLine(),
-              ListElements.entryText('Test result'.tr(), _testResult((cert.entryList[0] as CertEntryTest).testResult)),
+              ListElements.entryText(Settings.translateTravelMode('Test result'), _testResult((cert.entryList[0] as CertEntryTest).testResult)),
               ListElements.horizontalLine(),
-              ListElements.entryText('Testing centre'.tr(), (cert.entryList[0] as CertEntryTest).testingCentreName),
+              ListElements.entryText(Settings.translateTravelMode('Testing centre'), (cert.entryList[0] as CertEntryTest).testingCentreName),
               ListElements.horizontalLine(),
-              ListElements.entryText('Time of sample collection'.tr(), DateFormat('HH:mm, dd.MM.yyyy').format((cert.entryList[0] as CertEntryTest).timeSampleCollection)),
+              ListElements.entryText(Settings.translateTravelMode('Time of sample collection'), DateFormat('HH:mm, dd.MM.yyyy').format((cert.entryList[0] as CertEntryTest).timeSampleCollection)),
               if ((cert.entryList[0] as CertEntryTest).timeTestResult != null) ...[
                 ListElements.horizontalLine(),
-                ListElements.entryText('Time of test result'.tr(), DateFormat('HH:mm, dd.MM.yyyy').format((cert.entryList[0] as CertEntryTest).timeTestResult!)),
+                ListElements.entryText(Settings.translateTravelMode('Time of test result'), DateFormat('HH:mm, dd.MM.yyyy').format((cert.entryList[0] as CertEntryTest).timeTestResult!)),
               ],
               if ((cert.entryList[0] as CertEntryTest).testName != null) ...[
                 ListElements.horizontalLine(),
-                ListElements.entryText('Test name'.tr(), (cert.entryList[0] as CertEntryTest).testName!),
+                ListElements.entryText(Settings.translateTravelMode('Test name'), (cert.entryList[0] as CertEntryTest).testName!),
               ],
               if ((cert.entryList[0] as CertEntryTest).manufacturerName != null) ...[
                 ListElements.horizontalLine(),
-                ListElements.entryText('Test manufacturer'.tr(), (cert.entryList[0] as CertEntryTest).manufacturerName!),
+                ListElements.entryText(Settings.translateTravelMode('Test manufacturer'), (cert.entryList[0] as CertEntryTest).manufacturerName!),
               ],
             ],
 
             if (cert.certificateType == CertificateType.recovery) ...[
-              ListElements.listPadding(ListElements.groupText('Recovery'.tr())),
+              ListElements.listPadding(ListElements.groupText(Settings.translateTravelMode('Recovery'))),
               ListElements.horizontalLine(),
-              ListElements.entryText('First positive test result'.tr(), DateFormat('dd.MM.yyyy').format((cert.entryList[0] as CertEntryRecovery).firstPositiveTestResult)),
+              ListElements.entryText(Settings.translateTravelMode('First positive test result'), DateFormat('dd.MM.yyyy').format((cert.entryList[0] as CertEntryRecovery).firstPositiveTestResult)),
               ListElements.horizontalLine(),
-              ListElements.entryText('Certificate valid from'.tr(), DateFormat('dd.MM.yyyy').format((cert.entryList[0] as CertEntryRecovery).validFrom)),
+              ListElements.entryText(Settings.translateTravelMode('Certificate valid from'), DateFormat('dd.MM.yyyy').format((cert.entryList[0] as CertEntryRecovery).validFrom)),
               ListElements.horizontalLine(),
-              ListElements.entryText('Certificate valid until'.tr(), DateFormat('dd.MM.yyyy').format((cert.entryList[0] as CertEntryRecovery).validUntil)),
+              ListElements.entryText(Settings.translateTravelMode('Certificate valid until'), DateFormat('dd.MM.yyyy').format((cert.entryList[0] as CertEntryRecovery).validUntil)),
             ],
 
             if (cert.certificateType == CertificateType.vaccination) ...[
               for (CertEntryVaccination vac in cert.entryList.map((e) => e as CertEntryVaccination)) ...[
-                ListElements.listPadding(ListElements.groupText('Vaccination ({}/{})'.tr(args: [vac.doseNumber.toString(), vac.dosesNeeded.toString()]))),
+                ListElements.listPadding(ListElements.groupText(Settings.translateTravelMode('Vaccination ({}/{})', args: [vac.doseNumber.toString(), vac.dosesNeeded.toString()]))),
                 ListElements.horizontalLine(),
-                ListElements.entryText('Vaccine type'.tr(), _vaccineType(vac.vaccine)),
+                ListElements.entryText(Settings.translateTravelMode('Vaccine type'), _vaccineType(vac.vaccine)),
                 ListElements.horizontalLine(),
-                ListElements.entryText('Vaccine'.tr(), vac.medicalProduct),
+                ListElements.entryText(Settings.translateTravelMode('Vaccine'), vac.medicalProduct),
                 ListElements.horizontalLine(),
-                ListElements.entryText('Manufacturer'.tr(), vac.manufacturer),
+                ListElements.entryText(Settings.translateTravelMode('Manufacturer'), vac.manufacturer),
               ],
             ],
 
             Padding(padding: const EdgeInsets.symmetric(vertical: 30.0)),
-            ListElements.listPadding(ListElements.groupText('Certificate info'.tr())),
+            ListElements.listPadding(ListElements.groupText(Settings.translateTravelMode('Certificate info'))),
             ListElements.horizontalLine(),
-            ListElements.entryText('Issuer'.tr(), cert.entryList[0].certificateIssuer),
+            ListElements.entryText(Settings.translateTravelMode('Issuer'), cert.entryList[0].certificateIssuer),
             ListElements.horizontalLine(),
-            ListElements.entryText('Issuing country'.tr(), cert.entryList[0].country.localizedName!),
+            ListElements.entryText(Settings.translateTravelMode('Issuing country'), Settings.getTravelMode() ? cert.entryList[0].country.name! : cert.entryList[0].country.localizedName!),
             ListElements.horizontalLine(),
-            ListElements.entryText('Certificate identifier'.tr(), cert.entryList[0].certificateIdentifier),
+            ListElements.entryText(Settings.translateTravelMode('Certificate identifier'), cert.entryList[0].certificateIdentifier),
             Padding(padding: const EdgeInsets.symmetric(vertical: 15.0)),
             AspectRatio(
               aspectRatio: 1,
@@ -300,14 +301,14 @@ class _PassDetailsState extends State<PassDetails> {
   }
 
   String _vaccineType(VaccineType vaccineType) {
-    if (vaccineType == VaccineType.antigen) return 'Antigen'.tr();
-    if (vaccineType == VaccineType.mRna) return 'mRNA'.tr();
-    return 'Other'.tr();
+    if (vaccineType == VaccineType.antigen) return Settings.translateTravelMode('Antigen');
+    if (vaccineType == VaccineType.mRna) return Settings.translateTravelMode('mRNA');
+    return Settings.translateTravelMode('Other');
   }
 
   String _testResult(TestResult testResult) {
-    if (testResult == TestResult.negative) return 'Negative'.tr();
-    if (testResult == TestResult.positive) return 'Positive'.tr();
-    return 'Unknown'.tr();
+    if (testResult == TestResult.negative) return Settings.translateTravelMode('Negative');
+    if (testResult == TestResult.positive) return Settings.translateTravelMode('Positive');
+    return Settings.translateTravelMode('Unknown');
   }
 }

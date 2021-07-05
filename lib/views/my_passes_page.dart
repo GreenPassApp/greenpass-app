@@ -12,6 +12,7 @@ import 'package:greenpass_app/local_storage/country_regulations/regulation_resul
 import 'package:greenpass_app/local_storage/country_regulations/regulations_provider.dart';
 import 'package:greenpass_app/local_storage/my_certs/my_certs.dart';
 import 'package:greenpass_app/local_storage/my_certs/my_certs_result.dart';
+import 'package:greenpass_app/local_storage/settings.dart';
 import 'package:greenpass_app/views/pass_details.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -183,7 +184,11 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                             fontSize: 15.0,
                           ),
                         ),
-                        Padding(padding: const EdgeInsets.symmetric(vertical: 10.0)),
+                        if (Settings.getHidePassDetails()) ...[
+                          Padding(padding: const EdgeInsets.symmetric(vertical: 20.0)),
+                        ] else ...[
+                          Padding(padding: const EdgeInsets.symmetric(vertical: 10.0)),
+                        ],
                         AspectRatio(
                           aspectRatio: 1,
                           child: FittedBox(
@@ -207,32 +212,40 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                             ),
                           ),
                         ),
-                        Padding(padding: const EdgeInsets.symmetric(vertical: 10.0)),
+                        if (Settings.getHidePassDetails()) ...[
+                          Padding(padding: const EdgeInsets.symmetric(vertical: 20.0)),
+                        ] else ...[
+                          Padding(padding: const EdgeInsets.symmetric(vertical: 10.0)),
+                        ],
                         PassInfo.getTypeText(
                           certs[idx],
                           textSize: 25.0,
                           additionalTextSize: 15.0,
                           color: textColor,
                           regulationResult: regRes,
+                          hideDetails: Settings.getHidePassDetails(),
+                          travelMode: Settings.getTravelMode(),
                         ),
-                        Padding(padding: const EdgeInsets.symmetric(vertical: 2.0)),
-                        Text(
-                          PassInfo.getDate(certs[idx]),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: textColor,
-                            fontSize: 15.0,
+                        if (!Settings.getHidePassDetails()) ...[
+                          Padding(padding: const EdgeInsets.symmetric(vertical: 2.0)),
+                          Text(
+                            PassInfo.getDate(certs[idx], travelMode: Settings.getTravelMode()),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: textColor,
+                              fontSize: 15.0,
+                            ),
                           ),
-                        ),
-                        Padding(padding: const EdgeInsets.symmetric(vertical: 12.0)),
-                        Text(
-                          PassInfo.getDuration(certs[idx]),
-                          style: TextStyle(
-                            color: textColor,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.bold,
+                          Padding(padding: const EdgeInsets.symmetric(vertical: 12.0)),
+                          Text(
+                            PassInfo.getDuration(certs[idx], travelMode: Settings.getTravelMode()),
+                            style: TextStyle(
+                              color: textColor,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
+                        ],
                       ],
                     ),
                   ),

@@ -81,4 +81,18 @@ class ListElements {
       onTap: action,
     );
   }
+
+  static Widget checkboxElement({required String title, String? subtitle, required ValueChanged<bool?>? onChanged, required bool? value}) {
+    return CheckboxListTile(
+      contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 30.0, 10.0),
+      title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+      subtitle: subtitle != null ? Padding(
+        padding: const EdgeInsets.only(top: 3.0),
+        child: Text(subtitle),
+      ) : null,
+      controlAffinity: ListTileControlAffinity.leading,
+      onChanged: onChanged,
+      value: value,
+    );
+  }
 }
