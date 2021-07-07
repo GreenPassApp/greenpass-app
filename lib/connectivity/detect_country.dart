@@ -7,6 +7,7 @@ class DetectCountry {
 
   static String? countryCode;
 
+  // Method to fetch the country code of the client (detected by the server)
   static Future<String?> getCountryCode() async {
     try {
       Response res = await get(Uri.parse(_countryApiUri));

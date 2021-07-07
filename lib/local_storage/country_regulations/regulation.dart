@@ -17,6 +17,7 @@ class Regulation {
 
   Regulation(this.countryCode, this._regulationEntry);
 
+  // checks, if a certificate is valid in the current country
   RegulationResult validate(GreenCertificate cert) {
     if (cert.certificateType == CertificateType.recovery) {
       CertEntryRecovery rec = cert.entryList[0] as CertEntryRecovery;

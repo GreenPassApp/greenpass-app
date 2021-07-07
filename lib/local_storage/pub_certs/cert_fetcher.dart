@@ -5,6 +5,7 @@ class CertFetcher {
   static const String _pubCertUrl = 'https://de.dscg.ubirch.com/trustList/DSC/';
   static const String _DscgCertServerPubKey = 'MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAETHfi8foQF4UtSNVxSFxeu7W+gMxdSGElhdo7825SD3Lyb+Sqh4G6Kra0ro1BdrM6Qx+hsUx4Qwdby7QY0pzxyA==';
 
+  // method to fetch and parse public certificates online
   static Future<Map<String, String>> fetchPublicCerts() async {
     Response res = await get(Uri.parse(_pubCertUrl));
     String body = res.body;

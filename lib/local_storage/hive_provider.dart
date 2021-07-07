@@ -4,6 +4,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 
 class HiveProvider {
+  // returns a new Hive instance (key-value database)
+  // generates a new encryption key if no box exists or a dead key existed
+  // the encryption key is saved by secure storage
   static Future<Box> getEncryptedBox({required String boxName, required String boxKeyName}) async {
     String? key = await FlutterSecureStorage().read(key: boxKeyName);
 

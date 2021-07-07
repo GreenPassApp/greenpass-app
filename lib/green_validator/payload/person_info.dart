@@ -15,6 +15,7 @@ class PersonInfo {
     return firstName + ' ' + lastName;
   }
 
+  // a pseudo identifier to identify a person within multiple certificates
   String get pseudoIdentifier {
     return this.firstName + '_' + DateFormat('yyyy-MM-dd').format(this.dateOfBirth) + '_' + this.lastName;
   }

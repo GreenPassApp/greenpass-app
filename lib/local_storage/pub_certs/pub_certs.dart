@@ -15,6 +15,9 @@ class PubCerts {
   static const String _hiveBoxName = 'pubCerts';
   static const String _hiveBoxKey = 'pubCertsKey';
 
+  // loads the saved version of the public certificates
+  // copies the bundled public certificates if none are present
+  // tries to update the public certificates if outdated
   static Future<void> initAppStart() async {
     Box box = await HiveProvider.getEncryptedBox(boxName: _hiveBoxName, boxKeyName: _hiveBoxKey);
     if (await box.get('pubCertsJson') == null) {
@@ -33,6 +36,8 @@ class PubCerts {
     tryUpdateIfOutdated();
   }
 
+  // checks, if the current version of the public certificates are outdated
+  // if so, fetch a new version of the public certificates online
   static Future<void> tryUpdateIfOutdated() async {
     Box box = await HiveProvider.getEncryptedBox(boxName: _hiveBoxName, boxKeyName: _hiveBoxKey);
     String? lastUpdateStr = await box.get('pubCertsJsonLastUpdate');

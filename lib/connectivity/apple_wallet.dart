@@ -3,6 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 class AppleWallet {
 
   // TODO refactor
+  // Method to open a download url of an Apple Wallet Pass in the browser
   static Future<void> getAppleWalletPass({required String rawCert, required String serialNumber}) async {
     await _pkPassDownload(url: 'https://api.greenpassapp.eu/user/pass?'
       + 'cert=' + Uri.encodeQueryComponent(rawCert)

@@ -24,6 +24,9 @@ class RegulationsProvider {
   static const String _hiveBoxName = 'regulations';
   static const String _hiveBoxKey = 'regulationsKey';
 
+  // loads the saved version of the country regulations
+  // copies the bundled country regulations if none are present
+  // tries to update the country regulations if outdated
   static Future<void> initAppStart() async {
     Box box = await HiveProvider.getEncryptedBox(boxName: _hiveBoxName, boxKeyName: _hiveBoxKey);
     if (await box.get('regulationsJson') == null) {
@@ -44,6 +47,8 @@ class RegulationsProvider {
     tryUpdateIfOutdated();
   }
 
+  // checks, if the current version of the country regulations are outdated
+  // if so, fetch a new version of the country regulations online
   static Future<void> tryUpdateIfOutdated() async {
     Box box = await HiveProvider.getEncryptedBox(boxName: _hiveBoxName, boxKeyName: _hiveBoxKey);
     String? lastUpdateStr = await box.get('regulationsJsonLastUpdate');
