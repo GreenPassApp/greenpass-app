@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/connectivity/apple_wallet.dart';
-import 'package:greenpass_app/connectivity/share_certificate.dart';
 import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/elements/list_elements.dart';
 import 'package:greenpass_app/elements/pass_info.dart';
@@ -17,11 +16,8 @@ import 'package:greenpass_app/green_validator/payload/disease_type.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/green_validator/payload/test_result.dart';
 import 'package:greenpass_app/green_validator/payload/vaccine_type.dart';
-import 'package:greenpass_app/local_storage/my_certs/my_cert_share.dart';
 import 'package:greenpass_app/local_storage/my_certs/my_certs.dart';
 import 'package:greenpass_app/local_storage/settings.dart';
-import 'package:greenpass_app/views/share_info_page.dart';
-import 'package:greenpass_app/views/share_page.dart';
 import 'package:intl/intl.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
@@ -117,42 +113,6 @@ class _PassDetailsState extends State<PassDetails> {
               ),
               Padding(padding: const EdgeInsets.symmetric(vertical: 7.0)),
             ],
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 23.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  OutlinedButton(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(FontAwesome5Solid.share),
-                        Padding(padding: const EdgeInsets.symmetric(horizontal: 6.0)),
-                        if (MyCerts.getShareInfo(cert.rawData) == null) ...[
-                          Text('Share certificate'.tr()),
-                        ] else ...[
-                          Text('Shared certificate'.tr()),
-                        ],
-                      ],
-                    ),
-                    style: ButtonStyle(
-                      padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0)),
-                      foregroundColor: MaterialStateProperty.all(Colors.white),
-                      backgroundColor: MaterialStateProperty.all(Colors.black),
-                      overlayColor: MaterialStateProperty.all(GPColors.dark_grey),
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0))),
-                    ),
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        if (MyCerts.getShareInfo(cert.rawData) == null)
-                          return SharePage(cert: cert);
-                        return ShareInfoPage(cert: cert);
-                      }
-                    )).then((_) => setState(() {})),
-                  ),
-                ],
-              ),
-            ),
             Padding(padding: const EdgeInsets.symmetric(vertical: 14.0)),
             ListElements.listPadding(ListElements.groupText(Settings.translateTravelMode('Person info'))),
             ListElements.horizontalLine(),
@@ -289,18 +249,6 @@ class _PassDetailsState extends State<PassDetails> {
       dismissButtonText: 'Cancel'.tr(),
       actionButtonText: 'Delete'.tr(),
       action: () async {
-        MyCertShare? share = MyCerts.getShareInfo(cert.rawData);
-        if (share != null) {
-          if (!await ShareCertificate.delete(share.token)) {
-            PlatformAlertDialog.showAlertDialog(
-              context: context,
-              title: 'Error'.tr(),
-              text: 'An error occurred while deleting the share link associated to this pass. You need an internet connection in order to delete your share link first.'.tr(),
-              dismissButtonText: 'Ok'.tr()
-            );
-            return;
-          }
-        }
         await MyCerts.removeCert(cert.rawData);
         Navigator.of(context).pop();
       },

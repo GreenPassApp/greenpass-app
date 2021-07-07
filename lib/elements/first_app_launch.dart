@@ -36,7 +36,6 @@ class FirstAppLaunch {
           _getPageViewModel('Welcome!'.tr(), 'Glad to have you here! First click on **"Add QR code"** on the home screen'.tr(), 'tutorial-1-addqr.png'),
           _getPageViewModel('Scan your certificate'.tr(), '**Scan the QR code** of your proof of vaccination, past infection or negative test'.tr(), 'tutorial-2-scan.png'),
           _getPageViewModel('All information at a glance'.tr(), '**Click on your pass** to get to the detailed information of your certificate'.tr(), 'tutorial-3-show.png'),
-          _getPageViewModel('Share your certificates'.tr(), 'To share your pass with other people, you can select **"Share certificate"**'.tr(), 'tutorial-4-share.png'),
           _getPageViewModel("Validate other people's certificates".tr(), 'Select **"Check Pass"** from the menu to validate QR codes from other people'.tr(), 'tutorial-5-validate.png'),
           if (isFirstLaunch) ...[
             PageViewModel(
@@ -45,7 +44,7 @@ class FirstAppLaunch {
                 child:  MarkdownBody(
                   onTapLink: (text, href, title) => launch('https://greenpassapp.eu/privacy'),
                   data: 'Your data is only stored and processed **locally and offline on your device** and will be deleted when you uninstall the app.'.tr() + '\n\n'
-                      + _getFeaturesText() + '\n\n'
+                      + _getFeaturesText()
                       + 'All further information can be found in the [privacy policy]().'.tr(),
                   styleSheet: MarkdownStyleSheet(
                     p: TextStyle(fontSize: 16.0),
@@ -127,7 +126,7 @@ class FirstAppLaunch {
 
   static String _getFeaturesText() {
     if (Platform.isIOS)
-      return 'When using the **Apple Wallet** and **Share** feature, personal data is stored and processed online for the shortest possible period of time. Of course, you will be informed about this in the app before using these features.'.tr();
-    return 'When using the **Share** feature, personal data is stored and processed online for the shortest possible period of time. Of course, you will be informed about this in the app before using these features.'.tr();
+      return 'When using the **Apple Wallet** feature, personal data is stored and processed online for the shortest possible period of time. Of course, you will be informed about this in the app before using this feature.'.tr() + '\n\n';
+    return '';
   }
 }
