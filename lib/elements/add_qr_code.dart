@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/elements/platform_alert_dialog.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
@@ -20,6 +19,8 @@ import 'package:path/path.dart';
 
 class AddQrCode {
   static const String _tmpPdfImgFilename = '/tmpPdfImg.png';
+
+  static const platform = const MethodChannel('eu.greenpassapp.greenpass/mlkit_vision');
 
   static Future<void> openDialog(BuildContext context) {
     Completer completer = Completer();
@@ -77,9 +78,7 @@ class AddQrCode {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
       if (result != null) {
-        InputImage image = InputImage.fromFilePath(result.files.first.path!);
-        BarcodeScanner scanner = GoogleMlKit.vision.barcodeScanner();
-        List<Barcode> barcodes = await scanner.processImage(image);
+        List<String> barcodes = await _readQrCodes(File(result.files.first.path!));
 
         if (barcodes.isEmpty) {
           PlatformAlertDialog.showAlertDialog(
@@ -89,7 +88,7 @@ class AddQrCode {
             dismissButtonText: 'Ok'.tr()
           );
         } else {
-          String code = barcodes.first.value.rawValue!;
+          String code = barcodes.first;
           ValidationResult res = GreenValidator.validate(code);
 
           if (!res.success) {
@@ -137,13 +136,12 @@ class AddQrCode {
           File tmpPdfImg = new File(join(tmpDir.path + _tmpPdfImgFilename));
           await tmpPdfImg.writeAsBytes(pageImage!.bytes);
 
-          BarcodeScanner scanner = GoogleMlKit.vision.barcodeScanner();
-          List<Barcode> barcodes = await scanner.processImage(InputImage.fromFile(tmpPdfImg));
+          List<String> barcodes = await _readQrCodes(tmpPdfImg);
           tmpDir.deleteSync(recursive: true);
 
           if (barcodes.isNotEmpty) {
             found = true;
-            String code = barcodes.first.value.rawValue!;
+            String code = barcodes.first;
             ValidationResult res = GreenValidator.validate(code);
 
             if (!res.success) {
@@ -196,5 +194,12 @@ class AddQrCode {
       actionButtonText: 'Go to app settings'.tr(),
       action: () => AppSettings.openAppSettings(),
     );
+  }
+
+  static Future<List<String>> _readQrCodes(File file) async {
+    List<dynamic> res = await platform.invokeMethod('scanQrCodeInImage', {
+      'filename': file.path
+    });
+    return res.map((e) => e as String).toList();
   }
 }

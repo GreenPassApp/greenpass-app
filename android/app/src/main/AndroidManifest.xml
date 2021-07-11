@@ -2,7 +2,8 @@
     package="eu.greenpassapp.greenpassfh">
    <application
         android:label="GreenPass"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="false">
         <activity
             android:name="eu.greenpassapp.greenpassfh.MainActivity"
             android:launchMode="singleTop"
@@ -37,6 +38,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data android:name="firebase_analytics_collection_deactivated" android:value="true"/>
     </application>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.INTERNET" />
