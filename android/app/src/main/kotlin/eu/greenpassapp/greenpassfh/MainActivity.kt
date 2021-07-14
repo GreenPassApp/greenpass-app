@@ -2,8 +2,6 @@ package eu.greenpassapp.greenpassfh
 
 import android.net.Uri
 import androidx.annotation.NonNull
-import com.google.firebase.FirebaseApp
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.mlkit.vision.barcode.Barcode
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
