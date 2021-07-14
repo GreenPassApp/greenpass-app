@@ -9,7 +9,7 @@ class GreenCertificate {
 
   final DateTime issuedAt;
   final DateTime expiresAt;
-  final CountryDetails issuer;
+  final CountryDetails? issuer;
   final CertificateType certificateType;
 
   final PersonInfo personInfo;

@@ -4,7 +4,7 @@ import 'package:greenpass_app/green_validator/payload/disease_type.dart';
 abstract class CertEntry {
   final String certificateIdentifier;
   final String certificateIssuer;
-  final CountryDetails country;
+  final CountryDetails? country;
   final String targetedDiseaseCode;
 
   CertEntry({

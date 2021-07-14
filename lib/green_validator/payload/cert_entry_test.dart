@@ -16,7 +16,7 @@ class CertEntryTest extends CertEntry {
   CertEntryTest({
     required String certificateIdentifier,
     required String certificateIssuer,
-    required CountryDetails country,
+    required CountryDetails? country,
     required String targetedDiseaseCode,
 
     required this.testTypeCode,

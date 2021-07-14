@@ -218,7 +218,7 @@ class _PassDetailsState extends State<PassDetails> {
             ListElements.horizontalLine(),
             ListElements.entryText(Settings.translateTravelMode('Issuer'), cert.entryList[0].certificateIssuer),
             ListElements.horizontalLine(),
-            ListElements.entryText(Settings.translateTravelMode('Issuing country'), Settings.getTravelMode() ? cert.entryList[0].country.name! : cert.entryList[0].country.localizedName!),
+            ListElements.entryText(Settings.translateTravelMode('Issuing country'), cert.entryList[0].country == null ? 'Unknown'.tr() : (Settings.getTravelMode() ? cert.entryList[0].country!.name! : cert.entryList[0].country!.localizedName!)),
             ListElements.horizontalLine(),
             ListElements.entryText(Settings.translateTravelMode('Certificate identifier'), cert.entryList[0].certificateIdentifier),
             Padding(padding: const EdgeInsets.symmetric(vertical: 15.0)),
