@@ -80,19 +80,15 @@ class FirstAppLaunch {
           if (isFirstLaunch) {
             await FirstAppLaunch.setFirstLaunchFlag();
             String? countryCode = DetectCountry.countryCode;
-            if (countryCode == null || !RegulationsProvider.getCurrentRegulations().containsKey(countryCode)) {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => MyHomePage()
-              ));
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => CountrySelectionPage()
-              ));
-            } else {
+            if (countryCode != null && RegulationsProvider.getCurrentRegulations().containsKey(countryCode)) {
               await RegulationsProvider.setUserSetting(countryCode);
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => MyHomePage()
-              ));
             }
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => MyHomePage()
+            ));
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => CountrySelectionPage()
+            ));
           } else {
             Navigator.of(context).pop();
           }

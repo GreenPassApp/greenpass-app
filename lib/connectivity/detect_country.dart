@@ -1,22 +1,15 @@
-import 'dart:io';
+import 'dart:ui';
 
-import 'package:http/http.dart';
+import 'package:country_codes/country_codes.dart';
 
 class DetectCountry {
-  static const String _countryApiUri = 'https://api.greenpassapp.eu/user/countryCode';
-
   static String? countryCode;
 
-  // Method to fetch the country code of the client (detected by the server)
-  static Future<String?> getCountryCode() async {
-    try {
-      Response res = await get(Uri.parse(_countryApiUri));
-      if (res.statusCode == HttpStatus.ok) {
-        countryCode = res.body;
-      }
-    } catch (_) {
-      // ignore
-    }
+  // Method to retrieve the country set in the device's settings
+  static String? getCountryCode() {
+    Locale? l = CountryCodes.getDeviceLocale();
+    if (l != null)
+      return countryCode = l.countryCode;
     return null;
   }
 }
