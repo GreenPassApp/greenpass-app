@@ -52,9 +52,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
       child: FutureBuilder(
         future: MyCerts.getGreenCerts(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done
-            && snapshot.hasData
-            && snapshot.data != null) {
+          if (snapshot.data != null) {
             MyCertsResult res = snapshot.data as MyCertsResult;
 
             if (res.invalidCertificatesDeleted != 0)

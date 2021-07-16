@@ -49,23 +49,26 @@ class MyCerts {
 
   static Future<MyCertsResult> getGreenCerts() async {
     List<GreenCertificate> certs = [];
-    int deleted = 0;
+    List<MyCert> toRemove = [];
     _myCerts!.forEach((cert) {
       ValidationResult res = GreenValidator.validate(cert.qrCode);
       if (!res.success) {
-        _myCerts!.remove(cert);
-        deleted++;
+        toRemove.add(cert);
       } else {
         certs.add(res.certificate!);
       }
     });
 
-    if (deleted != 0)
+    if (toRemove.isNotEmpty) {
+      toRemove.forEach((cert) {
+        _myCerts!.remove(cert);
+      });
       await _saveCurrentList();
+    }
 
     return MyCertsResult(
       certificates: certs,
-      invalidCertificatesDeleted: deleted,
+      invalidCertificatesDeleted: toRemove.length,
     );
   }
 
