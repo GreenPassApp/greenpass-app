@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/elements/add_qr_code.dart';
 import 'package:greenpass_app/elements/colored_card.dart';
@@ -16,8 +16,8 @@ import 'package:greenpass_app/local_storage/settings.dart';
 import 'package:greenpass_app/views/pass_details.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'dart:math';
 
-import 'add_my_pass_page.dart';
 
 class MyPassesPage extends StatefulWidget {
   const MyPassesPage({Key? key}) : super(key: key);
@@ -142,7 +142,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
               animation: controller,
               builder: (context, child) {
                 return ColoredCard.buildCard(
-                  padding: EdgeInsets.fromLTRB(4.0, 8.0, 4.0, 65.0),
+                  padding: EdgeInsets.fromLTRB(4.0, 8.0, 4.0, 45.0),
                   backgroundColor: cardColor,
                   child: InkWell(
                     child: Center(
@@ -155,105 +155,163 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                   ),
                 );
               },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          certs[idx].personInfo.fullName,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: textColor,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Padding(padding: const EdgeInsets.symmetric(vertical: 2.0)),
-                        Text(
-                          DateFormat('dd.MM.yyyy').format(certs[idx].personInfo.dateOfBirth),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: textColor,
-                            fontSize: 15.0,
-                          ),
-                        ),
-                        if (Settings.getHidePassDetails()) ...[
-                          Padding(padding: const EdgeInsets.symmetric(vertical: 20.0)),
-                        ] else ...[
-                          Padding(padding: const EdgeInsets.symmetric(vertical: 10.0)),
-                        ],
-                        AspectRatio(
-                          aspectRatio: 1,
-                          child: FittedBox(
-                            fit: BoxFit.contain,
-                            child: Column(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.all(const Radius.circular(4.0))
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: PrettyQr(
-                                      data: certs[idx].rawData,
-                                      errorCorrectLevel: QrErrorCorrectLevel.L,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) => SingleChildScrollView(
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints.tightFor(height: max(380, constraints.maxHeight)),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 20.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  FittedBox(
+                                    child: Text(
+                                      certs[idx].personInfo.fullName,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: textColor,
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                  Padding(padding: const EdgeInsets.symmetric(vertical: 2.0)),
+                                  FittedBox(
+                                    child: Text(
+                                      DateFormat('dd.MM.yyyy').format(certs[idx].personInfo.dateOfBirth),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: textColor,
+                                        fontSize: 15.0,
+                                      ),
+                                    ),
+                                  ),
+                                  if (Settings.getHidePassDetails()) ...[
+                                    Padding(padding: const EdgeInsets.symmetric(vertical: 20.0)),
+                                  ] else ...[
+                                    Padding(padding: const EdgeInsets.symmetric(vertical: 10.0)),
+                                  ],
+                                  Flexible(
+                                    child: AspectRatio(
+                                      aspectRatio: 1,
+                                      child: FittedBox(
+                                        fit: BoxFit.contain,
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.all(const Radius.circular(4.0)),
+                                              ),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(4.0),
+                                                child: PrettyQr(
+                                                  data: certs[idx].rawData,
+                                                  errorCorrectLevel: QrErrorCorrectLevel.L,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  if (Settings.getHidePassDetails()) ...[
+                                    Padding(padding: const EdgeInsets.symmetric(vertical: 20.0)),
+                                  ] else ...[
+                                    Padding(padding: const EdgeInsets.symmetric(vertical: 10.0)),
+                                  ],
+                                  FittedBox(
+                                    child: PassInfo.getTypeText(
+                                      certs[idx],
+                                      textSize: 25.0,
+                                      additionalTextSize: 15.0,
+                                      color: textColor,
+                                      regulationResult: regRes,
+                                      hideDetails: Settings.getHidePassDetails(),
+                                      travelMode: Settings.getTravelMode(),
+                                    ),
+                                  ),
+                                  if (!Settings.getHidePassDetails()) ...[
+                                    Padding(padding: const EdgeInsets.symmetric(vertical: 2.0)),
+                                    FittedBox(
+                                      child: Text(
+                                        PassInfo.getDate(certs[idx], travelMode: Settings.getTravelMode()),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: textColor,
+                                          fontSize: 15.0,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(padding: const EdgeInsets.symmetric(vertical: 12.0)),
+                                    FittedBox(
+                                      child: Text(
+                                        PassInfo.getDuration(certs[idx], travelMode: Settings.getTravelMode()),
+                                        style: TextStyle(
+                                          color: textColor,
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                        if (Settings.getHidePassDetails()) ...[
-                          Padding(padding: const EdgeInsets.symmetric(vertical: 20.0)),
-                        ] else ...[
-                          Padding(padding: const EdgeInsets.symmetric(vertical: 10.0)),
-                        ],
-                        PassInfo.getTypeText(
-                          certs[idx],
-                          textSize: 25.0,
-                          additionalTextSize: 15.0,
-                          color: textColor,
-                          regulationResult: regRes,
-                          hideDetails: Settings.getHidePassDetails(),
-                          travelMode: Settings.getTravelMode(),
-                        ),
-                        if (!Settings.getHidePassDetails()) ...[
-                          Padding(padding: const EdgeInsets.symmetric(vertical: 2.0)),
-                          Text(
-                            PassInfo.getDate(certs[idx], travelMode: Settings.getTravelMode()),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: textColor,
-                              fontSize: 15.0,
-                            ),
-                          ),
-                          Padding(padding: const EdgeInsets.symmetric(vertical: 12.0)),
-                          Text(
-                            PassInfo.getDuration(certs[idx], travelMode: Settings.getTravelMode()),
-                            style: TextStyle(
-                              color: textColor,
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.white24,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              FontAwesome5Solid.info_circle,
+                              color: textColor,
+                              size: 16.0,
+                            ),
+                            Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0)),
+                            Flexible(
+                              child: FittedBox(
+                                child: Text(
+                                  Settings.translateTravelMode('Only valid with official photo identification', travelMode: Settings.getTravelMode()) +
+                                      (RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry ? '\n' + Settings.translateTravelMode('Color validation without guarantee', travelMode: Settings.getTravelMode()) : ''),
+                                  style: TextStyle(
+                                    color: textColor,
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
             );
           },
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 8.0),
+          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 8.0),
           child: Align(
             alignment: Alignment.bottomCenter,
             child: SmoothPageIndicator(

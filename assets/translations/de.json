@@ -50,6 +50,8 @@
 
   "Ok": "Ok",
 
+  "Valid": "Gültig",
+  "Not valid yet": "Noch nicht gültig",
   "Invalid": "Ungültig",
   "This QR code is invalid. Please try to scan another one.": "Dieser QR-Code ist ungültig. Bitte versuche es mit einem anderen.",
 
@@ -180,5 +182,8 @@
   "Travel Mode": "Reisemodus",
   "All certificate information is displayed in English": "Alle Passinformationen werden auf Englisch angezeigt",
   "Only show QR code": "Nur QR-Code anzeigen",
-  "All detailed information about your certificate will be hidden": "Alle Detailinformationen zu deinem Zertifikat werden ausgeblendet"
+  "All detailed information about your certificate will be hidden": "Alle Detailinformationen zu deinem Zertifikat werden ausgeblendet",
+
+  "Only valid with official photo identification": "Nur mit amtlichem Lichtbildausweis gültig",
+  "Color validation without guarantee": "Farbliche Validierung ohne Gewähr"
 }

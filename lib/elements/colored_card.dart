@@ -23,10 +23,10 @@ class ColoredCard {
           ],
         ),
         child: Card(
+          elevation: 0.0,
           color: backgroundColor,
           margin: const EdgeInsets.all(5.0),
           shape: RoundedRectangleBorder(
-            side: BorderSide(color: backgroundColor, width: 1),
             borderRadius: BorderRadius.circular(15),
           ),
           child: child

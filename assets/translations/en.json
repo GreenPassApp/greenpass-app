@@ -50,6 +50,8 @@
 
   "Ok": "Ok",
 
+  "Valid": "Valid",
+  "Not valid yet": "Not valid yet",
   "Invalid": "Invalid",
   "This QR code is invalid. Please try to scan another one.": "This QR code is invalid. Please try to scan another one.",
 
@@ -180,5 +182,8 @@
   "Travel Mode": "Travel Mode",
   "All certificate information is displayed in English": "All certificate information is displayed in English",
   "Only show QR code": "Only show QR code",
-  "All detailed information about your certificate will be hidden": "All detailed information about your certificate will be hidden"
+  "All detailed information about your certificate will be hidden": "All detailed information about your certificate will be hidden",
+
+  "Only valid with official photo identification": "Only valid with official photo identification",
+  "Color validation without guarantee": "Color validation without guarantee"
 }

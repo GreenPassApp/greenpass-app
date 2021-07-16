@@ -27,16 +27,34 @@ class PassInfo {
     bool travelMode = false,
   }) {
     String firstText;
+    String validText = '';
+    if (hideDetails) {
+      if (regulationResult == null) {
+        validText = 'Valid';
+      } else {
+        switch (regulationResult.type) {
+          case RegulationResultType.valid:
+            validText = 'Valid';
+            break;
+          case RegulationResultType.not_valid_anymore:
+            validText = 'Invalid';
+            break;
+          case RegulationResultType.not_valid_yet:
+            validText = 'Not valid yet';
+            break;
+        }
+      }
+    }
     switch (cert.certificateType) {
       case CertificateType.vaccination:
-        firstText = Settings.translateTravelMode('Vaccinated', travelMode: travelMode);
+        firstText = Settings.translateTravelMode(hideDetails ? validText : 'Vaccinated', travelMode: travelMode);
         break;
       case CertificateType.recovery:
-        firstText = Settings.translateTravelMode('Recovered', travelMode: travelMode);
+        firstText = Settings.translateTravelMode(hideDetails ? validText : 'Recovered', travelMode: travelMode);
         break;
       case CertificateType.test:
         var test = (cert.entryList[0] as CertEntryTest);
-        firstText = test.testResult == TestResult.negative ? Settings.translateTravelMode('Tested negative', travelMode: travelMode) : Settings.translateTravelMode('Tested positive', travelMode: travelMode);
+        firstText = test.testResult == TestResult.negative ? Settings.translateTravelMode(hideDetails ? validText : 'Tested negative', travelMode: travelMode) : Settings.translateTravelMode(hideDetails ? validText : 'Tested positive', travelMode: travelMode);
         break;
       case CertificateType.unknown:
         firstText = Settings.translateTravelMode('Unknown', travelMode: travelMode);
@@ -56,19 +74,17 @@ class PassInfo {
                 child: Icon(regulationResult.type == RegulationResultType.valid ? FontAwesome5Solid.check_circle
                   : regulationResult.type == RegulationResultType.not_valid_yet ? FontAwesome5Solid.hourglass_half : FontAwesome5Solid.times_circle, color: color, size: 22.0),
               ),
-              if (!hideDetails) ...[
-                Padding(padding: const EdgeInsets.symmetric(horizontal: 4.0)),
-              ],
+              Padding(padding: const EdgeInsets.symmetric(horizontal: 4.0)),
             ],
-            if (!hideDetails) ...[
-              Text(
-                firstText,
-                style: TextStyle(
-                  color: color,
-                  fontSize: textSize,
-                  fontWeight: FontWeight.bold,
-                ),
+            Text(
+              firstText,
+              style: TextStyle(
+                color: color,
+                fontSize: textSize,
+                fontWeight: FontWeight.bold,
               ),
+            ),
+            if (!hideDetails) ...[
               if (cert.certificateType == CertificateType.vaccination) ...[
                 Padding(padding: EdgeInsets.symmetric(horizontal: 2.0)),
                 (){
