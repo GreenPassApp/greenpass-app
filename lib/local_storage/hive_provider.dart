@@ -24,6 +24,13 @@ class HiveProvider {
       seq = base64Url.decode(key);
     }
 
-    return await Hive.openBox(boxName, encryptionCipher: HiveAesCipher(seq));
+    try {
+      return await Hive.openBox(boxName, encryptionCipher: HiveAesCipher(seq));
+    } catch (e) {
+      // encryption key is wrong... Generate new key and box
+      await FlutterSecureStorage().delete(key: boxKeyName);
+      await Hive.deleteBoxFromDisk(boxName);
+      return await getEncryptedBox(boxName: boxName, boxKeyName: boxKeyName);
+    }
   }
 }
