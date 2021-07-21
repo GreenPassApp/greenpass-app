@@ -88,7 +88,14 @@ class _SettingsPageState extends State<SettingsPage> {
                 _linkElement(context, 'Imprint'.tr(), 'https://greenpassapp.eu/imprint'),
                 ListElements.horizontalLine(height: 0.0),
                 _linkElement(context, 'Open Source Licenses'.tr(), 'https://greenpassapp.eu/legal/opensource'),
-                Padding(padding: const EdgeInsets.symmetric(vertical: 15.0)),
+                Padding(padding: const EdgeInsets.symmetric(vertical: 30.0)),
+                Center(
+                  child: FractionallySizedBox(
+                    child: Image(image: AssetImage('assets/images/oerk_ooe_logo.png')),
+                    widthFactor: 0.5,
+                  ),
+                ),
+                Padding(padding: const EdgeInsets.symmetric(vertical: 20.0)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
