@@ -1,25 +1,25 @@
-import 'package:url_launcher/url_launcher.dart';
+import 'package:crypto/crypto.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_wallet/flutter_wallet.dart';
+import 'package:greenpass_app/consts/private.dart';
 
 class AppleWallet {
+  static const String _appleWalletApiUri = 'http://localhost:8080/user/pass'; // TODO: change
 
-  // TODO refactor
-  // Method to open a download url of an Apple Wallet Pass in the browser
+  // Method to request and add an Apple Wallet Pass
   static Future<void> getAppleWalletPass({required String rawCert, required String serialNumber}) async {
-    await _pkPassDownload(url: 'https://api.greenpassapp.eu/user/pass?'
-      + 'cert=' + Uri.encodeQueryComponent(rawCert)
-      + '&serialNumber=' + Uri.encodeQueryComponent(serialNumber));
-  }
+    Response res = await Dio().get(
+      _appleWalletApiUri,
+      options: Options(
+        headers: {
+          'Authorization': Private.greenpassApiKey,
+          'X-Digital-Certificate': rawCert,
+          'X-Serial-Number': sha256.convert(serialNumber.codeUnits).toString(),
+        },
+        responseType: ResponseType.bytes,
+      ),
+    );
 
-  static Future<void> _pkPassDownload({required String url}) async {
-    assert(url.isNotEmpty);
-    if (await canLaunch(url)) {
-      try{
-        await launch(url);
-      } on Exception catch (_) {
-        print('Launch problem');
-      }
-    } else {
-      throw 'Could not launch Apple Wallet url';
-    }
+    await FlutterWallet.addPass(pkpass: res.data);
   }
 }

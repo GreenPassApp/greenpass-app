@@ -80,6 +80,7 @@
   "Notice": "Notice",
   "The certificate is sent to us for technical reasons in order to generate an Apple Wallet pass. This certificate is not stored longer than necessary for generation, which normally takes a few seconds.": "The certificate is sent to us for technical reasons in order to generate an Apple Wallet pass. This certificate is not stored longer than necessary for generation, which normally takes a few seconds.",
   "Create pass": "Create pass",
+  "Could not retrieve the Apple Wallet Pass. Please ensure that you are connected to the Internet.": "Could not retrieve the Apple Wallet Pass. Please ensure that you are connected to the Internet.",
 
   "Person info": "Person info",
   "Full name": "Full name",

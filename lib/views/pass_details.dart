@@ -130,7 +130,18 @@ class _PassDetailsState extends State<PassDetails> {
                           text: 'The certificate is sent to us for technical reasons in order to generate an Apple Wallet pass. This certificate is not stored longer than necessary for generation, which normally takes a few seconds.'.tr(),
                           dismissButtonText: 'Cancel'.tr(),
                           actionButtonText: 'Create pass'.tr(),
-                          action: () => AppleWallet.getAppleWalletPass(rawCert: cert.rawData, serialNumber: cert.personInfo.pseudoIdentifier),
+                          action: () async {
+                            try {
+                              await AppleWallet.getAppleWalletPass(rawCert: cert.rawData, serialNumber: cert.personInfo.pseudoIdentifier);
+                            } catch (_) {
+                              PlatformAlertDialog.showAlertDialog(
+                                context: context,
+                                title: 'Error'.tr(),
+                                text: 'Could not retrieve the Apple Wallet Pass. Please ensure that you are connected to the Internet.'.tr(),
+                                dismissButtonText: 'Ok'.tr()
+                              );
+                            }
+                          },
                         );
                       }
                     ),

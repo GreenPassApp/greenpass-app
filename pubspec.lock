@@ -93,7 +93,7 @@ packages:
     source: hosted
     version: "2.0.1"
   crypto:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: crypto
       url: "https://pub.dartlang.org"
@@ -141,6 +141,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.0"
   dots_indicator:
     dependency: transitive
     description:
@@ -261,6 +268,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  flutter_wallet:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "4caac5ed82a0d6b145180c3809180ee156f5053c"
+      url: "https://github.com/Hiyorimi/flutter_wallet"
+    source: git
+    version: "0.0.5"
   flutter_web_plugins:
     dependency: transitive
     description: flutter

@@ -80,6 +80,7 @@
   "Notice": "Hinweis",
   "The certificate is sent to us for technical reasons in order to generate an Apple Wallet pass. This certificate is not stored longer than necessary for generation, which normally takes a few seconds.": "Das Zertifikat wird aus technischen Gründen an uns gesendet, um einen Apple Wallet-Pass erzeugen zu können. Dabei speichern wir dieses Zertifikat nicht länger, als für die Erzeugung notwendig, was im Normalfall wenige Sekunden dauert.",
   "Create pass": "Pass erzeugen",
+  "Could not retrieve the Apple Wallet Pass. Please ensure that you are connected to the Internet.": "Der Apple Wallet-Pass konnte nicht abgerufen werden. Bitte stelle sicher, dass du mit dem Internet verbunden bist.",
 
   "Person info": "Persönliche Daten",
   "Full name": "Name",
