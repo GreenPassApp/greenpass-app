@@ -17,6 +17,7 @@ import 'package:greenpass_app/green_validator/payload/disease_type.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/green_validator/payload/test_result.dart';
 import 'package:greenpass_app/green_validator/payload/vaccine_type.dart';
+import 'package:greenpass_app/local_storage/country_regulations/regulations_provider.dart';
 import 'package:greenpass_app/local_storage/my_certs/my_cert_share.dart';
 import 'package:greenpass_app/local_storage/my_certs/my_certs.dart';
 import 'package:greenpass_app/local_storage/settings.dart';
@@ -75,6 +76,31 @@ class _PassDetailsState extends State<PassDetails> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PassInfo.getSmallPassCard(cert, travelMode: Settings.getTravelMode()),
+            ListElements.listPadding(
+              Row(
+                children: [
+                  Icon(
+                    FontAwesome5Solid.info_circle,
+                    color: GPColors.dark_grey,
+                    size: 16.0,
+                  ),
+                  Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0)),
+                  Flexible(
+                    child: FittedBox(
+                      child: Text(
+                        Settings.translateTravelMode('Only valid with official photo identification', travelMode: Settings.getTravelMode()) +
+                            (RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry ? '\n' + Settings.translateTravelMode('Color validation without guarantee', travelMode: Settings.getTravelMode()) : ''),
+                        style: TextStyle(
+                          color: GPColors.dark_grey,
+                          fontSize: 12.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(padding: const EdgeInsets.symmetric(vertical: 8.0)),
             if (Platform.isIOS) ...[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 23.0),

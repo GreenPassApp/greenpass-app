@@ -145,9 +145,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                   padding: EdgeInsets.fromLTRB(4.0, 8.0, 4.0, 45.0),
                   backgroundColor: cardColor,
                   child: InkWell(
-                    child: Center(
-                      child: child,
-                    ),
+                    child: child,
                     borderRadius: BorderRadius.circular(15.0),
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => PassDetails(cert: certs[idx]))
@@ -271,37 +269,35 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(6.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.white24,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
-                        child: Row(
-                          children: [
-                            Icon(
-                              FontAwesome5Solid.info_circle,
-                              color: textColor,
-                              size: 16.0,
-                            ),
-                            Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0)),
-                            Flexible(
-                              child: FittedBox(
-                                child: Text(
-                                  Settings.translateTravelMode('Only valid with official photo identification', travelMode: Settings.getTravelMode()) +
-                                      (RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry ? '\n' + Settings.translateTravelMode('Color validation without guarantee', travelMode: Settings.getTravelMode()) : ''),
-                                  style: TextStyle(
-                                    color: textColor,
-                                    fontSize: 12.0,
-                                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.vertical(bottom: Radius.circular(15.0)),
+                      color: Colors.white24,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 26.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            FontAwesome5Solid.info_circle,
+                            color: textColor,
+                            size: 16.0,
+                          ),
+                          Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0)),
+                          Flexible(
+                            child: FittedBox(
+                              child: Text(
+                                Settings.translateTravelMode('Only valid with official photo identification', travelMode: Settings.getTravelMode()) +
+                                    (RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry ? '\n' + Settings.translateTravelMode('Color validation without guarantee', travelMode: Settings.getTravelMode()) : ''),
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 12.0,
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   )
