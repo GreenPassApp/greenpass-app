@@ -300,7 +300,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                         ],
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             );

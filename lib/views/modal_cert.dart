@@ -5,6 +5,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/consts/vibration.dart';
 import 'package:greenpass_app/elements/colored_card.dart';
+import 'package:greenpass_app/elements/flag_element.dart';
 import 'package:greenpass_app/elements/pass_info.dart';
 import 'package:greenpass_app/green_validator/model/validation_result.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -173,27 +174,32 @@ class ModalCert extends StatelessWidget {
                     ),
                   ),
                 ],
-                if (cert.success && RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry) ...[
+                if (cert.success) ...[
                   Expanded(child: Container()),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 46.0),
-                    child: Column(
+                    child: (RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry) ? Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text('Validation according to the regulations in {} (Last update: {})'.tr(args: [
+                        FlagElement.buildFlag(flag: RegulationsProvider.getUserSetting()),
+                        Padding(padding: const EdgeInsets.symmetric(horizontal: 12.0)),
+                        Flexible(
+                          child: Text('Validation according to the regulations in {} (Last update: {})'.tr(args: [
                             CountryCodes.detailsForLocale(Locale.fromSubtags(countryCode: RegulationsProvider.getUserSetting())).localizedName!,
                             DateFormat('dd.MM.yyyy').format(RegulationsProvider.getUserRegulation().validFrom)
-                          ]),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: GPColors.dark_grey),
-                        ),
-                        Text(
-                          'All information without guarantee'.tr(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: GPColors.dark_grey),
+                          ]) + '\n' + 'All information without guarantee'.tr(),
+                            textAlign: TextAlign.start,
+                            style: TextStyle(color: GPColors.dark_grey),
+                          ),
                         ),
                       ],
+                    )
+
+                    : Text('There is no validation according to country regulations'.tr(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: GPColors.dark_grey),
                     ),
-                  )
+                  ),
                 ],
               ],
             ),
