@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "OERK_OOE_1z_slogan_unten_rgb.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "OERK_OOE_1z_slogan_unten_rgb-1.jpg",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "OERK_OOE_1z_slogan_unten_rgb-2.jpg",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
