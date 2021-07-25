@@ -27,7 +27,7 @@ class ModalCert extends StatelessWidget {
   Widget build(BuildContext context) {
     Color cardColor = cert.success ? GPColors.blue : GPColors.red;
 
-    if (cert.success && RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry) {
+    if (cert.success && !RegulationsProvider.useDefaultCountry()) {
       RegulationResult res = RegulationsProvider.getUserRegulation().validate(cert.certificate!);
       cardColor = RegulationsProvider.getCardColor(res);
     }
@@ -178,7 +178,7 @@ class ModalCert extends StatelessWidget {
                   Expanded(child: Container()),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 46.0),
-                    child: (RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry) ? Row(
+                    child: (!RegulationsProvider.useDefaultCountry()) ? Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         FlagElement.buildFlag(flag: RegulationsProvider.getUserSetting()),

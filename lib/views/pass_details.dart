@@ -85,7 +85,7 @@ class _PassDetailsState extends State<PassDetails> {
                     child: FittedBox(
                       child: Text(
                         Settings.translateTravelMode('Only valid with official photo identification', travelMode: Settings.getTravelMode()) +
-                            (RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry ? '\n' + Settings.translateTravelMode('Color validation without guarantee', travelMode: Settings.getTravelMode()) : ''),
+                            (!RegulationsProvider.useDefaultCountry() ? '\n' + Settings.translateTravelMode('Color validation without guarantee', travelMode: Settings.getTravelMode()) : ''),
                         style: TextStyle(
                           color: GPColors.dark_grey,
                           fontSize: 12.0,

@@ -163,5 +163,8 @@
   "All detailed information about your certificate will be hidden": "All detailed information about your certificate will be hidden",
 
   "Only valid with official photo identification": "Only valid with official photo identification",
-  "Color validation without guarantee": "Color validation without guarantee"
+  "Color validation without guarantee": "Color validation without guarantee",
+
+  "Outdated app version": "Outdated app version",
+  "Your app version is outdated, so certificate checking and color validation have been disabled. To re-enable these features, you need to update the app.": "Your app version is outdated, so certificate checking and color validation have been disabled. To re-enable these features, you need to update the app."
 }

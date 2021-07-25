@@ -1,11 +1,13 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/services/country_regulations/regulation.dart';
 import 'package:greenpass_app/services/country_regulations/regulation_result.dart';
 import 'package:greenpass_app/services/country_regulations/regulation_result_type.dart';
+import 'package:greenpass_app/services/outdated_check.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 
@@ -103,6 +105,10 @@ class RegulationsProvider {
 
   static String getUserSetting() {
     return _userSetting!;
+  }
+
+  static bool useDefaultCountry() {
+    return _userSetting == defaultCountry || OutdatedCheck.isOutdated;
   }
 
   static Regulation getUserRegulation() {

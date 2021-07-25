@@ -132,7 +132,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
             Color cardColor = GPColors.blue;
             Color textColor = Colors.white;
             RegulationResult? regRes;
-            if (RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry) {
+            if (!RegulationsProvider.useDefaultCountry()) {
               regRes = RegulationsProvider.getUserRegulation().validate(certs[idx]);
               cardColor = RegulationsProvider.getCardColor(regRes);
               textColor = RegulationsProvider.getCardTextColor(regRes);
@@ -289,7 +289,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                             child: FittedBox(
                               child: Text(
                                 Settings.translateTravelMode('Only valid with official photo identification', travelMode: Settings.getTravelMode()) +
-                                    (RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry ? '\n' + Settings.translateTravelMode('Color validation without guarantee', travelMode: Settings.getTravelMode()) : ''),
+                                    (!RegulationsProvider.useDefaultCountry() ? '\n' + Settings.translateTravelMode('Color validation without guarantee', travelMode: Settings.getTravelMode()) : ''),
                                 style: TextStyle(
                                   color: textColor,
                                   fontSize: 12.0,

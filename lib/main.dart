@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:greenpass_app/elements/platform_alert_dialog.dart';
 import 'package:greenpass_app/services/detect_country.dart';
 import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/elements/add_qr_code.dart';
@@ -11,6 +12,7 @@ import 'package:greenpass_app/elements/first_app_launch.dart';
 import 'package:greenpass_app/elements/flag_element.dart';
 import 'package:greenpass_app/services/country_regulations/regulations_provider.dart';
 import 'package:greenpass_app/services/my_certs/my_certs.dart';
+import 'package:greenpass_app/services/outdated_check.dart';
 import 'package:greenpass_app/services/pub_certs/pub_certs.dart';
 import 'package:greenpass_app/services/settings.dart';
 import 'package:greenpass_app/views/country_selection_page.dart';
@@ -22,6 +24,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+  await OutdatedCheck.initAppStart();
   await CountryCodes.init();
   await PubCerts.initAppStart();
   await RegulationsProvider.initAppStart();
@@ -121,12 +124,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
         ),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
-        leading: _currentPageIdx == 0 ? IconButton(
-          icon: FlagElement.buildFlag(flag: RegulationsProvider.getUserSetting()),
-          onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => CountrySelectionPage()
-          )),
-        ) : null,
+        leading: _currentPageIdx == 0 ? _getCountryButton() : null,
         actions: [
           /*IconButton(
             icon: const Icon(Icons.info_outline),
@@ -197,6 +195,30 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
           ),
         ],
       ),
+    );
+  }
+
+  Widget _getCountryButton() {
+    if (OutdatedCheck.isOutdated) {
+      return IconButton(
+        icon: Icon(
+          FontAwesome5Solid.exclamation,
+          color: Colors.black,
+        ),
+        onPressed: () => PlatformAlertDialog.showAlertDialog(
+          context: context,
+          title: 'Outdated app version'.tr(),
+          text: "Your app version is outdated, so certificate checking and color validation have been disabled. To re-enable these features, you need to update the app.".tr(),
+          dismissButtonText: 'Ok'.tr(),
+        ),
+      );
+    }
+
+    return IconButton(
+      icon: FlagElement.buildFlag(flag: RegulationsProvider.getUserSetting()),
+      onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => CountrySelectionPage()
+      )),
     );
   }
 }

@@ -68,7 +68,7 @@ class PassInfo {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (regulationResult != null && RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry) ...[
+            if (regulationResult != null && !RegulationsProvider.useDefaultCountry()) ...[
               Padding(
                 padding: const EdgeInsets.only(bottom: 2.0),
                 child: Icon(regulationResult.type == RegulationResultType.valid ? FontAwesome5Solid.check_circle
@@ -188,7 +188,7 @@ class PassInfo {
   static Widget getSmallPassCard(GreenCertificate cert, {bool travelMode = false}) {
     Color cardColor = GPColors.blue;
     Color textColor = Colors.white;
-    if (RegulationsProvider.getUserSetting() != RegulationsProvider.defaultCountry) {
+    if (!RegulationsProvider.useDefaultCountry()) {
       RegulationResult res = RegulationsProvider.getUserRegulation().validate(cert);
       cardColor = RegulationsProvider.getCardColor(res);
       textColor = RegulationsProvider.getCardTextColor(res);

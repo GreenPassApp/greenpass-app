@@ -163,5 +163,8 @@
   "All detailed information about your certificate will be hidden": "Alle Detailinformationen zu deinem Zertifikat werden ausgeblendet",
 
   "Only valid with official photo identification": "Nur mit amtlichem Lichtbildausweis gültig",
-  "Color validation without guarantee": "Farbliche Validierung ohne Gewähr"
+  "Color validation without guarantee": "Farbliche Validierung ohne Gewähr",
+
+  "Outdated app version": "Veraltete App-Version",
+  "Your app version is outdated, so certificate checking and color validation have been disabled. To re-enable these features, you need to update the app.": "Deine App-Version ist veraltet, daher wurde das Prüfen von Pässen und die Farbvalidierung deaktiviert. Um diese Funktionen wieder zu aktivieren, musst du die App aktualisieren."
 }
