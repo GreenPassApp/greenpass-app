@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:greenpass_app/consts/colors.dart';
-import 'package:greenpass_app/local_storage/country_regulations/regulation.dart';
-import 'package:greenpass_app/local_storage/country_regulations/regulation_result.dart';
-import 'package:greenpass_app/local_storage/country_regulations/regulation_result_type.dart';
+import 'package:greenpass_app/services/country_regulations/regulation.dart';
+import 'package:greenpass_app/services/country_regulations/regulation_result.dart';
+import 'package:greenpass_app/services/country_regulations/regulation_result_type.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 
-import 'package:greenpass_app/local_storage/hive_provider.dart';
+import 'package:greenpass_app/services/hive_provider.dart';
 
 class RegulationsProvider {
   static const String _regulationsUrl = 'https://raw.githubusercontent.com/GreenPassApp/shared-data/main/validation-by-country.json';

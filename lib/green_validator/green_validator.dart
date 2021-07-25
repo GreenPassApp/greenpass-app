@@ -16,7 +16,7 @@ import 'package:greenpass_app/green_validator/payload/person_info.dart';
 import 'package:greenpass_app/green_validator/payload/test_result.dart';
 import 'package:greenpass_app/green_validator/utils/dgc_country_parser.dart';
 import 'package:greenpass_app/green_validator/utils/dgc_date_parser.dart';
-import 'package:greenpass_app/local_storage/pub_certs/pub_certs.dart';
+import 'package:greenpass_app/services/pub_certs/pub_certs.dart';
 
 class GreenValidator {
 

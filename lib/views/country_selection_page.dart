@@ -5,7 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/elements/flag_element.dart';
 import 'package:greenpass_app/elements/list_elements.dart';
-import 'package:greenpass_app/local_storage/country_regulations/regulations_provider.dart';
+import 'package:greenpass_app/services/country_regulations/regulations_provider.dart';
 
 class CountrySelectionPage extends StatefulWidget {
   const CountrySelectionPage({Key? key}) : super(key: key);

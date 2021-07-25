@@ -5,7 +5,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/elements/first_app_launch.dart';
 import 'package:greenpass_app/elements/list_elements.dart';
-import 'package:greenpass_app/local_storage/settings.dart';
+import 'package:greenpass_app/services/settings.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 

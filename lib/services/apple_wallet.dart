@@ -4,7 +4,7 @@ import 'package:flutter_wallet/flutter_wallet.dart';
 import 'package:greenpass_app/consts/private.dart';
 
 class AppleWallet {
-  static const String _appleWalletApiUri = 'https://test-integration.mein-roteskreuz.at/greenpass/wallet'; // TODO: change
+  static const String _appleWalletApiUri = 'https://integration.mein-roteskreuz.at/greenpass/wallet';
 
   // Method to request and add an Apple Wallet Pass
   static Future<void> getAppleWalletPass({required String rawCert, required String serialNumber}) async {

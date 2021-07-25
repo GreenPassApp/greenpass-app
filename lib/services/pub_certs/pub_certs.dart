@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:greenpass_app/local_storage/hive_provider.dart';
-import 'package:greenpass_app/local_storage/pub_certs/cert_fetcher.dart';
+import 'package:greenpass_app/services/hive_provider.dart';
+import 'package:greenpass_app/services/pub_certs/cert_fetcher.dart';
 import 'package:hive/hive.dart';
 
 class PubCerts {

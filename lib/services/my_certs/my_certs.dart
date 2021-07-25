@@ -1,14 +1,13 @@
 import 'dart:convert';
 
-import 'package:collection/collection.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
 import 'package:greenpass_app/green_validator/model/validation_result.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
-import 'package:greenpass_app/local_storage/my_certs/my_cert.dart';
-import 'package:greenpass_app/local_storage/my_certs/my_certs_result.dart';
+import 'package:greenpass_app/services/my_certs/my_cert.dart';
+import 'package:greenpass_app/services/my_certs/my_certs_result.dart';
 import 'package:hive/hive.dart';
 
-import 'package:greenpass_app/local_storage/hive_provider.dart';
+import 'package:greenpass_app/services/hive_provider.dart';
 
 class MyCerts {
   static List<MyCert>? _myCerts;

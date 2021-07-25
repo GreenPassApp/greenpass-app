@@ -9,10 +9,10 @@ import 'package:greenpass_app/green_validator/payload/certificate_type.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/green_validator/payload/test_result.dart';
 import 'package:greenpass_app/green_validator/payload/test_type.dart';
-import 'package:greenpass_app/local_storage/country_regulations/regulation_result.dart';
-import 'package:greenpass_app/local_storage/country_regulations/regulation_result_type.dart';
-import 'package:greenpass_app/local_storage/country_regulations/regulations_provider.dart';
-import 'package:greenpass_app/local_storage/settings.dart';
+import 'package:greenpass_app/services/country_regulations/regulation_result.dart';
+import 'package:greenpass_app/services/country_regulations/regulation_result_type.dart';
+import 'package:greenpass_app/services/country_regulations/regulations_provider.dart';
+import 'package:greenpass_app/services/settings.dart';
 
 import 'colored_card.dart';
 

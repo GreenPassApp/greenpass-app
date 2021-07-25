@@ -9,8 +9,8 @@ import 'package:greenpass_app/elements/flag_element.dart';
 import 'package:greenpass_app/elements/pass_info.dart';
 import 'package:greenpass_app/green_validator/model/validation_result.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:greenpass_app/local_storage/country_regulations/regulation_result.dart';
-import 'package:greenpass_app/local_storage/country_regulations/regulations_provider.dart';
+import 'package:greenpass_app/services/country_regulations/regulation_result.dart';
+import 'package:greenpass_app/services/country_regulations/regulations_provider.dart';
 import 'package:intl/intl.dart';
 
 class ModalCert extends StatelessWidget {
