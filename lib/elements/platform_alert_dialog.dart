@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:greenpass_app/consts/colors.dart';
 
 class PlatformAlertDialog {
   static Future showAlertDialog({
@@ -35,16 +36,46 @@ class PlatformAlertDialog {
       );
     } else {
       dialog = AlertDialog(
-        title: Text(title),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(28.0, 20.0, 28.0, 16.0),
+              child: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+            ),
+            Divider(
+              height: 0.0,
+              color: GPColors.dark_grey,
+            ),
+          ],
+        ),
+        titlePadding: const EdgeInsets.all(0.0),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 18.0),
+        actionsPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        ),
         content: Text(text),
         actions: [
           TextButton(
-            child: Text(dismissButtonText),
+            child: Text(
+              dismissButtonText,
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: actionButtonText == null ? FontWeight.bold : FontWeight.normal,
+              ),
+            ),
             onPressed: () => Navigator.of(context).pop(),
           ),
           if (actionButtonText != null) ...[
             TextButton(
-              child: Text(actionButtonText),
+              child: Text(
+                actionButtonText,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
                 action();

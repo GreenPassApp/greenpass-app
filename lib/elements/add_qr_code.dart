@@ -28,7 +28,24 @@ class AddQrCode {
       context: context,
       builder: (BuildContext c) {
         return AlertDialog(
-          title: Text('Add QR code'.tr()),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(28.0, 20.0, 28.0, 16.0),
+                child: Text('Add QR code'.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
+              Divider(
+                height: 0.0,
+                color: GPColors.dark_grey,
+              ),
+            ],
+          ),
+          titlePadding: const EdgeInsets.all(0.0),
+          contentPadding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 16.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+          ),
           content: Container(
             width: double.maxFinite,
             child: Column(
@@ -38,6 +55,7 @@ class AddQrCode {
                   shrinkWrap: true,
                   children: <Widget>[
                     ListTile(
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 34.0),
                       leading: Icon(FontAwesome5Solid.camera, color: GPColors.almost_black),
                       title: Text('Scan with camera'.tr()),
                       onTap: () {
@@ -48,6 +66,7 @@ class AddQrCode {
                       },
                     ),
                     ListTile(
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 34.0),
                       leading: Icon(FontAwesome5Solid.image, color: GPColors.almost_black),
                       title: Text('Select image'.tr()),
                       onTap: () {
@@ -56,6 +75,7 @@ class AddQrCode {
                       },
                     ),
                     ListTile(
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 34.0),
                       leading: Icon(FontAwesome5Solid.file_pdf, color: GPColors.almost_black),
                       title: Text('Select PDF document'.tr()),
                       onTap: () {
