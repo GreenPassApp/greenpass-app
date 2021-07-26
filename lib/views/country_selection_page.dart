@@ -7,6 +7,7 @@ import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/elements/flag_element.dart';
 import 'package:greenpass_app/elements/list_elements.dart';
 import 'package:greenpass_app/services/country_regulations/regulations_provider.dart';
+import 'package:greenpass_app/services/outdated_check.dart';
 
 class CountrySelectionPage extends StatefulWidget {
   const CountrySelectionPage({Key? key}) : super(key: key);
@@ -44,6 +45,12 @@ class _CountrySelectionPageState extends State<CountrySelectionPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            if (OutdatedCheck.isOutdated) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                child: OutdatedCheck.getInfoCard(),
+              ),
+            ],
             _infoText("Based on your current country selection, your QR codes will be validated according to that country's specifications.".tr()),
             Padding(padding: const EdgeInsets.symmetric(vertical: 20.0)),
             ListElements.listPadding(
@@ -102,17 +109,23 @@ class _CountrySelectionPageState extends State<CountrySelectionPage> {
     else
       name = c.localizedName!;
 
-    return ListElements.listElement(
-      icon: FlagElement.buildFlag(flag: code),
-      mainText: name,
-      secondaryText: '(' + code.toUpperCase() + ')',
-      action: () async {
-        if (!isUpdating) {
-          isUpdating = true;
-          await RegulationsProvider.setUserSetting(code);
-          Navigator.of(context).pop();
-        }
-      }
+    return IgnorePointer(
+      ignoring: OutdatedCheck.isOutdated,
+      child: Opacity(
+        opacity: OutdatedCheck.isOutdated ? 0.5 : 1.0,
+        child: ListElements.listElement(
+          icon: FlagElement.buildFlag(flag: code),
+          mainText: name,
+          secondaryText: '(' + code.toUpperCase() + ')',
+          action: () async {
+            if (!isUpdating) {
+              isUpdating = true;
+              await RegulationsProvider.setUserSetting(code);
+              Navigator.of(context).pop();
+            }
+          }
+        ),
+      ),
     );
   }
 

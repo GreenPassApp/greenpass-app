@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
 import 'package:greenpass_app/services/outdated_check.dart';
 import 'package:greenpass_app/views/qr_code_scanner.dart';
@@ -35,18 +34,7 @@ class _ScanOthersPassViewState extends State<ScanOthersPassView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    'Outdated app version'.tr(),
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Padding(padding: const EdgeInsets.symmetric(vertical: 6.0)),
-                  Text(
-                    "Your app version is outdated, so certificate checking and color validation have been disabled. To re-enable these features, you need to update the app.".tr(),
-                    textAlign: TextAlign.center,
-                  ),
+                  OutdatedCheck.getInfoCard()
                 ],
               ),
             ),

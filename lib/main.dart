@@ -99,6 +99,17 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
         }
       }
     });
+
+    if (OutdatedCheck.isOutdated) {
+      Future.delayed(Duration.zero, () =>
+          PlatformAlertDialog.showAlertDialog(
+            context: context,
+            title: 'Outdated app version'.tr(),
+            text: "Your app version is outdated, so certificate checking and color validation have been disabled. To re-enable these features, you need to update the app.".tr(),
+            dismissButtonText: 'Ok'.tr()
+          )
+      );
+    }
   }
 
   @override
@@ -192,26 +203,30 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
   }
 
   Widget _getCountryButton() {
-    if (OutdatedCheck.isOutdated) {
-      return IconButton(
-        icon: Icon(
-          FontAwesome5Solid.exclamation,
-          color: Colors.black,
-        ),
-        onPressed: () => PlatformAlertDialog.showAlertDialog(
-          context: context,
-          title: 'Outdated app version'.tr(),
-          text: "Your app version is outdated, so certificate checking and color validation have been disabled. To re-enable these features, you need to update the app.".tr(),
-          dismissButtonText: 'Ok'.tr(),
-        ),
-      );
-    }
 
-    return IconButton(
-      icon: FlagElement.buildFlag(flag: RegulationsProvider.getUserSetting()),
-      onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => CountrySelectionPage()
-      )).then((_) => FlutterStatusbarcolor.setStatusBarWhiteForeground(_currentPageIdx != 0)),
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        IconButton(
+          icon: FlagElement.buildFlag(flag: RegulationsProvider.getUserSetting()),
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => CountrySelectionPage()
+          )).then((_) => FlutterStatusbarcolor.setStatusBarWhiteForeground(_currentPageIdx != 0)),
+        ),
+        if (OutdatedCheck.isOutdated) ...[
+          Positioned(
+            bottom: 10.0,
+            right: 4.0,
+            child: IgnorePointer(
+              child: Icon(
+                FontAwesome5Solid.exclamation_triangle,
+                color: GPColors.yellow,
+                size: 20.0,
+              ),
+            ),
+          ),
+        ],
+      ],
     );
   }
 }
