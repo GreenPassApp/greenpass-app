@@ -72,31 +72,6 @@ class _PassDetailsState extends State<PassDetails> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PassInfo.getSmallPassCard(cert, travelMode: Settings.getTravelMode()),
-            ListElements.listPadding(
-              Row(
-                children: [
-                  Icon(
-                    FontAwesome5Solid.info_circle,
-                    color: GPColors.dark_grey,
-                    size: 16.0,
-                  ),
-                  Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0)),
-                  Flexible(
-                    child: FittedBox(
-                      child: Text(
-                        Settings.translateTravelMode('Only valid with official photo identification', travelMode: Settings.getTravelMode()) +
-                            (!RegulationsProvider.useDefaultCountry() ? '\n' + Settings.translateTravelMode('Color validation without guarantee', travelMode: Settings.getTravelMode()) : ''),
-                        style: TextStyle(
-                          color: GPColors.dark_grey,
-                          fontSize: 12.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(padding: const EdgeInsets.symmetric(vertical: 8.0)),
             if (Platform.isIOS) ...[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 23.0),
@@ -150,6 +125,30 @@ class _PassDetailsState extends State<PassDetails> {
               ),
               Padding(padding: const EdgeInsets.symmetric(vertical: 7.0)),
             ],
+            ListElements.listPadding(
+              Row(
+                children: [
+                  Icon(
+                    FontAwesome5Solid.info_circle,
+                    color: GPColors.dark_grey,
+                    size: 16.0,
+                  ),
+                  Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0)),
+                  Flexible(
+                    child: FittedBox(
+                      child: Text(
+                        Settings.translateTravelMode('Only valid with official photo identification', travelMode: Settings.getTravelMode()) +
+                            (!RegulationsProvider.useDefaultCountry() ? '\n' + Settings.translateTravelMode('Color validation without guarantee', travelMode: Settings.getTravelMode()) : ''),
+                        style: TextStyle(
+                          color: GPColors.dark_grey,
+                          fontSize: 12.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Padding(padding: const EdgeInsets.symmetric(vertical: 14.0)),
             ListElements.listPadding(ListElements.groupText(Settings.translateTravelMode('Person info'))),
             ListElements.horizontalLine(),
@@ -300,6 +299,7 @@ class _PassDetailsState extends State<PassDetails> {
   String _vaccineType(VaccineType vaccineType) {
     if (vaccineType == VaccineType.antigen) return Settings.translateTravelMode('Antigen');
     if (vaccineType == VaccineType.mRna) return Settings.translateTravelMode('mRNA');
+    if (vaccineType == VaccineType.other) return Settings.translateTravelMode('COVID-19 Vaccine');
     return Settings.translateTravelMode('Other');
   }
 

@@ -124,7 +124,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
         ),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
-        leading: _currentPageIdx == 0 ? _getCountryButton() : null,
+        leading: _getCountryButton(),
         actions: [
           /*IconButton(
             icon: const Icon(Icons.info_outline),
@@ -146,25 +146,16 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
               color: Colors.black,
               onPressed: () => AddQrCode.openDialog(context).then((_) => setState(() {})),
             ),
-            IconButton(
-              icon: const Icon(
-                FontAwesome5Solid.ellipsis_v,
-                color: Colors.black,
-              ),
-              onPressed: () => Navigator.push(context, MaterialPageRoute(
-                builder: (context) => SettingsPage()
-              )).then((_) => setState(() {})),
-            ),
-          ] else if (_currentPageIdx == 1) ...[
-            /*
-            TODO add flashlight
-            IconButton(
-              icon: const Icon(Icons.flashlight_on),
-              color: Colors.white,
-              onPressed: () {}
-            ),
-           */
           ],
+          IconButton(
+            icon: Icon(
+              FontAwesome5Solid.ellipsis_v,
+              color: _currentPageIdx == 0 ? Colors.black : Colors.white,
+            ),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(
+              builder: (context) => SettingsPage()
+            )).then((_) => setState(() {})),
+          ),
         ],
       ),
       extendBodyBehindAppBar: true,
