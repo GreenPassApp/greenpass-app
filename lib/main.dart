@@ -154,7 +154,9 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
             ),
             onPressed: () => Navigator.push(context, MaterialPageRoute(
               builder: (context) => SettingsPage()
-            )).then((_) => setState(() {})),
+            )).then((_) => setState(() {
+              FlutterStatusbarcolor.setStatusBarWhiteForeground(_currentPageIdx != 0);
+            })),
           ),
         ],
       ),
@@ -209,7 +211,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
       icon: FlagElement.buildFlag(flag: RegulationsProvider.getUserSetting()),
       onPressed: () => Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => CountrySelectionPage()
-      )),
+      )).then((_) => FlutterStatusbarcolor.setStatusBarWhiteForeground(_currentPageIdx != 0)),
     );
   }
 }
