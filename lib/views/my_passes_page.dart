@@ -306,22 +306,24 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
             );
           },
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 8.0),
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: SmoothPageIndicator(
-              controller: controller,
-              count: certs.length,
-              effect: WormEffect(
-                dotWidth: 10.0,
-                dotHeight: 10.0,
-                activeDotColor: GPColors.dark_grey,
-                dotColor: GPColors.light_grey
+        if (certs.length > 1) ...[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 8.0),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: SmoothPageIndicator(
+                controller: controller,
+                count: certs.length,
+                effect: WormEffect(
+                  dotWidth: 10.0,
+                  dotHeight: 10.0,
+                  activeDotColor: GPColors.dark_grey,
+                  dotColor: GPColors.light_grey
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ],
     );
   }
