@@ -1,4 +1,4 @@
-package eu.greenpassapp.greenpassfh
+package eu.greenpassapp.greenpassrk
 
 import android.net.Uri
 import androidx.annotation.NonNull

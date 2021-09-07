@@ -34,7 +34,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "eu.greenpassapp.greenpassfh"
+        applicationId "eu.greenpassapp.greenpassrk"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()

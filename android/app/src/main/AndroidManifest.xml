@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="eu.greenpassapp.greenpassfh">
+    package="eu.greenpassapp.greenpassrk">
    <application
         android:label="GreenPass"
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="false">
         <activity
-            android:name="eu.greenpassapp.greenpassfh.MainActivity"
+            android:name="eu.greenpassapp.greenpassrk.MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
