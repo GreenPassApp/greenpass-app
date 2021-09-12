@@ -167,5 +167,14 @@
   "Color validation without guarantee": "Farbliche Validierung ohne Gewähr",
 
   "Outdated app version": "Veraltete App-Version",
-  "Your app version is outdated, so certificate checking and color validation have been disabled. To re-enable these features, you need to update the app.": "Deine App-Version ist veraltet, daher wurde das Prüfen von Pässen und die Farbvalidierung deaktiviert. Um diese Funktionen wieder zu aktivieren, musst du die App aktualisieren."
+  "Your app version is outdated, so certificate checking and color validation have been disabled. To re-enable these features, you need to update the app.": "Deine App-Version ist veraltet, daher wurde das Prüfen von Pässen und die Farbvalidierung deaktiviert. Um diese Funktionen wieder zu aktivieren, musst du die App aktualisieren.",
+
+  "Update available": "Update verfügbar",
+  "A new version of the app is available. Would you like to update now?": "Eine neue Version der App ist verfügbar. Möchtest du jetzt aktualisieren?",
+  "New version: {} (Last update: {})": "Neue Version: {} (Stand: {})",
+  "Visit our website if you want to update manually": "Besuche unsere Webseite, wenn du manuell aktualisieren möchtest",
+  "Not now": "Nicht jetzt",
+  "Download update": "Update herunterladen",
+  "Downloading...": "Lade herunter...",
+  "An error occurred while downloading the update. Please try again later.": "Beim Herunterladen des Updates ist ein Fehler aufgetreten. Bitte versuche es später erneut."
 }

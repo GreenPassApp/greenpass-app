@@ -59,6 +59,7 @@ dependencies:
   flutter_wallet:
     git:
       url: https://github.com/Hiyorimi/flutter_wallet
+  ota_update: ^3.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

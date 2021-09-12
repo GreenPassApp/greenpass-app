@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:country_codes/country_codes.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:greenpass_app/consts/configuration.dart';
 import 'package:greenpass_app/elements/platform_alert_dialog.dart';
 import 'package:greenpass_app/services/detect_country.dart';
 import 'package:greenpass_app/consts/colors.dart';
@@ -15,16 +19,19 @@ import 'package:greenpass_app/services/my_certs/my_certs.dart';
 import 'package:greenpass_app/services/outdated_check.dart';
 import 'package:greenpass_app/services/pub_certs/pub_certs.dart';
 import 'package:greenpass_app/services/settings.dart';
+import 'package:greenpass_app/services/update_check/update_check.dart';
 import 'package:greenpass_app/views/country_selection_page.dart';
 import 'package:greenpass_app/views/settings_page.dart';
 import 'package:greenpass_app/views/my_passes_page.dart';
 import 'package:greenpass_app/views/scan_others_pass.dart';
+import 'package:greenpass_app/views/update_notification.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await OutdatedCheck.initAppStart();
+  if (Platform.isAndroid && kReleaseMode && Configuration.enable_android_updater) await UpdateCheck.initAppStart();
   await CountryCodes.init();
   await PubCerts.initAppStart();
   await RegulationsProvider.initAppStart();
@@ -110,6 +117,14 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
           )
       );
     }
+
+    if (UpdateCheck.updateAvailable) {
+      Future.delayed(Duration.zero, () =>
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => UpdateNotification()
+          ))
+      );
+    }
   }
 
   @override
@@ -120,6 +135,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
     ];
 
     FlutterStatusbarcolor.setStatusBarColor(Colors.transparent);
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(_currentPageIdx != 0);
     FlutterStatusbarcolor.setNavigationBarWhiteForeground(Theme.of(context).brightness == Brightness.dark);
     FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).scaffoldBackgroundColor);
 

@@ -167,5 +167,14 @@
   "Color validation without guarantee": "Color validation without guarantee",
 
   "Outdated app version": "Outdated app version",
-  "Your app version is outdated, so certificate checking and color validation have been disabled. To re-enable these features, you need to update the app.": "Your app version is outdated, so certificate checking and color validation have been disabled. To re-enable these features, you need to update the app."
+  "Your app version is outdated, so certificate checking and color validation have been disabled. To re-enable these features, you need to update the app.": "Your app version is outdated, so certificate checking and color validation have been disabled. To re-enable these features, you need to update the app.",
+
+  "Update available": "Update available",
+  "A new version of the app is available. Would you like to update now?": "A new version of the app is available. Would you like to update now?",
+  "New version: {} (Last update: {})": "New version: {} (Last update: {})",
+  "Visit our website if you want to update manually": "Visit our website if you want to update manually",
+  "Not now": "Not now",
+  "Download update": "Download update",
+  "Downloading...": "Downloading...",
+  "An error occurred while downloading the update. Please try again later.": "An error occurred while downloading the update. Please try again later."
 }
