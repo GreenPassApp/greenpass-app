@@ -5,7 +5,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/consts/configuration.dart';
 import 'package:greenpass_app/elements/platform_alert_dialog.dart';
@@ -60,16 +59,25 @@ class App extends StatelessWidget {
       DeviceOrientation.portraitUp,
     ]);
 
-    return MaterialApp(
-      title: 'GreenPass',
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      theme: ThemeData(
-        primarySwatch: GPColors.createMaterialColor(GPColors.green),
-        fontFamily: 'Inter',
+    return AnnotatedRegion(
+      value: SystemUiOverlayStyle(
+        systemNavigationBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
       ),
-      home: firstAppLaunch ? FirstAppLaunch.getFirstLaunchScreen(true) : MyHomePage(),
+      child: MaterialApp(
+        title: 'GreenPass',
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            systemOverlayStyle: GPColors.dark_statusbar_style,
+          ),
+          primarySwatch: GPColors.createMaterialColor(GPColors.green),
+          fontFamily: 'Inter',
+        ),
+        home: firstAppLaunch ? FirstAppLaunch.getFirstLaunchScreen(true) : MyHomePage(),
+      ),
     );
   }
 }
@@ -98,12 +106,6 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
       int roundedIdx = _tabController.animation!.value.round();
       if (_currentPageIdx != roundedIdx) {
         setState(() { _currentPageIdx = roundedIdx; });
-
-        if (_currentPageIdx == 0) {
-          FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
-        } else {
-          FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
-        }
       }
     });
 
@@ -134,11 +136,6 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
       ScanOthersPassView(context: context),
     ];
 
-    FlutterStatusbarcolor.setStatusBarColor(Colors.transparent);
-    FlutterStatusbarcolor.setStatusBarWhiteForeground(_currentPageIdx != 0);
-    FlutterStatusbarcolor.setNavigationBarWhiteForeground(Theme.of(context).brightness == Brightness.dark);
-    FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).scaffoldBackgroundColor);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -152,6 +149,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         leading: _getCountryButton(),
+        systemOverlayStyle: _currentPageIdx == 0 ? GPColors.dark_statusbar_style : GPColors.light_statusbar_style,
         actions: [
           /*IconButton(
             icon: const Icon(Icons.info_outline),
@@ -181,9 +179,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
             ),
             onPressed: () => Navigator.push(context, MaterialPageRoute(
               builder: (context) => SettingsPage()
-            )).then((_) => setState(() {
-              FlutterStatusbarcolor.setStatusBarWhiteForeground(_currentPageIdx != 0);
-            })),
+            )),
           ),
         ],
       ),
@@ -227,7 +223,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
           icon: FlagElement.buildFlag(flag: RegulationsProvider.getUserSetting()),
           onPressed: () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => CountrySelectionPage()
-          )).then((_) => FlutterStatusbarcolor.setStatusBarWhiteForeground(_currentPageIdx != 0)),
+          )),
         ),
         if (OutdatedCheck.isOutdated) ...[
           Positioned(

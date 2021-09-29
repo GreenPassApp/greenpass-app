@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class GPColors {
   static const Color blue = Color(0xFF135ACF);
@@ -11,6 +12,16 @@ class GPColors {
   static const Color light_grey = Color(0xFFEDEDED);
   static const Color dark_grey = Color(0xFF8A8A8A);
   static const Color almost_black = Color(0xFF333333);
+
+  static const SystemUiOverlayStyle light_statusbar_style = SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.light,
+  );
+
+  static const SystemUiOverlayStyle dark_statusbar_style = SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+  );
 
   static MaterialColor createMaterialColor(Color color) {
     List strengths = <double>[.05];

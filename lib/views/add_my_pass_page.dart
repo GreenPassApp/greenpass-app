@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/consts/vibration.dart';
 import 'package:greenpass_app/elements/platform_alert_dialog.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
@@ -20,7 +20,6 @@ class AddMyPassPage extends StatefulWidget {
 class _AddMyPassPageState extends State<AddMyPassPage> {
   @override
   Widget build(BuildContext context) {
-    FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
     bool stopScanning = false;
 
     return Scaffold(
@@ -34,6 +33,7 @@ class _AddMyPassPageState extends State<AddMyPassPage> {
         ),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
+        systemOverlayStyle: GPColors.light_statusbar_style,
         leading: IconButton(
           icon: Icon(FontAwesome5Solid.arrow_left),
           onPressed: () => Navigator.of(context).pop(),

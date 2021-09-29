@@ -242,13 +242,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.0"
-  flutter_statusbarcolor_ns:
-    dependency: "direct main"
-    description:
-      name: flutter_statusbarcolor_ns
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0-nullsafety"
   flutter_svg:
     dependency: transitive
     description:

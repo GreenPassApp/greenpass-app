@@ -1,6 +1,5 @@
 import 'package:country_codes/country_codes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:greenpass_app/consts/colors.dart';
@@ -21,8 +20,6 @@ class _CountrySelectionPageState extends State<CountrySelectionPage> {
 
   @override
   Widget build(BuildContext context) {
-    FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

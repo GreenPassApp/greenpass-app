@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/elements/list_elements.dart';
@@ -22,11 +21,6 @@ class _UpdateNotificationState extends State<UpdateNotification> {
 
   @override
   Widget build(BuildContext context) {
-    FlutterStatusbarcolor.setStatusBarColor(Colors.transparent);
-    FlutterStatusbarcolor.setStatusBarWhiteForeground(Theme.of(context).brightness == Brightness.dark);
-    FlutterStatusbarcolor.setNavigationBarWhiteForeground(Theme.of(context).brightness == Brightness.dark);
-    FlutterStatusbarcolor.setNavigationBarColor(Theme.of(context).scaffoldBackgroundColor);
-
     AndroidUpdateCheckResult updateRes = UpdateCheck.androidUpdateCheckResult!;
 
     String? changelog;

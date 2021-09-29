@@ -35,8 +35,6 @@ class ModalCert extends StatelessWidget {
     // there should be no yellow color in the validation process
     if (cardColor == GPColors.yellow) cardColor = GPColors.red;
 
-
-
     return Material(
       child: CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(

@@ -38,7 +38,6 @@ dependencies:
     git:
       url: https://github.com/kevinhaendel/flutter_qr_mobile_vision
   app_settings: ^4.1.0
-  flutter_statusbarcolor_ns: ^0.3.0-nullsafety
   modal_bottom_sheet: ^2.0.0
   flutter_vector_icons: ^1.0.0
   easy_localization: ^3.0.0
