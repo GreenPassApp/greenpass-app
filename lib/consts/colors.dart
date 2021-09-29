@@ -16,11 +16,13 @@ class GPColors {
   static const SystemUiOverlayStyle light_statusbar_style = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.light,
+    statusBarBrightness: Brightness.dark,
   );
 
   static const SystemUiOverlayStyle dark_statusbar_style = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
+    statusBarBrightness: Brightness.light,
   );
 
   static MaterialColor createMaterialColor(Color color) {
