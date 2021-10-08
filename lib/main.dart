@@ -122,13 +122,15 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
       );
     }
 
-    UpdateCheck.updateCheck.then((res) {
-      if (res != null) {
-        Navigator.push(context, MaterialPageRoute(
-          builder: (context) => UpdateNotification(androidUpdateCheckResult: res)
-        ));
-      }
-    });
+    if (UpdateCheck.updateCheck != null) {
+      UpdateCheck.updateCheck!.then((res) {
+        if (res != null && res.updateAvailable) {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => UpdateNotification(androidUpdateCheckResult: res)
+          ));
+        }
+      });
+    }
   }
 
   @override

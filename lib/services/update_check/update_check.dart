@@ -6,7 +6,7 @@ import 'package:package_info/package_info.dart';
 class UpdateCheck {
   static const String _currentVersionUrl = 'https://raw.githubusercontent.com/GreenPassApp/shared-data/main/current-app-version.json';
 
-  static late final Future<AndroidUpdateCheckResult?> updateCheck;
+  static Future<AndroidUpdateCheckResult?>? updateCheck;
 
   static void initAppStart() {
     updateCheck = _fetchCurrentVersion();
