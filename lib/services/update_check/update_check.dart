@@ -6,16 +6,19 @@ import 'package:package_info/package_info.dart';
 class UpdateCheck {
   static const String _currentVersionUrl = 'https://raw.githubusercontent.com/GreenPassApp/shared-data/main/current-app-version.json';
 
-  static AndroidUpdateCheckResult? androidUpdateCheckResult;
-  static bool updateAvailable = androidUpdateCheckResult?.updateAvailable ?? false;
+  static late final Future<AndroidUpdateCheckResult?> updateCheck;
 
-  static Future<void> initAppStart() async {
+  static void initAppStart() {
+    updateCheck = _fetchCurrentVersion();
+  }
+
+  static Future<AndroidUpdateCheckResult?> _fetchCurrentVersion() async {
     try {
       Response res = await get(Uri.parse(_currentVersionUrl));
       Map<String, dynamic> parsedJson = jsonDecode(res.body);
       Map<String, dynamic> androidVerInfo = parsedJson['android'];
 
-      androidUpdateCheckResult = AndroidUpdateCheckResult(
+      return AndroidUpdateCheckResult(
         installedVersion: await _getVersionCode(),
         newestVersion: androidVerInfo['version'],
         updatedAt: DateTime.parse(androidVerInfo['updated_at']),

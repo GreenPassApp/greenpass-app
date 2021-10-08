@@ -4,24 +4,29 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/elements/list_elements.dart';
 import 'package:greenpass_app/services/update_check/android_update_check_result.dart';
-import 'package:greenpass_app/services/update_check/update_check.dart';
 import 'package:ota_update/ota_update.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UpdateNotification extends StatefulWidget {
-  const UpdateNotification({Key? key}) : super(key: key);
+  final AndroidUpdateCheckResult androidUpdateCheckResult;
+
+  const UpdateNotification({Key? key, required this.androidUpdateCheckResult}) : super(key: key);
 
   @override
-  _UpdateNotificationState createState() => _UpdateNotificationState();
+  _UpdateNotificationState createState() => _UpdateNotificationState(androidUpdateCheckResult);
 }
 
 class _UpdateNotificationState extends State<UpdateNotification> {
   bool _updating = false;
   double _downloadProgress = 0.0;
 
+  final AndroidUpdateCheckResult androidUpdateCheckResult;
+
+  _UpdateNotificationState(this.androidUpdateCheckResult);
+
   @override
   Widget build(BuildContext context) {
-    AndroidUpdateCheckResult updateRes = UpdateCheck.androidUpdateCheckResult!;
+    AndroidUpdateCheckResult updateRes = androidUpdateCheckResult;
 
     String? changelog;
     if (updateRes.changelog != null) {
@@ -117,7 +122,7 @@ class _UpdateNotificationState extends State<UpdateNotification> {
                     child: TextButton(
                       style: TextButton.styleFrom(
                         shape: RoundedRectangleBorder(),
-                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                        padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
                       ),
                       child: Text(
                         'Visit our website if you want to update manually'.tr(),
@@ -144,7 +149,7 @@ class _UpdateNotificationState extends State<UpdateNotification> {
                         child: TextButton(
                           style: TextButton.styleFrom(
                             shape: RoundedRectangleBorder(),
-                            padding: EdgeInsets.symmetric(vertical: 16.0),
+                            padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
                           ),
                           child: Text('Not now'.tr()),
                           onPressed: () => Navigator.of(context).pop(),
@@ -155,7 +160,7 @@ class _UpdateNotificationState extends State<UpdateNotification> {
                         child: TextButton(
                           style: TextButton.styleFrom(
                             shape: RoundedRectangleBorder(),
-                            padding: EdgeInsets.symmetric(vertical: 16.0),
+                            padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
                           ),
                           child: Text(
                             'Download update'.tr(),

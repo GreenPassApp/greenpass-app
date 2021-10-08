@@ -28,15 +28,17 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-  await OutdatedCheck.initAppStart();
-  if (Platform.isAndroid && kReleaseMode && Configuration.enable_android_updater) await UpdateCheck.initAppStart();
-  await CountryCodes.init();
-  await PubCerts.initAppStart();
-  await RegulationsProvider.initAppStart();
-  await MyCerts.initAppStart();
-  await Settings.initAppStart();
-  await EasyLocalization.ensureInitialized();
+  await Future.wait([
+    Hive.initFlutter(),
+    OutdatedCheck.initAppStart(),
+    CountryCodes.init(),
+    PubCerts.initAppStart(),
+    RegulationsProvider.initAppStart(),
+    MyCerts.initAppStart(),
+    Settings.initAppStart(),
+    EasyLocalization.ensureInitialized(),
+  ]);
+  if (Platform.isAndroid && kReleaseMode && Configuration.enable_android_updater) UpdateCheck.initAppStart();
   DetectCountry.getCountryCode();
   runApp(
     EasyLocalization(
@@ -120,13 +122,13 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
       );
     }
 
-    if (UpdateCheck.updateAvailable) {
-      Future.delayed(Duration.zero, () =>
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) => UpdateNotification()
-          ))
-      );
-    }
+    UpdateCheck.updateCheck.then((res) {
+      if (res != null) {
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) => UpdateNotification(androidUpdateCheckResult: res)
+        ));
+      }
+    });
   }
 
   @override
