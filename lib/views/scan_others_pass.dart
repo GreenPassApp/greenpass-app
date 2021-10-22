@@ -40,18 +40,20 @@ class _ScanOthersPassViewState extends State<ScanOthersPassView> {
             ),
           ),
         ] else ...[
-          QRCodeScanner(callback: (code) {
-            if (!lastCodes.contains(code)) {
-              lastCodes.add(code);
-              showCupertinoModalBottomSheet(
-                context: this.context,
-                expand: true,
-                builder: (context) => ModalCert(cert: GreenValidator.validate(code)),
-              ).then((value) {
-                lastCodes.remove(code);
-              });
+          QRCodeScanner(
+            showRuleSelection: true,
+            callback: (code) {
+              if (!lastCodes.contains(code)) {
+                lastCodes.add(code);
+                showCupertinoModalBottomSheet(
+                  context: this.context,
+                  builder: (context) => ModalCert(cert: GreenValidator.validate(code)),
+                ).then((value) {
+                  lastCodes.remove(code);
+                });
+              }
             }
-          }),
+          ),
         ],
         Container(
           color: Colors.black45,

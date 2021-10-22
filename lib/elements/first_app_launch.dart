@@ -79,8 +79,8 @@ class FirstAppLaunch {
           if (isFirstLaunch) {
             await FirstAppLaunch.setFirstLaunchFlag();
             String? countryCode = DetectCountry.countryCode;
-            if (countryCode != null && RegulationsProvider.getCurrentRegulations().containsKey(countryCode)) {
-              await RegulationsProvider.setUserSetting(countryCode);
+            if (countryCode != null && RegulationsProvider.getAvailableRegions().containsKey(countryCode)) {
+              await RegulationsProvider.selectRegion(countryCode, null);
             }
             Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (context) => MyHomePage()

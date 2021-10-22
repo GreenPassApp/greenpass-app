@@ -10,7 +10,6 @@ import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/green_validator/payload/test_result.dart';
 import 'package:greenpass_app/green_validator/payload/test_type.dart';
 import 'package:greenpass_app/services/country_regulations/regulation_result.dart';
-import 'package:greenpass_app/services/country_regulations/regulation_result_type.dart';
 import 'package:greenpass_app/services/country_regulations/regulations_provider.dart';
 import 'package:greenpass_app/services/settings.dart';
 
@@ -32,17 +31,12 @@ class PassInfo {
       if (regulationResult == null) {
         validText = 'Valid';
       } else {
-        switch (regulationResult.type) {
-          case RegulationResultType.valid:
-            validText = 'Valid';
-            break;
-          case RegulationResultType.not_valid_anymore:
-            validText = 'Invalid';
-            break;
-          case RegulationResultType.not_valid_yet:
-            validText = 'Not valid yet';
-            break;
-        }
+        if (regulationResult.currentlyValid)
+          validText = 'Valid';
+        else if (regulationResult.needToWait)
+          validText = 'Not valid yet';
+        else
+          validText = 'Invalid';
       }
     }
     switch (cert.certificateType) {
@@ -68,11 +62,11 @@ class PassInfo {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (regulationResult != null && !RegulationsProvider.useDefaultCountry()) ...[
+            if (regulationResult != null && RegulationsProvider.useColorValidation()) ...[
               Padding(
                 padding: const EdgeInsets.only(bottom: 2.0),
-                child: Icon(regulationResult.type == RegulationResultType.valid ? FontAwesome5Solid.check_circle
-                  : regulationResult.type == RegulationResultType.not_valid_yet ? FontAwesome5Solid.hourglass_half : FontAwesome5Solid.times_circle, color: color, size: 22.0),
+                child: Icon(regulationResult.currentlyValid ? FontAwesome5Solid.check_circle
+                  : regulationResult.needToWait ? FontAwesome5Solid.hourglass_half : FontAwesome5Solid.times_circle, color: color, size: 22.0),
               ),
               Padding(padding: const EdgeInsets.symmetric(horizontal: 4.0)),
             ],
@@ -188,8 +182,8 @@ class PassInfo {
   static Widget getSmallPassCard(GreenCertificate cert, {bool travelMode = false}) {
     Color cardColor = GPColors.blue;
     Color textColor = Colors.white;
-    if (!RegulationsProvider.useDefaultCountry()) {
-      RegulationResult res = RegulationsProvider.getUserRegulation().validate(cert);
+    if (RegulationsProvider.useColorValidation()) {
+      RegulationResult res = RegulationsProvider.getSelectedRuleset()!.validate(cert);
       cardColor = RegulationsProvider.getCardColor(res);
       textColor = RegulationsProvider.getCardTextColor(res);
     }

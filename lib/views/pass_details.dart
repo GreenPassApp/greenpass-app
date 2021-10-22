@@ -71,6 +71,34 @@ class _PassDetailsState extends State<PassDetails> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(36.0, 8.0, 36.0, 0.0),
+              child: Hero(
+                tag: 'qr_code_' + cert.entryList.first.certificateIdentifier,
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: FittedBox(
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(const Radius.circular(4.0))
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: PrettyQr(
+                              data: cert.rawData,
+                              errorCorrectLevel: QrErrorCorrectLevel.L,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
             PassInfo.getSmallPassCard(cert, travelMode: Settings.getTravelMode()),
             if (Platform.isIOS) ...[
               Padding(
@@ -138,7 +166,7 @@ class _PassDetailsState extends State<PassDetails> {
                     child: FittedBox(
                       child: Text(
                         Settings.translateTravelMode('Only valid with official photo identification', travelMode: Settings.getTravelMode()) +
-                            (!RegulationsProvider.useDefaultCountry() ? '\n' + Settings.translateTravelMode('Color validation without guarantee', travelMode: Settings.getTravelMode()) : ''),
+                            (RegulationsProvider.useColorValidation() ? '\n' + Settings.translateTravelMode('Color validation without guarantee', travelMode: Settings.getTravelMode()) : ''),
                         style: TextStyle(
                           color: GPColors.dark_grey,
                           fontSize: 12.0,
@@ -218,31 +246,6 @@ class _PassDetailsState extends State<PassDetails> {
             ListElements.horizontalLine(),
             ListElements.entryText(Settings.translateTravelMode('Certificate identifier'), cert.entryList[0].certificateIdentifier),
             Padding(padding: const EdgeInsets.symmetric(vertical: 15.0)),
-            AspectRatio(
-              aspectRatio: 1,
-              child: FittedBox(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(const Radius.circular(4.0))
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: PrettyQr(
-                            data: cert.rawData,
-                            errorCorrectLevel: QrErrorCorrectLevel.L,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

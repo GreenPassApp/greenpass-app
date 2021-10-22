@@ -7,7 +7,7 @@ import 'package:greenpass_app/services/pub_certs/cert_fetcher.dart';
 import 'package:hive/hive.dart';
 
 class PubCerts {
-  static const Duration pubCertsOutdatedAfter = Duration(days: 1);
+  static const Duration pubCertsOutdatedAfter = Duration(days: kReleaseMode ? 1 : 0);
   static const String bundledPubCertsLocation = 'assets/pubCerts.json';
 
   static Map<String, String>? _currentPubCerts;

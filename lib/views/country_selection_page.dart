@@ -17,6 +17,7 @@ class CountrySelectionPage extends StatefulWidget {
 
 class _CountrySelectionPageState extends State<CountrySelectionPage> {
   bool isUpdating = false;
+  Map<String, List<String?>> availableRegions = RegulationsProvider.getAvailableRegions();
 
   @override
   Widget build(BuildContext context) {
@@ -55,14 +56,14 @@ class _CountrySelectionPageState extends State<CountrySelectionPage> {
             ),
             Padding(padding: const EdgeInsets.symmetric(vertical: 6.0)),
             ListElements.horizontalLine(height: 0),
-            _countryListElement(code: RegulationsProvider.getUserSetting()),
+            _countryListElement(code: RegulationsProvider.getUserSelection().countryCode),
 
             Padding(padding: const EdgeInsets.symmetric(vertical: 30.0)),
             ListElements.listPadding(
               ListElements.groupText('European Union'.tr())
             ),
             Padding(padding: const EdgeInsets.symmetric(vertical: 6.0)),
-            if (RegulationsProvider.getUserSetting().toLowerCase() != 'eu') ...[
+            if (RegulationsProvider.getUserSelection().countryCode.toLowerCase() != 'eu') ...[
               ListElements.horizontalLine(height: 0),
               _countryListElement(code: 'EU'),
             ],
@@ -91,7 +92,7 @@ class _CountrySelectionPageState extends State<CountrySelectionPage> {
     );
   }
 
-  Widget _countryListElement({required String code, GestureTapCallback? action}) {
+  Widget _countryListElement({required String code}) {
     Locale l = Locale.fromSubtags(countryCode: code);
     CountryDetails? c;
     try {
@@ -110,25 +111,67 @@ class _CountrySelectionPageState extends State<CountrySelectionPage> {
       ignoring: OutdatedCheck.isOutdated,
       child: Opacity(
         opacity: OutdatedCheck.isOutdated ? 0.5 : 1.0,
-        child: ListElements.listElement(
+        child: availableRegions.containsKey(code) ? ListElements.expandableListElement(
+          context: context,
+          icon: FlagElement.buildFlag(flag: code),
+          expanded: RegulationsProvider.getUserSelection().countryCode == code,
+          mainText: name,
+          secondaryText: '(' + code.toUpperCase() + ')',
+          children: [
+            for (String? subregion in _subregionListOrderedByName(availableRegions[code]!)) ...[
+              ListElements.horizontalLine(height: 1),
+              ListElements.listElement(
+                secondaryText: RegulationsProvider.getSubregionTranslation(subregion, context.locale),
+                icon: Icon(null),
+                trailing: RegulationsProvider.getUserSelection().countryCode == code && RegulationsProvider.getUserSelection().subregionCode == subregion ? Icon(
+                  MaterialIcons.check,
+                  color: Theme.of(context).primaryColor,
+                ) : null,
+                action: () async {
+                  await _saveSelection(code, subregion);
+                },
+              ),
+            ],
+          ],
+        ) : ListElements.listElement(
           icon: FlagElement.buildFlag(flag: code),
           mainText: name,
           secondaryText: '(' + code.toUpperCase() + ')',
+          trailing: RegulationsProvider.getUserSelection().countryCode == code ? Icon(
+            MaterialIcons.check,
+            color: Theme.of(context).primaryColor,
+          ) : null,
           action: () async {
-            if (!isUpdating) {
-              isUpdating = true;
-              await RegulationsProvider.setUserSetting(code);
-              Navigator.of(context).pop();
-            }
-          }
+            await _saveSelection(code, null);
+          },
         ),
       ),
     );
   }
 
-  static List<String> _countryListOrderedByName() {
-    List<String> codes = RegulationsProvider.getCurrentRegulations().keys.toList();
-    codes.removeWhere((c) => c == RegulationsProvider.getUserSetting());
+  Future<void> _saveSelection(String countryCode, String? subregion) async {
+    if (!isUpdating) {
+      isUpdating = true;
+      await RegulationsProvider.selectRegion(countryCode, subregion);
+      Navigator.of(context).pop();
+    }
+  }
+
+  List<String?> _subregionListOrderedByName(List<String?> subregions) {
+    List<String?> res = List.from(subregions);
+
+    res.sort((r1, r2) {
+      if (r1 == null) return -1;
+      if (r2 == null) return 1;
+      return RegulationsProvider.getSubregionTranslation(r1, context.locale).compareTo(RegulationsProvider.getSubregionTranslation(r2, context.locale));
+    });
+
+    return res;
+  }
+
+  List<String> _countryListOrderedByName() {
+    List<String> codes = availableRegions.keys.toList();
+    codes.removeWhere((c) => c == RegulationsProvider.getUserSelection().countryCode);
     codes.sort((c1, c2) {
       Locale l1 = Locale.fromSubtags(countryCode: c1);
       Locale l2 = Locale.fromSubtags(countryCode: c2);

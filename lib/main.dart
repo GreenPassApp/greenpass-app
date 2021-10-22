@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/consts/configuration.dart';
 import 'package:greenpass_app/elements/platform_alert_dialog.dart';
@@ -28,6 +29,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Future.wait([
     Hive.initFlutter(),
     OutdatedCheck.initAppStart(),
@@ -99,6 +101,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
   @override
   void initState() {
     super.initState();
+    RegulationsProvider.setUserSelectionChangeCallback(() => setState(() {}));
     _tabController = TabController(length: _pageCount, vsync: this);
     _tabController.addListener(() {
       setState(() { _currentPageIdx = _tabController.index; });
@@ -142,17 +145,10 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'GreenPass',
-          style: TextStyle(
-            color: _currentPageIdx == 0 ? Colors.black : Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
-        leading: _getCountryButton(),
+        title: _getTitleBar(),
+        titleSpacing: 0.0,
         systemOverlayStyle: _currentPageIdx == 0 ? GPColors.dark_statusbar_style : GPColors.light_statusbar_style,
         actions: [
           /*IconButton(
@@ -169,22 +165,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
             },
           ),*/
 
-          if (_currentPageIdx == 0) ...[
-            IconButton(
-              icon: const Icon(FontAwesome5Solid.plus),
-              color: Colors.black,
-              onPressed: () => AddQrCode.openDialog(context).then((_) => setState(() {})),
-            ),
-          ],
-          IconButton(
-            icon: Icon(
-              FontAwesome5Solid.ellipsis_v,
-              color: _currentPageIdx == 0 ? Colors.black : Colors.white,
-            ),
-            onPressed: () => Navigator.push(context, MaterialPageRoute(
-              builder: (context) => SettingsPage()
-            )),
-          ),
+
         ],
       ),
       extendBodyBehindAppBar: true,
@@ -218,31 +199,111 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
     );
   }
 
-  Widget _getCountryButton() {
-
-    return Stack(
-      alignment: Alignment.center,
+  Widget _getTitleBar() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        IconButton(
-          icon: FlagElement.buildFlag(flag: RegulationsProvider.getUserSetting()),
-          onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => CountrySelectionPage()
-          )),
-        ),
-        if (OutdatedCheck.isOutdated) ...[
-          Positioned(
-            bottom: 10.0,
-            right: 4.0,
-            child: IgnorePointer(
-              child: Icon(
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: TextButton.icon(
+              style: TextButton.styleFrom(
+                primary: _currentPageIdx == 0 ? Colors.black : Colors.white,
+                shape: StadiumBorder(),
+              ),
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => CountrySelectionPage()
+              )),
+              icon: OutdatedCheck.isOutdated ? Icon(
                 FontAwesome5Solid.exclamation_triangle,
                 color: GPColors.yellow,
                 size: 20.0,
+              ) : FlagElement.buildFlag(flag: RegulationsProvider.getUserSelection().countryCode),
+              label: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                    child: RichText(
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      text: TextSpan(
+                        style: TextStyle(color: _currentPageIdx == 0 ? Colors.black : Colors.white),
+                        children: [
+                          TextSpan(text: RegulationsProvider.getCountryTranslation(RegulationsProvider.getUserSelection().countryCode), style: TextStyle(fontWeight: FontWeight.bold)),
+                          if (RegulationsProvider.useColorValidation()) ...[
+                            TextSpan(text: ' '),
+                            TextSpan(text: '(' + RegulationsProvider.getSubregionTranslation(RegulationsProvider.getUserSelection().subregionCode, context.locale) + ')'),
+                          ],
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4.0),
+                    child: Icon(
+                      FontAwesome5Solid.angle_down,
+                      color: _currentPageIdx == 0 ? Colors.black : Colors.white,
+                      size: 12.0,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-        ],
+        ),
+        Row(
+          children: [
+            if (_currentPageIdx == 0) ...[
+              IconButton(
+                icon: const Icon(FontAwesome5Solid.plus),
+                color: Colors.black,
+                onPressed: () => AddQrCode.openDialog(context).then((_) => setState(() {})),
+              ),
+            ],
+            IconButton(
+              icon: Icon(
+                FontAwesome5Solid.ellipsis_v,
+                color: _currentPageIdx == 0 ? Colors.black : Colors.white,
+              ),
+              onPressed: () => Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => SettingsPage()
+              )),
+            ),
+          ],
+        ),
       ],
     );
+
+    /*return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            IconButton(
+              icon: FlagElement.buildFlag(flag: RegulationsProvider.getUserSetting()),
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => CountrySelectionPage()
+              )),
+            ),
+            if (OutdatedCheck.isOutdated) ...[
+              Positioned(
+                bottom: 10.0,
+                right: 4.0,
+                child: IgnorePointer(
+                  child: Icon(
+                    FontAwesome5Solid.exclamation_triangle,
+                    color: GPColors.yellow,
+                    size: 20.0,
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
+        Text('Test', style: TextStyle(color: Colors.black)),
+      ],
+    );*/
   }
 }

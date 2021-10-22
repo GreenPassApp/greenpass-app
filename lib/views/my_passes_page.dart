@@ -5,6 +5,7 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/elements/add_qr_code.dart';
 import 'package:greenpass_app/elements/colored_card.dart';
+import 'package:greenpass_app/elements/list_elements.dart';
 import 'package:greenpass_app/elements/pass_info.dart';
 import 'package:greenpass_app/elements/platform_alert_dialog.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
@@ -14,6 +15,8 @@ import 'package:greenpass_app/services/my_certs/my_certs.dart';
 import 'package:greenpass_app/services/my_certs/my_certs_result.dart';
 import 'package:greenpass_app/services/settings.dart';
 import 'package:greenpass_app/views/pass_details.dart';
+import 'package:greenpass_app/views/rule_selection_modal.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'dart:math';
@@ -120,6 +123,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
       initialPage: (currentPage >= certs.length ? (certs.length - 1) : currentPage),
       viewportFraction: 0.9,
     );
+
     return Stack(
       children: [
         PageView.builder(
@@ -132,8 +136,8 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
             Color cardColor = GPColors.blue;
             Color textColor = Colors.white;
             RegulationResult? regRes;
-            if (!RegulationsProvider.useDefaultCountry()) {
-              regRes = RegulationsProvider.getUserRegulation().validate(certs[idx]);
+            if (RegulationsProvider.useColorValidation()) {
+              regRes = RegulationsProvider.getSelectedRuleset()!.validate(certs[idx]);
               cardColor = RegulationsProvider.getCardColor(regRes);
               textColor = RegulationsProvider.getCardTextColor(regRes);
             }
@@ -157,6 +161,49 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  if (RegulationsProvider.useColorValidation()) ...[
+                    InkWell(
+                      onTap: () => showCupertinoModalBottomSheet(
+                        context: context,
+                        builder: (context) => RuleSelectionModal(),
+                      ).then((value) => setState(() {})),
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
+                          color: Colors.white24,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 26.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Flexible(
+                                child: FittedBox(
+                                  child: Text(
+                                    RegulationsProvider.getRuleTranslation(RegulationsProvider.getUserSelection().rule, Settings.getTravelMode() ? Locale.fromSubtags(languageCode: 'en') : context.locale).toUpperCase(),
+                                    style: TextStyle(
+                                      color: textColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(padding: const EdgeInsets.symmetric(horizontal: 4.0)),
+                              Icon(
+                                FontAwesome5Solid.angle_down,
+                                color: textColor,
+                                size: 15.0,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ] else ...[
+                    Padding(padding: const EdgeInsets.symmetric(vertical: 5.0)),
+                  ],
                   Expanded(
                     child: Center(
                       child: LayoutBuilder(
@@ -164,7 +211,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                           child: ConstrainedBox(
                             constraints: BoxConstraints.tightFor(height: max(380, constraints.maxHeight)),
                             child: Padding(
-                              padding: const EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 20.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 25.0),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -197,26 +244,29 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                                     Padding(padding: const EdgeInsets.symmetric(vertical: 10.0)),
                                   ],
                                   Flexible(
-                                    child: AspectRatio(
-                                      aspectRatio: 1,
-                                      child: FittedBox(
-                                        fit: BoxFit.contain,
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.all(const Radius.circular(4.0)),
-                                              ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(4.0),
-                                                child: PrettyQr(
-                                                  data: certs[idx].rawData,
-                                                  errorCorrectLevel: QrErrorCorrectLevel.L,
+                                    child: Hero(
+                                      tag: 'qr_code_' + certs[idx].entryList.first.certificateIdentifier,
+                                      child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: FittedBox(
+                                          fit: BoxFit.contain,
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius: BorderRadius.all(const Radius.circular(4.0)),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(4.0),
+                                                  child: PrettyQr(
+                                                    data: certs[idx].rawData,
+                                                    errorCorrectLevel: QrErrorCorrectLevel.L,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -289,7 +339,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                             child: FittedBox(
                               child: Text(
                                 Settings.translateTravelMode('Only valid with official photo identification', travelMode: Settings.getTravelMode()) +
-                                    (!RegulationsProvider.useDefaultCountry() ? '\n' + Settings.translateTravelMode('Color validation without guarantee', travelMode: Settings.getTravelMode()) : ''),
+                                    (RegulationsProvider.useColorValidation() ? '\n' + Settings.translateTravelMode('Color validation without guarantee', travelMode: Settings.getTravelMode()) : ''),
                                 style: TextStyle(
                                   color: textColor,
                                   fontSize: 12.0,

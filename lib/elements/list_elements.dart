@@ -57,17 +57,21 @@ class ListElements {
       leading: icon,
       title: content ?? Row(
         children: [
-          Flexible(
-            child: Text(
-              mainText!,
-              style: TextStyle(
-                color: GPColors.almost_black,
-                fontWeight: FontWeight.bold,
+          if (mainText != null) ...[
+            Flexible(
+              child: Text(
+                mainText,
+                style: TextStyle(
+                  color: GPColors.almost_black,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
+          ],
           if (secondaryText != null) ...[
-            Padding(padding: const EdgeInsets.symmetric(horizontal: 3.0)),
+            if (mainText != null) ...[
+              Padding(padding: const EdgeInsets.symmetric(horizontal: 3.0)),
+            ],
             Text(
               secondaryText,
               style: TextStyle(
@@ -81,6 +85,51 @@ class ListElements {
       onTap: action,
     );
   }
+
+  static Widget expandableListElement({required BuildContext context, required List<Widget> children, Widget? icon, String? mainText, String? secondaryText, Widget? trailing, Widget? content, bool expanded = false}) {
+    return Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        tilePadding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
+        leading: icon,
+        initiallyExpanded: expanded,
+        iconColor: Theme.of(context).unselectedWidgetColor,
+        title: content ?? Row(
+          children: [
+            if (mainText != null) ...[
+              Flexible(
+                child: Text(
+                  mainText,
+                  style: TextStyle(
+                    color: GPColors.almost_black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+            if (secondaryText != null) ...[
+              if (mainText != null) ...[
+                Padding(padding: const EdgeInsets.symmetric(horizontal: 3.0)),
+              ],
+              Text(
+                secondaryText,
+                style: TextStyle(
+                  color: GPColors.almost_black,
+                ),
+              )
+            ],
+          ],
+        ),
+        trailing: trailing,
+        children: [
+          for (Widget child in children) ...[
+            Theme(data: Theme.of(context), child: child),
+          ],
+        ],
+      ),
+    );
+  }
+
 
   static Widget checkboxElement({required String title, String? subtitle, required ValueChanged<bool?>? onChanged, required bool? value}) {
     return CheckboxListTile(

@@ -115,6 +115,7 @@
   "Based on your current country selection, your QR codes will be validated according to that country's specifications.": "Based on your current country selection, your QR codes will be validated according to that country's specifications.",
   "Current selection": "Current selection",
   "European Union": "European Union",
+  "Nationwide": "Nationwide",
   "Work is currently underway to add the regulations for all other EU countries!": "Work is currently underway to add the regulations for all other EU countries!",
 
   "Validation according to the regulations in {} (Last update: {})": "Validation according to the regulations in {} (Last update: {})",
@@ -176,5 +177,8 @@
   "Not now": "Not now",
   "Download update": "Download update",
   "Downloading...": "Downloading...",
-  "An error occurred while downloading the update. Please try again later.": "An error occurred while downloading the update. Please try again later."
+  "An error occurred while downloading the update. Please try again later.": "An error occurred while downloading the update. Please try again later.",
+
+  "Purpose of use": "Purpose of use",
+  "Based on the purpose of use selection, all QR codes will be validated according to the current regulations.": "Based on the purpose of use selection, all QR codes will be validated according to the current regulations."
 }

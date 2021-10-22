@@ -27,8 +27,8 @@ class ModalCert extends StatelessWidget {
   Widget build(BuildContext context) {
     Color cardColor = cert.success ? GPColors.blue : GPColors.red;
 
-    if (cert.success && !RegulationsProvider.useDefaultCountry()) {
-      RegulationResult res = RegulationsProvider.getUserRegulation().validate(cert.certificate!);
+    if (cert.success && RegulationsProvider.useColorValidation()) {
+      RegulationResult res = RegulationsProvider.getSelectedRuleset()!.validate(cert.certificate!);
       cardColor = RegulationsProvider.getCardColor(res);
     }
 
@@ -49,95 +49,122 @@ class ModalCert extends StatelessWidget {
             constraints: BoxConstraints.expand(),
             child: Column(
               children: [
+                Padding(padding: const EdgeInsets.only(top: 16.0),),
                 ColoredCard.buildCard(
+                  showCurrentRegulationRule: true,
                   backgroundColor: cardColor,
                   padding: const EdgeInsets.all(20.0),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: ColoredCard.buildIcon(
-                                icon: cardColor == GPColors.red ? FontAwesome5Solid.times
-                                    : (cardColor == GPColors.green ? FontAwesome5Solid.check : ColoredCard.getValidationIcon(cert))
-                              ),
-                            ),
-                          ],
-                        ),
-                        if (cert.success) ...[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              PassInfo.getTypeText(cert.certificate!),
-                            ],
+                  child: Column(
+                    children: <Widget>[
+                      if (RegulationsProvider.useColorValidation()) ...[
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
+                            color: Colors.white24,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                PassInfo.getDate(cert.certificate!),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.all(35.0),
-                                child: Text(
-                                  PassInfo.getDuration(cert.certificate!),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ] else ...[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                'Invalid'.tr(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 25.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 26.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
+                              children: [
                                 Flexible(
-                                  child: Text(
-                                    'This QR code is invalid. Please try to scan another one.'.tr(),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.0,
+                                  child: FittedBox(
+                                    child: Text(
+                                      RegulationsProvider.getRuleTranslation(RegulationsProvider.getUserSelection().rule, context.locale).toUpperCase(),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15.0,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                        ],
+                        ),
                       ],
-                    ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: ColoredCard.buildIcon(
+                              icon: cardColor == GPColors.red ? FontAwesome5Solid.times
+                                  : (cardColor == GPColors.green ? FontAwesome5Solid.check : ColoredCard.getValidationIcon(cert))
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (cert.success) ...[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            PassInfo.getTypeText(cert.certificate!),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              PassInfo.getDate(cert.certificate!),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.all(35.0),
+                              child: Text(
+                                PassInfo.getDuration(cert.certificate!),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ] else ...[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Invalid'.tr(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 25.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Flexible(
+                                child: Text(
+                                  'This QR code is invalid. Please try to scan another one.'.tr(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                 ),
                 if (cert.success) ...[
@@ -175,19 +202,20 @@ class ModalCert extends StatelessWidget {
                 if (cert.success) ...[
                   Expanded(child: Container()),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 46.0),
-                    child: (!RegulationsProvider.useDefaultCountry()) ? Row(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 40.0),
+                    child: (RegulationsProvider.useColorValidation()) ? Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        FlagElement.buildFlag(flag: RegulationsProvider.getUserSetting()),
+                        FlagElement.buildFlag(flag: RegulationsProvider.getUserSelection().countryCode),
                         Padding(padding: const EdgeInsets.symmetric(horizontal: 12.0)),
                         Flexible(
                           child: Text('Validation according to the regulations in {} (Last update: {})'.tr(args: [
-                            CountryCodes.detailsForLocale(Locale.fromSubtags(countryCode: RegulationsProvider.getUserSetting())).localizedName!,
-                            DateFormat('dd.MM.yyyy').format(RegulationsProvider.getUserRegulation().validFrom)
+                            RegulationsProvider.getCountryTranslation(RegulationsProvider.getUserSelection().countryCode) + ', '
+                                + RegulationsProvider.getSubregionTranslation(RegulationsProvider.getUserSelection().subregionCode, context.locale),
+                            DateFormat('dd.MM.yyyy').format(RegulationsProvider.getSelectedRuleset()!.validFrom)
                           ]) + '\n' + 'All information without guarantee'.tr(),
                             textAlign: TextAlign.start,
-                            style: TextStyle(color: GPColors.dark_grey),
+                            style: TextStyle(color: GPColors.dark_grey, fontSize: 12.0),
                           ),
                         ),
                       ],
@@ -195,7 +223,7 @@ class ModalCert extends StatelessWidget {
 
                     : Text('There is no validation according to country regulations'.tr(),
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: GPColors.dark_grey),
+                      style: TextStyle(color: GPColors.dark_grey, fontSize: 12.0),
                     ),
                   ),
                 ],

@@ -115,6 +115,7 @@
   "Based on your current country selection, your QR codes will be validated according to that country's specifications.": "Basierend auf deiner aktuellen Länderauswahl werden deine QR-Codes nach den Vorgaben dieses Landes validiert.",
   "Current selection": "Aktuelle Auswahl",
   "European Union": "Europäische Union",
+  "Nationwide": "Bundesweit",
   "Work is currently underway to add the regulations for all other EU countries!": "Es wird aktuell daran gearbeitet, die Regelungen für alle anderen EU-Staaten nachzuziehen!",
 
   "Validation according to the regulations in {} (Last update: {})": "Validierung gemäß den Regelungen in {} (Stand: {})",
@@ -176,5 +177,8 @@
   "Not now": "Nicht jetzt",
   "Download update": "Update herunterladen",
   "Downloading...": "Lade herunter...",
-  "An error occurred while downloading the update. Please try again later.": "Beim Herunterladen des Updates ist ein Fehler aufgetreten. Bitte versuche es später erneut."
+  "An error occurred while downloading the update. Please try again later.": "Beim Herunterladen des Updates ist ein Fehler aufgetreten. Bitte versuche es später erneut.",
+
+  "Purpose of use": "Verwendungszweck",
+  "Based on the purpose of use selection, all QR codes will be validated according to the current regulations.": "Basierend auf der Auswahl des Verwendungszwecks werden alle QR-Codes nach den aktuellen Vorgaben validiert."
 }
