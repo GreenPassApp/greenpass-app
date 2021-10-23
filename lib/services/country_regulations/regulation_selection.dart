@@ -2,7 +2,7 @@ class RegulationSelection {
 
   final String countryCode;
   final String? subregionCode;
-  final String rule;
+  final String? rule;
 
   RegulationSelection(this.countryCode, this.subregionCode, this.rule);
 
@@ -13,7 +13,7 @@ class RegulationSelection {
   }
 
   @override
-  int get hashCode => (countryCode + ';' + (subregionCode ?? '') + ';' + rule).hashCode;
+  int get hashCode => (countryCode + ';' + (subregionCode ?? '') + ';' + (rule ?? '')).hashCode;
 
   RegulationSelection copyWith({String countryCode = '\0', String subregionCode = '\0', String rule = '\0'}) {
     return RegulationSelection(

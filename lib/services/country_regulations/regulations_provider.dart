@@ -123,7 +123,7 @@ class RegulationsProvider {
     return _getTranslations(locale)[_langPrefixSubregion + subregion] ?? _fallbackTranslation;
   }
 
-  static String getRuleTranslation(String rule, Locale locale) => _getTranslations(locale)[_langPrefixRule + rule] ?? _fallbackTranslation;
+  static String getRuleTranslation(String? rule, Locale locale) => _getTranslations(locale)[_langPrefixRule + (rule ?? '')] ?? _fallbackTranslation;
 
   static Future<void> selectRegion(String countryCode, String? subregion) async {
     Box box = await HiveProvider.getEncryptedBox(boxName: _hiveBoxName, boxKeyName: _hiveBoxKey);
@@ -167,7 +167,7 @@ class RegulationsProvider {
     Map<String, RegulationRuleset> result = {};
     _currentRegulations.forEach((sel, rul) {
       if (sel.countryCode == countryCode && ((sel.subregionCode == null && !result.containsKey(sel.rule)) || sel.subregionCode == subregion))
-        result[sel.rule] = rul;
+        result[sel.rule!] = rul;
     });
     return result;
   }
