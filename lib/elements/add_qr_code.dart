@@ -97,7 +97,7 @@ class AddQrCode {
   static Future<void> _selectImage(BuildContext context, Completer completer) async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
-      if (result != null) {
+      if (result != null && result.files.isNotEmpty) {
         List<String> barcodes = await _readQrCodes(File(result.files.first.path!));
 
         if (barcodes.isEmpty) {
