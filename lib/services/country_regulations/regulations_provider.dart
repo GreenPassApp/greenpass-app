@@ -104,9 +104,9 @@ class RegulationsProvider {
 
   static RegulationSelection getUserSelection() => OutdatedCheck.isOutdated ? RegulationSelection(defaultCountry, null, '') : _userSelection;
 
-  static RegulationRuleset? getSelectedRuleset() => _currentRegulations[getUserSelection()];
+  static RegulationRuleset? getSelectedRuleset() => _currentRegulations[getUserSelection()] ?? _currentRegulations[getUserSelection().copyWith(subregionCode: null)];
 
-  static bool useColorValidation() => !OutdatedCheck.isOutdated && _userSelection.countryCode != defaultCountry;
+  static bool useColorValidation() => !OutdatedCheck.isOutdated && _userSelection.countryCode != defaultCountry && getSelectedRuleset() != null;
 
   static String getCountryTranslation(String countryCode) {
     if (countryCode.toUpperCase() == defaultCountry.toUpperCase())
@@ -252,6 +252,10 @@ class RegulationsProvider {
       entries.forEach((e) {
         e as Map<String, dynamic>;
         DateTime validFrom = DateTime.parse(e['validFrom']!);
+
+        if (e['validUntil'] is String && DateTime.parse(e['validUntil']!).isBefore(DateTime.now()))
+          return;
+
         if (validFrom.isBefore(DateTime.now())) {
           if (currentRegulationValidFrom == null || validFrom.isAfter(currentRegulationValidFrom!)) {
             currentRegulation = e;
