@@ -232,7 +232,7 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
                           TextSpan(text: RegulationsProvider.getCountryTranslation(RegulationsProvider.getUserSelection().countryCode), style: TextStyle(fontWeight: FontWeight.bold)),
                           if (RegulationsProvider.useColorValidation()) ...[
                             TextSpan(text: ' '),
-                            TextSpan(text: '(' + RegulationsProvider.getSubregionTranslation(RegulationsProvider.getUserSelection().subregionCode, context.locale) + ')'),
+                            TextSpan(text: '(' + RegulationsProvider.getSubregionTranslation(RegulationsProvider.getUserSelection().subregionCode, context.locale, Settings.getTravelMode()) + ')'),
                           ],
                         ],
                       ),

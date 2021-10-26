@@ -9,6 +9,7 @@ import 'package:greenpass_app/services/country_regulations/regulation_result.dar
 import 'package:greenpass_app/services/country_regulations/regulation_ruleset.dart';
 import 'package:greenpass_app/services/country_regulations/regulation_selection.dart';
 import 'package:greenpass_app/services/outdated_check.dart';
+import 'package:greenpass_app/services/settings.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -117,10 +118,10 @@ class RegulationsProvider {
     }
   }
 
-  static String getSubregionTranslation(String? subregion, Locale locale) {
+  static String getSubregionTranslation(String? subregion, Locale locale, [bool travelMode = false]) {
     if (subregion == null)
-      return 'Nationwide'.tr();
-    return _getTranslations(locale)[_langPrefixSubregion + subregion] ?? _fallbackTranslation;
+      return Settings.translateTravelMode('Nationwide', travelMode: travelMode);
+    return _getTranslations(travelMode ? Locale.fromSubtags(languageCode: 'en') : locale)[_langPrefixSubregion + subregion] ?? _fallbackTranslation;
   }
 
   static String getRuleTranslation(String? rule, Locale locale) => _getTranslations(locale)[_langPrefixRule + (rule ?? '')] ?? _fallbackTranslation;
