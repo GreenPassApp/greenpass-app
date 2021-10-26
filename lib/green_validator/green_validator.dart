@@ -30,6 +30,8 @@ class GreenValidator {
   static const int _res_body_dgc_v1 = 1;
 
   static ValidationResult validate(String rawInput) {
+    rawInput = rawInput.trim();
+
     // check if the right prefix is present
     if (!rawInput.startsWith(_health_certificate_prefix))
       return ValidationResult(errorCode: ValidationErrorCode.unable_to_parse);
@@ -51,6 +53,10 @@ class GreenValidator {
       return ValidationResult(errorCode: ValidationErrorCode.unable_to_parse);
 
     GreenCertificate greenCert = _parseCoseResultPayload(rawInput, result.payload);
+
+    // check that there is only one entry in the entryList, as otherwise it would not conform with the specification
+    if (greenCert.entryList.length != 1)
+      return ValidationResult(errorCode: ValidationErrorCode.unable_to_parse);
 
     // check if the certificate helps against SARS-CoV-2
     if (!greenCert.entryList.any((entry) => entry.targetedDisease == DiseaseType.covid_19))
@@ -80,11 +86,11 @@ class GreenValidator {
     Map body = payload[_res_body][_res_body_dgc_v1];
 
     CertificateType type;
-    if (body.containsKey('v'))
+    if (body.containsKey('v') && body['v'] is List && (body['v'] as List).isNotEmpty)
       type = CertificateType.vaccination;
-    else if (body.containsKey('r'))
+    else if (body.containsKey('r') && body['r'] is List && (body['r'] as List).isNotEmpty)
       type = CertificateType.recovery;
-    else if (body.containsKey('t'))
+    else if (body.containsKey('t') && body['t'] is List && (body['t'] as List).isNotEmpty)
       type = CertificateType.test;
     else
       type = CertificateType.unknown;

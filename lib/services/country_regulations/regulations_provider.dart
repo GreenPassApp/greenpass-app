@@ -16,7 +16,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:greenpass_app/services/hive_provider.dart';
 
 class RegulationsProvider {
-  static const String _regulationsUrl = 'https://raw.githubusercontent.com/GreenPassApp/shared-data/main/validation-by-country-v2.json';
+  static const String _regulationsUrl = 'https://raw.githubusercontent.com/GreenPassApp/shared-data/main/validation-by-country-v2.min.json';
   static const String defaultCountry = 'EU';
   static const String defaultLanguage = 'en';
   static const String _langPrefixSubregion = 'subr_';
