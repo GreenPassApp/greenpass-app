@@ -104,6 +104,8 @@
   "Certificate info": "Zertifikatsinformationen",
   "Issuer": "Aussteller",
   "Issuing country": "Ausstellendes Land",
+  "Technical expiry date": "Technisches Ablaufdatum",
+  "Please make an effort in time to have a new certificate issued by then": "Bitte bemühe dich rechtzeitig darum, bis dahin ein neues Zertifikat ausstellen zu lassen",
   "Certificate identifier": "Identifikationsnummer des Zertifikats",
 
   "Vaccination ({}/{})": "Impfung ({}/{})",

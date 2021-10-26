@@ -244,6 +244,9 @@ class _PassDetailsState extends State<PassDetails> {
             ListElements.horizontalLine(),
             ListElements.entryText(Settings.translateTravelMode('Issuing country'), cert.entryList[0].country == null ? 'Unknown'.tr() : (Settings.getTravelMode() ? cert.entryList[0].country!.name! : cert.entryList[0].country!.localizedName!)),
             ListElements.horizontalLine(),
+            ListElements.entryText(Settings.translateTravelMode('Technical expiry date'), DateFormat('HH:mm, dd.MM.yyyy').format(cert.expiresAt)),
+            ListElements.listPadding(Text('Please make an effort in time to have a new certificate issued by then'.tr(), style: TextStyle(color: GPColors.dark_grey))),
+            ListElements.horizontalLine(),
             ListElements.entryText(Settings.translateTravelMode('Certificate identifier'), cert.entryList[0].certificateIdentifier),
             Padding(padding: const EdgeInsets.symmetric(vertical: 15.0)),
             Column(
