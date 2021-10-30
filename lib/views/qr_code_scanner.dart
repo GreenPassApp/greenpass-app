@@ -126,27 +126,29 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Purpose of use'.tr(),
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12.0,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Purpose of use'.tr(),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12.0,
+                                ),
                               ),
-                            ),
-                            Padding(padding: const EdgeInsets.symmetric(vertical: 1.0)),
-                            Text(
-                              RegulationsProvider.getRuleTranslation(RegulationsProvider.getUserSelection().rule, context.locale).toUpperCase(),
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
+                              Padding(padding: const EdgeInsets.symmetric(vertical: 1.0)),
+                              Text(
+                                RegulationsProvider.getRuleTranslation(RegulationsProvider.getUserSelection().rule, context.locale).toUpperCase(),
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                        Expanded(child: Container()),
+                        Padding(padding: const EdgeInsets.symmetric(horizontal: 4.0)),
                         Icon(
                           FontAwesome5Solid.angle_up,
                           color: Colors.black,
