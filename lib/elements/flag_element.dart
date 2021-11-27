@@ -7,12 +7,13 @@ class FlagElement {
   static Widget buildFlag({required String flag}) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(300),
-      child: Flag(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      child: Flag.fromString(
         flag,
         fit: BoxFit.cover,
         width: 28.0,
         height: 28.0,
-        replacement: Flag(
+        replacement: Flag.fromString(
           default_flag,
           fit: BoxFit.cover,
           width: 28.0,
