@@ -182,5 +182,9 @@
   "An error occurred while downloading the update. Please try again later.": "An error occurred while downloading the update. Please try again later.",
 
   "Purpose of use": "Purpose of use",
-  "Based on the purpose of use selection, all QR codes will be validated according to the current regulations.": "Based on the purpose of use selection, all QR codes will be validated according to the current regulations."
+  "Based on the purpose of use selection, all QR codes will be validated according to the current regulations.": "Based on the purpose of use selection, all QR codes will be validated according to the current regulations.",
+
+  "Sort certificates": "Sort certificates",
+  "Press and hold a certificate in this list to move it": "Press and hold a certificate in this list to move it",
+  "Tip: You can also press and hold any certificate on the home screen to sort them": "Tip: You can also press and hold any certificate on the home screen to sort them"
 }

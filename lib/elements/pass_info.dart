@@ -21,6 +21,7 @@ class PassInfo {
     double additionalTextSize = 20.0,
     bool showTestType = true,
     bool hideDetails = false,
+    bool useBoldText = true,
     Color color = Colors.white,
     RegulationResult? regulationResult,
     bool travelMode = false,
@@ -75,7 +76,7 @@ class PassInfo {
               style: TextStyle(
                 color: color,
                 fontSize: textSize,
-                fontWeight: FontWeight.bold,
+                fontWeight: useBoldText ? FontWeight.bold : null,
               ),
             ),
             if (!hideDetails) ...[
@@ -126,7 +127,7 @@ class PassInfo {
     }
   }
 
-  static String getDate(GreenCertificate cert, {bool travelMode = false}) {
+  static String getDate(GreenCertificate cert, {bool travelMode = false, bool showTime = true}) {
     switch (cert.certificateType) {
       case CertificateType.vaccination:
         var vacs = cert.entryList;
@@ -142,7 +143,7 @@ class PassInfo {
         return DateFormat('dd.MM.yyyy').format(rec.validFrom);
       case CertificateType.test:
         var test = (cert.entryList[0] as CertEntryTest);
-        return DateFormat('dd.MM.yyyy | HH:mm').format(test.timeSampleCollection);
+        return DateFormat('dd.MM.yyyy' + (showTime ? ' | HH:mm' : '')).format(test.timeSampleCollection);
       case CertificateType.unknown:
         return Settings.translateTravelMode('Unknown time', travelMode: travelMode);
     }
@@ -225,6 +226,101 @@ class PassInfo {
           ),
         ),
       ],
+    );
+  }
+
+  static Widget getSmallSortCard(int idx, GreenCertificate cert) {
+    Color cardColor = GPColors.blue;
+    Color textColor = Colors.white;
+    if (RegulationsProvider.useColorValidation()) {
+      RegulationResult res = RegulationsProvider.getSelectedRuleset()!.validate(cert);
+      cardColor = RegulationsProvider.getCardColor(res);
+      textColor = RegulationsProvider.getCardTextColor(res);
+    }
+
+    return Container(
+      child: Column(
+        children: [
+          Divider(height: 0, color: GPColors.dark_grey),
+          Container(
+            color: Colors.transparent,
+            child: Row(
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(20.0),
+                  padding: EdgeInsets.all(15.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(150),
+                    color: cardColor,
+                  ),
+                  child: Icon(
+                    ColoredCard.getValidationIcon(cert),
+                    color: textColor,
+                    size: 25.0,
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FittedBox(
+                        child: Text(
+                          cert.personInfo.fullName,
+                          style: TextStyle(
+                            color: GPColors.almost_black,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Padding(padding: const EdgeInsets.symmetric(vertical: 2.0)),
+                      FittedBox(
+                        child: Row(
+                          children: [
+                            PassInfo.getTypeText(
+                              cert,
+                              textSize: 14.0,
+                              showTestType: false,
+                              color: GPColors.almost_black,
+                              useBoldText: false,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 6.0),
+                              child: Text(
+                                '|',
+                                style: TextStyle(fontSize: 14.0, color: GPColors.almost_black),
+                              ),
+                            ),
+                            Text(
+                              PassInfo.getDate(cert, showTime: false),
+                              style: TextStyle(fontSize: 14.0, color: GPColors.almost_black),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                ReorderableDragStartListener(
+                  key: Key(idx.toString()),
+                  index: idx,
+                  child: Container(
+                    color: Colors.transparent,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 36.0),
+                      child: Icon(
+                        FontAwesome5Solid.sort,
+                        color: GPColors.almost_black,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

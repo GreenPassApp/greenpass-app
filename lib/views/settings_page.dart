@@ -5,7 +5,13 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/elements/first_app_launch.dart';
 import 'package:greenpass_app/elements/list_elements.dart';
+import 'package:greenpass_app/green_validator/green_validator.dart';
+import 'package:greenpass_app/green_validator/model/validation_result.dart';
+import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
+import 'package:greenpass_app/services/my_certs/my_cert.dart';
+import 'package:greenpass_app/services/my_certs/my_certs.dart';
 import 'package:greenpass_app/services/settings.dart';
+import 'package:greenpass_app/views/sort_passes.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -64,6 +70,21 @@ class _SettingsPageState extends State<SettingsPage> {
                   subtitle: 'All detailed information about your certificate will be hidden'.tr(),
                   onChanged: (_) => setState(() => _hidePassDetails = !_hidePassDetails),
                   value: _hidePassDetails,
+                ),
+                ListElements.horizontalLine(height: 0.0),
+                ListElements.listElement(
+                  mainText: 'Sort certificates'.tr(),
+                  subtitle: 'Tip: You can also press and hold any certificate on the home screen to sort them'.tr(),
+                  action: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) {
+                      List<GreenCertificate> greenCerts = [];
+                      for (MyCert myCert in MyCerts.getCurrentCerts()) {
+                        ValidationResult res = GreenValidator.validate(myCert.qrCode);
+                        if (res.success) greenCerts.add(res.certificate!);
+                      }
+                      return SortPasses(certs: greenCerts);
+                    }),
+                  ),
                 ),
                 Padding(padding: const EdgeInsets.symmetric(vertical: 30.0)),
                 ListElements.listPadding(ListElements.groupText('General information'.tr())),

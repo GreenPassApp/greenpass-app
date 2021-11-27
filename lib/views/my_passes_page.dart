@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/consts/colors.dart';
+import 'package:greenpass_app/consts/vibration.dart';
 import 'package:greenpass_app/elements/add_qr_code.dart';
 import 'package:greenpass_app/elements/colored_card.dart';
-import 'package:greenpass_app/elements/list_elements.dart';
 import 'package:greenpass_app/elements/pass_info.dart';
 import 'package:greenpass_app/elements/platform_alert_dialog.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
@@ -16,6 +16,7 @@ import 'package:greenpass_app/services/my_certs/my_certs_result.dart';
 import 'package:greenpass_app/services/settings.dart';
 import 'package:greenpass_app/views/pass_details.dart';
 import 'package:greenpass_app/views/rule_selection_modal.dart';
+import 'package:greenpass_app/views/sort_passes.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -37,6 +38,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
   void initState() {
     controller = PageController(
       initialPage: currentPage,
+      keepPage: true,
       viewportFraction: 0.9,
     );
     super.initState();
@@ -68,10 +70,15 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                 )
               );
 
+            if (currentPage >= res.certificates.length) {
+              currentPage = res.certificates.length - 1;
+              if (controller.hasClients) controller.jumpToPage(currentPage);
+            }
+
             if (res.certificates.isEmpty)
               return _noCertsPage();
             else
-              return _certsPage(res.certificates, controller);
+              return _certsPage(res.certificates);
           }
           return Center(
             child: CircularProgressIndicator(),
@@ -118,12 +125,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
     );
   }
 
-  Widget _certsPage(List<GreenCertificate> certs, PageController controller) {
-    controller = PageController(
-      initialPage: (currentPage >= certs.length ? (certs.length - 1) : currentPage),
-      viewportFraction: 0.9,
-    );
-
+  Widget _certsPage(List<GreenCertificate> certs) {
     return Stack(
       children: [
         PageView.builder(
@@ -153,7 +155,13 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
                     borderRadius: BorderRadius.circular(15.0),
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => PassDetails(cert: certs[idx]))
-                    ),
+                    ).then((_) => setState(() {})),
+                    onLongPress: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => SortPasses(certs: certs))
+                      ).then((_) => setState(() {}));
+                      GPVibration.normalAction();
+                    },
                   ),
                 );
               },

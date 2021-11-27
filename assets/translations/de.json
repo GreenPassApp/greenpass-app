@@ -182,5 +182,9 @@
   "An error occurred while downloading the update. Please try again later.": "Beim Herunterladen des Updates ist ein Fehler aufgetreten. Bitte versuche es später erneut.",
 
   "Purpose of use": "Verwendungszweck",
-  "Based on the purpose of use selection, all QR codes will be validated according to the current regulations.": "Basierend auf der Auswahl des Verwendungszwecks werden alle QR-Codes nach den aktuellen Vorgaben validiert."
+  "Based on the purpose of use selection, all QR codes will be validated according to the current regulations.": "Basierend auf der Auswahl des Verwendungszwecks werden alle QR-Codes nach den aktuellen Vorgaben validiert.",
+
+  "Sort certificates": "Zertifikate sortieren",
+  "Press and hold a certificate in this list to move it": "Halte ein Zertifikat in dieser Liste gedrückt, um es zu verschieben",
+  "Tip: You can also press and hold any certificate on the home screen to sort them": "Tipp: Du kannst auch ein beliebiges Zertifikat auf dem Startbildschirm gedrückt halten, um es zu sortieren"
 }

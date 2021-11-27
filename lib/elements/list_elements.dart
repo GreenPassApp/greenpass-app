@@ -51,7 +51,7 @@ class ListElements {
     );
   }
 
-  static Widget listElement({Widget? icon, String? mainText, String? secondaryText, GestureTapCallback? action, Widget? trailing, Widget? content}) {
+  static Widget listElement({Widget? icon, String? mainText, String? secondaryText, String? subtitle, GestureTapCallback? action, Widget? trailing, Widget? content}) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
       leading: icon,
@@ -81,6 +81,10 @@ class ListElements {
           ],
         ],
       ),
+      subtitle: subtitle != null ? Padding(
+        padding: const EdgeInsets.only(top: 3.0),
+        child: Text(subtitle),
+      ) : null,
       trailing: trailing,
       onTap: action,
     );
