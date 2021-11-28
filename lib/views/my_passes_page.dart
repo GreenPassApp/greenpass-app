@@ -32,7 +32,7 @@ class MyPassesPage extends StatefulWidget {
 
 class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClientMixin<MyPassesPage> {
   late PageController controller;
-  int currentPage = 0;
+  int currentPage = MyCerts.getCertSelection();
 
   @override
   void initState() {
@@ -132,6 +132,7 @@ class _MyPassesPageState extends State<MyPassesPage> with AutomaticKeepAliveClie
           controller: controller,
           onPageChanged: (val) {
             currentPage = val;
+            MyCerts.setCertSelection(val);
           },
           itemCount: certs.length,
           itemBuilder: (context, idx) {

@@ -11,6 +11,7 @@ import 'package:greenpass_app/services/hive_provider.dart';
 
 class MyCerts {
   static List<MyCert>? _myCerts;
+  static late int _certSelection;
 
   static const String _hiveBoxName = 'myCerts';
   static const String _hiveBoxKey = 'myCertsKey';
@@ -24,10 +25,14 @@ class MyCerts {
 
     _myCerts = (jsonDecode((await box.get('myCerts'))!) as List)
       .map((e) => MyCert.fromJson(e)).toList();
+
+    _certSelection = await box.get('myCertsSelection') ?? 0;
+    await _checkSelection();
   }
 
   static Future<void> setCertList(List<MyCert> newList) async {
     _myCerts = newList;
+    await _checkSelection();
     await _saveCurrentList();
   }
 
@@ -38,8 +43,18 @@ class MyCerts {
 
   static Future<void> removeCert(String qrCode) async {
     _myCerts!.removeWhere((c) => c.qrCode == qrCode);
+    await _checkSelection();
     await _saveCurrentList();
   }
+
+  static Future<void> setCertSelection(int selection) async {
+    _certSelection = selection;
+    Box box = await HiveProvider.getEncryptedBox(boxName: _hiveBoxName, boxKeyName: _hiveBoxKey);
+    await box.put('myCertsSelection', selection);
+    await box.compact();
+  }
+
+  static int getCertSelection() => _certSelection;
 
   static List<MyCert> getCurrentCerts() {
     return _myCerts!;
@@ -61,6 +76,7 @@ class MyCerts {
       toRemove.forEach((cert) {
         _myCerts!.remove(cert);
       });
+      await _checkSelection();
       await _saveCurrentList();
     }
 
@@ -68,6 +84,16 @@ class MyCerts {
       certificates: certs,
       invalidCertificatesDeleted: toRemove.length,
     );
+  }
+
+  static Future<void> _checkSelection() async {
+    int max = _myCerts?.length ?? 0;
+    if (_certSelection >= max) {
+      _certSelection = max - 1;
+      if (_certSelection < 0) _certSelection = 0;
+
+      await setCertSelection(_certSelection);
+    }
   }
 
   static Future<void> _saveCurrentList() async {
