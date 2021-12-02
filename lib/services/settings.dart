@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -36,7 +37,13 @@ class Settings {
   static translateTravelMode(String en, {List<String>? args, bool? travelMode}) {
     if (travelMode != null ? travelMode : _travelMode) {
       if (args == null) {
-        return _enTranslations[en];
+        if (kReleaseMode) {
+          return _enTranslations[en] ?? en;
+        } else {
+          String? res = _enTranslations[en];
+          if (res == null) print('[WARNING] Localization key [' + en + '] not found');
+          return res ?? en;
+        }
       } else {
         RegExp toReplace = RegExp(r'{}');
         en = _enTranslations[en];
