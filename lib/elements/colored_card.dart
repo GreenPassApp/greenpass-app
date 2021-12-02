@@ -8,7 +8,6 @@ class ColoredCard {
     required Color backgroundColor,
     required Widget child,
     EdgeInsetsGeometry? padding,
-    bool showCurrentRegulationRule = false,
   }) {
     return Padding(
       padding: padding == null ? const EdgeInsets.all(0) : padding,

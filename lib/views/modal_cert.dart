@@ -51,7 +51,6 @@ class ModalCert extends StatelessWidget {
               children: [
                 Padding(padding: const EdgeInsets.only(top: 16.0),),
                 ColoredCard.buildCard(
-                  showCurrentRegulationRule: true,
                   backgroundColor: cardColor,
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
