@@ -59,6 +59,7 @@ dependencies:
     git:
       url: https://github.com/Hiyorimi/flutter_wallet
   ota_update: ^3.1.0
+  pointycastle: ^3.4.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
