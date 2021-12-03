@@ -147,45 +147,47 @@ class AddQrCode {
         bool found = false;
         PdfDocument doc = await PdfDocument.openFile(result.files.first.path!);
 
-        for (int pageNum = 1; pageNum <= doc.pagesCount; pageNum++) {
-          PdfPage page = await doc.getPage(pageNum);
-          PdfPageImage? pageImage = await page.render(width: page.width * 2, height: page.height * 2, format: PdfPageFormat.PNG);
-          page.close();
+        doFacts: for (int fact in const [1, 2, 4, 8]) {
+          for (int pageNum = 1; pageNum <= doc.pagesCount; pageNum++) {
+            PdfPage page = await doc.getPage(pageNum);
+            PdfPageImage? pageImage = await page.render(width: page.width * fact, height: page.height * fact, format: PdfPageFormat.PNG, backgroundColor: '#FFFFFF');
+            page.close();
 
-          Directory tmpDir = Directory.systemTemp.createTempSync();
-          File tmpPdfImg = new File(join(tmpDir.path + _tmpPdfImgFilename));
-          await tmpPdfImg.writeAsBytes(pageImage!.bytes);
+            Directory tmpDir = Directory.systemTemp.createTempSync();
+            File tmpPdfImg = new File(join(tmpDir.path + _tmpPdfImgFilename));
+            await tmpPdfImg.writeAsBytes(pageImage!.bytes);
 
-          List<String> barcodes = await _readQrCodes(tmpPdfImg);
-          tmpDir.deleteSync(recursive: true);
+            List<String> barcodes = await _readQrCodes(tmpPdfImg);
+            tmpDir.deleteSync(recursive: true);
 
-          if (barcodes.isNotEmpty) {
-            found = true;
-            String code = barcodes.first;
-            ValidationResult res = GreenValidator.validate(code);
+            if (barcodes.isNotEmpty) {
+              found = true;
+              String code = barcodes.first;
+              ValidationResult res = GreenValidator.validate(code);
 
-            if (!res.success) {
-              PlatformAlertDialog.showAlertDialog(
-                context: context,
-                title: 'Invalid QR code'.tr(),
-                text: 'The QR code in the selected file is invalid. Please try again.'.tr(),
-                dismissButtonText: 'Ok'.tr()
-              );
-            } else {
-              if (MyCerts.getCurrentCerts().any((c) => c.qrCode == code)) {
+              if (!res.success) {
                 PlatformAlertDialog.showAlertDialog(
                   context: context,
-                  title: 'Already added'.tr(),
-                  text: 'You have already added this QR code. Please select another file.'.tr(),
+                  title: 'Invalid QR code'.tr(),
+                  text: 'The QR code in the selected file is invalid. Please try again.'.tr(),
                   dismissButtonText: 'Ok'.tr()
                 );
               } else {
-                completer.complete(MyCerts.addCert(
-                  MyCert(qrCode: code),
-                ));
+                if (MyCerts.getCurrentCerts().any((c) => c.qrCode == code)) {
+                  PlatformAlertDialog.showAlertDialog(
+                    context: context,
+                    title: 'Already added'.tr(),
+                    text: 'You have already added this QR code. Please select another file.'.tr(),
+                    dismissButtonText: 'Ok'.tr()
+                  );
+                } else {
+                  completer.complete(MyCerts.addCert(
+                    MyCert(qrCode: code),
+                  ));
+                }
               }
+              break doFacts;
             }
-            break;
           }
         }
 
