@@ -186,5 +186,11 @@
 
   "Sort certificates": "Sort certificates",
   "Press and hold a certificate in this list to move it": "Press and hold a certificate in this list to move it",
-  "Tip: You can also press and hold any certificate on the home screen to sort them": "Tip: You can also press and hold any certificate on the home screen to sort them"
+  "Tip: You can also press and hold any certificate on the home screen to sort them": "Tip: You can also press and hold any certificate on the home screen to sort them",
+
+  "This certificate is not valid": "This certificate is not valid",
+  "Expected to be valid from": "Expected to be valid from",
+  "Expired since": "Expired since",
+  "Expected to be valid forever": "Expected to be valid forever",
+  "Expected to be valid until": "Expected to be valid until"
 }

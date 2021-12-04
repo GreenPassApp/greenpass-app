@@ -16,6 +16,7 @@ import 'package:greenpass_app/green_validator/payload/disease_type.dart';
 import 'package:greenpass_app/green_validator/payload/green_certificate.dart';
 import 'package:greenpass_app/green_validator/payload/test_result.dart';
 import 'package:greenpass_app/green_validator/payload/vaccine_type.dart';
+import 'package:greenpass_app/services/country_regulations/regulation_result.dart';
 import 'package:greenpass_app/services/country_regulations/regulations_provider.dart';
 import 'package:greenpass_app/services/my_certs/my_certs.dart';
 import 'package:greenpass_app/services/settings.dart';
@@ -38,6 +39,10 @@ class _PassDetailsState extends State<PassDetails> {
 
   @override
   Widget build(BuildContext context) {
+    RegulationResult? res;
+    if (RegulationsProvider.useColorValidation())
+      res = RegulationsProvider.getSelectedRuleset()!.validate(cert);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -99,7 +104,7 @@ class _PassDetailsState extends State<PassDetails> {
                 ),
               ),
             ),
-            PassInfo.getSmallPassCard(cert, travelMode: Settings.getTravelMode()),
+            PassInfo.getSmallPassCard(context, cert, travelMode: Settings.getTravelMode()),
             if (Platform.isIOS) ...[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 23.0),
@@ -153,31 +158,13 @@ class _PassDetailsState extends State<PassDetails> {
               ),
               Padding(padding: const EdgeInsets.symmetric(vertical: 7.0)),
             ],
-            ListElements.listPadding(
-              Row(
-                children: [
-                  Icon(
-                    FontAwesome5Solid.info_circle,
-                    color: GPColors.dark_grey,
-                    size: 16.0,
-                  ),
-                  Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0)),
-                  Flexible(
-                    child: FittedBox(
-                      child: Text(
-                        Settings.translateTravelMode('Only valid with official photo identification', travelMode: Settings.getTravelMode()) +
-                            (RegulationsProvider.useColorValidation() ? '\n' + Settings.translateTravelMode('Color validation without guarantee', travelMode: Settings.getTravelMode()) : ''),
-                        style: TextStyle(
-                          color: GPColors.dark_grey,
-                          fontSize: 12.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+            if (res != null) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                child: PassInfo.getCalculatedRegulationResult(res, travelMode: Settings.getTravelMode()),
               ),
-            ),
-            Padding(padding: const EdgeInsets.symmetric(vertical: 14.0)),
+            ],
+            Padding(padding: const EdgeInsets.symmetric(vertical: 18.0)),
             ListElements.listPadding(ListElements.groupText(Settings.translateTravelMode('Person info'))),
             ListElements.horizontalLine(),
             ListElements.entryText(Settings.translateTravelMode('Full name'), cert.personInfo.fullName),
@@ -249,6 +236,48 @@ class _PassDetailsState extends State<PassDetails> {
             ListElements.horizontalLine(),
             ListElements.entryText(Settings.translateTravelMode('Certificate identifier'), cert.entryList[0].certificateIdentifier),
             Padding(padding: const EdgeInsets.symmetric(vertical: 15.0)),
+            if (res != null) ...[
+              ListElements.listPadding(
+                Row(
+                  children: [
+                    Icon(
+                      FontAwesome5Solid.info_circle,
+                      color: GPColors.dark_grey,
+                      size: 16.0,
+                    ),
+                    Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0)),
+                    Flexible(
+                      child: PassInfo.getCurrentRegulationInfo(context, centerText: false, travelMode: Settings.getTravelMode()),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+            ListElements.listPadding(
+              Row(
+                children: [
+                  Icon(
+                    FontAwesome5Solid.info_circle,
+                    color: GPColors.dark_grey,
+                    size: 16.0,
+                  ),
+                  Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0)),
+                  Flexible(
+                    child: FittedBox(
+                      child: Text(
+                        Settings.translateTravelMode('Only valid with official photo identification', travelMode: Settings.getTravelMode()) +
+                            (RegulationsProvider.useColorValidation() ? '\n' + Settings.translateTravelMode('Color validation without guarantee', travelMode: Settings.getTravelMode()) : ''),
+                        style: TextStyle(
+                          color: GPColors.dark_grey,
+                          fontSize: 12.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(padding: const EdgeInsets.symmetric(vertical: 25.0)),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

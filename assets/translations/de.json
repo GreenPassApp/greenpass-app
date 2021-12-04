@@ -186,5 +186,11 @@
 
   "Sort certificates": "Zertifikate sortieren",
   "Press and hold a certificate in this list to move it": "Halte ein Zertifikat in dieser Liste gedrückt, um es zu verschieben",
-  "Tip: You can also press and hold any certificate on the home screen to sort them": "Tipp: Du kannst auch ein beliebiges Zertifikat auf dem Startbildschirm gedrückt halten, um es zu sortieren"
+  "Tip: You can also press and hold any certificate on the home screen to sort them": "Tipp: Du kannst auch ein beliebiges Zertifikat auf dem Startbildschirm gedrückt halten, um es zu sortieren",
+
+  "This certificate is not valid": "Dieses Zertifikat ist nicht gültig",
+  "Expected to be valid from": "Voraussichtlich gültig ab",
+  "Expired since": "Abgelaufen seit",
+  "Expected to be valid forever": "Voraussichtlich für immer gültig",
+  "Expected to be valid until": "Voraussichtlich gültig bis"
 }

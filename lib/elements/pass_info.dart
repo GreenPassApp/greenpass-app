@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/consts/colors.dart';
+import 'package:greenpass_app/elements/flag_element.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_recovery.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_test.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_vaccination.dart';
@@ -180,7 +181,7 @@ class PassInfo {
     }
   }
 
-  static Widget getSmallPassCard(GreenCertificate cert, {bool travelMode = false}) {
+  static Widget getSmallPassCard(BuildContext context, GreenCertificate cert, {bool travelMode = false}) {
     Color cardColor = GPColors.blue;
     Color textColor = Colors.white;
     if (RegulationsProvider.useColorValidation()) {
@@ -196,27 +197,59 @@ class PassInfo {
             padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
             child: ColoredCard.buildCard(
               backgroundColor: cardColor,
-              child: Row(
+              child: Column(
                 children: [
-                  ColoredCard.buildIcon(icon: ColoredCard.getValidationIcon(cert), size: 25.0, circleBorder: 3, circlePadding: 15.0, color: textColor),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      PassInfo.getTypeText(
-                        cert,
-                        textSize: 20.0,
-                        additionalTextSize: 15.0,
-                        showTestType: false,
-                        color: textColor,
-                        travelMode: travelMode,
+                  if (RegulationsProvider.useColorValidation()) ...[
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
+                        color: Colors.white24,
                       ),
-                      Padding(padding: const EdgeInsets.symmetric(vertical: 2.0)),
-                      Text(
-                        PassInfo.getDate(cert, travelMode: travelMode),
-                        style: TextStyle(
-                          color: textColor,
-                          fontSize: 15.0,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 26.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: FittedBox(
+                                child: Text(
+                                  RegulationsProvider.getRuleTranslation(RegulationsProvider.getUserSelection().rule, travelMode ? Locale.fromSubtags(languageCode: 'en') : context.locale).toUpperCase(),
+                                  style: TextStyle(
+                                    color: textColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
+                      ),
+                    ),
+                  ],
+                  Row(
+                    children: [
+                      ColoredCard.buildIcon(icon: ColoredCard.getValidationIcon(cert), size: 25.0, circleBorder: 3, circlePadding: 15.0, color: textColor),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          PassInfo.getTypeText(
+                            cert,
+                            textSize: 20.0,
+                            additionalTextSize: 15.0,
+                            showTestType: false,
+                            color: textColor,
+                            travelMode: travelMode,
+                          ),
+                          Padding(padding: const EdgeInsets.symmetric(vertical: 2.0)),
+                          Text(
+                            PassInfo.getDate(cert, travelMode: travelMode),
+                            style: TextStyle(
+                              color: textColor,
+                              fontSize: 15.0,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -321,6 +354,79 @@ class PassInfo {
           ),
         ],
       ),
+    );
+  }
+
+  static Widget getCalculatedRegulationResult(RegulationResult res, {bool travelMode = false}) {
+    Widget boldText(String text) => Text(
+      text,
+      style: TextStyle(
+        color: GPColors.almost_black,
+        fontSize: 17.0,
+        fontWeight: FontWeight.bold
+      ),
+    );
+    Widget greyText(String text) => Text(
+      text,
+      style: TextStyle(
+        color: GPColors.dark_grey,
+        fontSize: 15.0,
+      ),
+    );
+
+    Widget title;
+    Widget? subtitle;
+
+    if (res.isInvalid) {
+      title = greyText(Settings.translateTravelMode('This certificate is not valid', travelMode: travelMode));
+    } else if (res.needToWait) {
+      title = greyText(Settings.translateTravelMode('Expected to be valid from', travelMode: travelMode));
+      subtitle = boldText(DateFormat('HH:mm, dd.MM.yyyy').format(res.validFrom!));
+    } else if (res.hasExpired) {
+      title = greyText(Settings.translateTravelMode('Expired since', travelMode: travelMode));
+      subtitle = boldText(DateFormat('HH:mm, dd.MM.yyyy').format(res.validUntil!));
+    } else if (res.currentlyValid) {
+      if (res.validUntil == null) {
+        title = greyText(Settings.translateTravelMode('Expected to be valid forever', travelMode: travelMode));
+      } else {
+        title = greyText(Settings.translateTravelMode('Expected to be valid until', travelMode: travelMode));
+        subtitle = boldText(DateFormat('HH:mm, dd.MM.yyyy').format(res.validUntil!));
+      }
+    } else {
+      title = greyText(Settings.translateTravelMode('Unknown', travelMode: travelMode));
+    }
+
+    return ListTile(
+      leading: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FlagElement.buildFlag(flag: RegulationsProvider.getUserSelection().countryCode),
+        ],
+      ),
+      title: title,
+      subtitle: subtitle,
+    );
+  }
+
+  static Widget getCurrentRegulationInfo(BuildContext context, {bool centerText = true, bool travelMode = false}) {
+    List<String> translatedTextParts = Settings.translateTravelMode('Validation according to the regulations in {} (Last update: {})', travelMode: travelMode).split('{}');
+
+    return Text.rich(
+      TextSpan(
+        style: TextStyle(color: GPColors.dark_grey, fontSize: 12.0),
+        children: [
+          TextSpan(text: translatedTextParts[0]),
+          TextSpan(text: (RegulationsProvider.getCountryTranslation(RegulationsProvider.getUserSelection().countryCode) + ', '
+              + RegulationsProvider.getSubregionTranslation(RegulationsProvider.getUserSelection().subregionCode, context.locale, travelMode)).replaceAll(' ', '\u00A0'),
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          TextSpan(text: translatedTextParts[1]),
+          TextSpan(text: DateFormat('dd.MM.yyyy').format(RegulationsProvider.getSelectedRuleset()!.validFrom)),
+          TextSpan(text: translatedTextParts[2]),
+          TextSpan(text: '\n' + Settings.translateTravelMode('All information without guarantee', travelMode: travelMode)),
+        ],
+      ),
+      textAlign: centerText ? TextAlign.center : TextAlign.start,
     );
   }
 }

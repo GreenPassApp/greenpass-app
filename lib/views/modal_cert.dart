@@ -9,8 +9,10 @@ import 'package:greenpass_app/elements/flag_element.dart';
 import 'package:greenpass_app/elements/pass_info.dart';
 import 'package:greenpass_app/green_validator/model/validation_result.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:greenpass_app/green_validator/payload/certificate_type.dart';
 import 'package:greenpass_app/services/country_regulations/regulation_result.dart';
 import 'package:greenpass_app/services/country_regulations/regulations_provider.dart';
+import 'package:greenpass_app/services/settings.dart';
 import 'package:intl/intl.dart';
 
 class ModalCert extends StatelessWidget {
@@ -27,13 +29,33 @@ class ModalCert extends StatelessWidget {
   Widget build(BuildContext context) {
     Color cardColor = cert.success ? GPColors.blue : GPColors.red;
 
+    RegulationResult? res;
     if (cert.success && RegulationsProvider.useColorValidation()) {
-      RegulationResult res = RegulationsProvider.getSelectedRuleset()!.validate(cert.certificate!);
+      res = RegulationsProvider.getSelectedRuleset()!.validate(cert.certificate!);
       cardColor = RegulationsProvider.getCardColor(res);
     }
 
     // there should be no yellow color in the validation process
     if (cardColor == GPColors.yellow) cardColor = GPColors.red;
+
+    Widget? validationNoticeWidget;
+    if (cert.success) {
+      if (RegulationsProvider.useColorValidation()) {
+        validationNoticeWidget = Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Flexible(
+              child: PassInfo.getCurrentRegulationInfo(context, travelMode: Settings.getTravelMode()),
+            ),
+          ],
+        );
+      } else {
+        validationNoticeWidget = Text('There is no validation according to country regulations'.tr(),
+          textAlign: TextAlign.center,
+          style: TextStyle(color: GPColors.dark_grey, fontSize: 12.0),
+        );
+      }
+    }
 
     return Material(
       child: CupertinoPageScaffold(
@@ -168,14 +190,14 @@ class ModalCert extends StatelessWidget {
                 ),
                 if (cert.success) ...[
                   Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: ListTile(
                       leading: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
                             FontAwesome5Solid.user,
-                            size: 30,
+                            size: 28.0,
                             color: GPColors.almost_black,
                           ),
                         ],
@@ -186,44 +208,27 @@ class ModalCert extends StatelessWidget {
                           color: GPColors.almost_black,
                           fontSize: 17.0,
                           fontWeight: FontWeight.bold
-                        )
+                        ),
                       ),
                       subtitle: Text(
                         DateFormat('dd.MM.yyyy').format(cert.certificate!.personInfo.dateOfBirth),
                         style: TextStyle(
-                          color: Colors.grey,
+                          color: GPColors.dark_grey,
                           fontSize: 15.0
-                        )
+                        ),
                       ),
                     ),
                   ),
-                ],
-                if (cert.success) ...[
+                  if (RegulationsProvider.useColorValidation() && res!.currentlyValid) ...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: PassInfo.getCalculatedRegulationResult(res),
+                    ),
+                  ],
                   Expanded(child: Container()),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 40.0),
-                    child: (RegulationsProvider.useColorValidation()) ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        FlagElement.buildFlag(flag: RegulationsProvider.getUserSelection().countryCode),
-                        Padding(padding: const EdgeInsets.symmetric(horizontal: 12.0)),
-                        Flexible(
-                          child: Text('Validation according to the regulations in {} (Last update: {})'.tr(args: [
-                            RegulationsProvider.getCountryTranslation(RegulationsProvider.getUserSelection().countryCode) + ', '
-                                + RegulationsProvider.getSubregionTranslation(RegulationsProvider.getUserSelection().subregionCode, context.locale),
-                            DateFormat('dd.MM.yyyy').format(RegulationsProvider.getSelectedRuleset()!.validFrom)
-                          ]) + '\n' + 'All information without guarantee'.tr(),
-                            textAlign: TextAlign.start,
-                            style: TextStyle(color: GPColors.dark_grey, fontSize: 12.0),
-                          ),
-                        ),
-                      ],
-                    )
-
-                    : Text('There is no validation according to country regulations'.tr(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: GPColors.dark_grey, fontSize: 12.0),
-                    ),
+                    child: validationNoticeWidget,
                   ),
                 ],
               ],
