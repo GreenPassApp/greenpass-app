@@ -39,11 +39,10 @@ class CertEntryVaccination extends CertEntry {
 
   String get medicalProduct {
     if (medicalProductCode == 'EU/1/20/1528') return 'Comirnaty';
-    if (medicalProductCode == 'EU/1/20/1507') return 'COVID-19 Vaccine Moderna';
+    if (medicalProductCode == 'EU/1/20/1507') return 'Spikevax';
     if (medicalProductCode == 'EU/1/21/1529') return 'Vaxzevria';
     if (medicalProductCode == 'EU/1/20/1525') return 'COVID-19 Vaccine Janssen';
     if (medicalProductCode == 'CVnCoV') return 'CVnCoV';
-    if (medicalProductCode == 'NVX-CoV2373') return 'NVX-CoV2373';
     if (medicalProductCode == 'Sputnik-V') return 'Sputnik V';
     if (medicalProductCode == 'Convidecia') return 'Convidecia';
     if (medicalProductCode == 'EpiVacCorona') return 'EpiVacCorona';
@@ -51,6 +50,15 @@ class CertEntryVaccination extends CertEntry {
     if (medicalProductCode == 'Inactivated-SARS-CoV-2-Vero-Cell') return 'Inactivated SARS-CoV-2 (Vero Cell)';
     if (medicalProductCode == 'CoronaVac') return 'CoronaVac';
     if (medicalProductCode == 'Covaxin') return 'Covaxin (also known as BBV152 A, B, C)';
+    if (medicalProductCode == 'Covishield') return 'Covishield (ChAdOx1_nCoV-19)';
+    if (medicalProductCode == 'Covid-19-recombinant') return 'Covid-19 (recombinant)';
+    if (medicalProductCode == 'R-COVI') return 'R-COVI';
+    if (medicalProductCode == 'CoviVac') return 'CoviVac';
+    if (medicalProductCode == 'Sputnik-Light') return 'Sputnik Light';
+    if (medicalProductCode == 'Hayat-Vax') return 'Hayat-Vax';
+    if (medicalProductCode == 'Abdala') return 'Abdala';
+    if (medicalProductCode == 'WIBP-CorV') return 'WIBP-CorV';
+    if (medicalProductCode == 'MVC-COV1901') return 'MVC COVID-19 Vaccine';
 
     return 'Unknown';
   }
@@ -70,6 +78,14 @@ class CertEntryVaccination extends CertEntry {
     if (manufacturerCode == 'Vector-Institute') return 'Vector Institute';
     if (manufacturerCode == 'Sinovac-Biotech') return 'Sinovac Biotech';
     if (manufacturerCode == 'Bharat-Biotech') return 'Bharat Biotech';
+    if (manufacturerCode == 'ORG-100001981') return 'Serum Institute Of India Private Limited';
+    if (manufacturerCode == 'Fiocruz') return 'Fiocruz';
+    if (manufacturerCode == 'ORG-100007893') return 'R-Pharm CJSC';
+    if (manufacturerCode == 'Chumakov-Federal-Scientific-Center') return 'Chumakov Federal Scientific Center for Research and Development of Immune-and-Biological Products';
+    if (manufacturerCode == 'ORG-100023050') return 'Gulf Pharmaceutical Industries';
+    if (manufacturerCode == 'CIGB') return 'Center for Genetic Engineering and Biotechnology';
+    if (manufacturerCode == 'Sinopharm-WIBP') return 'Sinopharm - Wuhan Institute of Biological Products';
+    if (manufacturerCode == 'ORG-100033914') return 'Medigen Vaccine Biologics Corporation';
 
     return 'Unknown';
   }
