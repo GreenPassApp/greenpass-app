@@ -35,7 +35,7 @@ class _SortPassesState extends State<SortPasses> {
         appBar: AppBar(
           centerTitle: true,
           title: Text(
-            'Sort passes'.tr(),
+            'Sort certificates'.tr(),
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black,
