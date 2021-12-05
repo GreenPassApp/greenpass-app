@@ -48,7 +48,7 @@ class _SortPassesState extends State<SortPasses> {
               FontAwesome5Solid.arrow_left,
               color: Colors.black,
             ),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Navigator.of(context).maybePop(),
           ),
         ),
         body: IgnorePointer(
