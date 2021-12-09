@@ -91,7 +91,7 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 16.0),
                     child: Text(
-                      'Hold your camera in front of the QR code.'.tr(),
+                      'Hold the QR code in front of your camera.'.tr(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
