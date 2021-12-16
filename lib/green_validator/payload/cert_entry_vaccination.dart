@@ -43,6 +43,7 @@ class CertEntryVaccination extends CertEntry {
     if (medicalProductCode == 'EU/1/21/1529') return 'Vaxzevria';
     if (medicalProductCode == 'EU/1/20/1525') return 'COVID-19 Vaccine Janssen';
     if (medicalProductCode == 'CVnCoV') return 'CVnCoV';
+    if (medicalProductCode == 'NVX-CoV2373') return 'NVX-CoV2373';
     if (medicalProductCode == 'Sputnik-V') return 'Sputnik V';
     if (medicalProductCode == 'Convidecia') return 'Convidecia';
     if (medicalProductCode == 'EpiVacCorona') return 'EpiVacCorona';
