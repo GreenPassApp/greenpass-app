@@ -31,7 +31,7 @@ class RegulationsProvider {
   static Map<String, dynamic> _translations = {};
   static late RegulationSelection _userSelection;
 
-  static Function? _userSelectionChangeCallback;
+  static Function({required bool showCountrySelection})? _userSelectionChangeCallback;
 
   static const String _hiveBoxName = 'regulations';
   static const String _hiveBoxKey = 'regulationsKey';
@@ -121,7 +121,9 @@ class RegulationsProvider {
   static String getSubregionTranslation(String? subregion, Locale locale, [bool travelMode = false]) {
     if (subregion == null)
       return Settings.translateTravelMode('Nationwide', travelMode: travelMode);
-    return _getTranslations(travelMode ? Locale.fromSubtags(languageCode: 'en') : locale)[_langPrefixSubregion + subregion] ?? _fallbackTranslation;
+
+    String? translation = _getTranslations(travelMode ? Locale.fromSubtags(languageCode: 'en') : locale)[_langPrefixSubregion + subregion];
+    return translation ?? _getTranslations(Locale.fromSubtags(languageCode: 'en'))[_langPrefixSubregion + subregion] ?? _fallbackTranslation;
   }
 
   static String getRuleTranslation(String? rule, Locale locale) => _getTranslations(locale)[_langPrefixRule + (rule ?? '')] ?? _fallbackTranslation;
@@ -152,7 +154,7 @@ class RegulationsProvider {
     await _loadUserSelection();
   }
 
-  static void setUserSelectionChangeCallback(Function? callback) => _userSelectionChangeCallback = callback;
+  static void setUserSelectionChangeCallback(Function({required bool showCountrySelection})? callback) => _userSelectionChangeCallback = callback;
 
   static Map<String, List<String?>> getAvailableRegions() {
     Map<String, List<String?>> result = {};
@@ -181,45 +183,59 @@ class RegulationsProvider {
       await box.get('regulationsUserRule')
     );
     if (_userSelectionChangeCallback != null)
-      _userSelectionChangeCallback!();
+      _userSelectionChangeCallback!(showCountrySelection: false);
   }
 
   // reset user selection when new regulations don't contain old selection
   static Future<void> _repairUserSelection() async {
-    if (_userSelection.countryCode == defaultCountry) return;
 
-    Box box = await HiveProvider.getEncryptedBox(boxName: _hiveBoxName, boxKeyName: _hiveBoxKey);
+    // returns true, when the county selection screen should be shown to the user
+    Future<bool> _repair() async {
+      if (_userSelection.countryCode == defaultCountry) return false;
 
-    Future<void> _fullReset() async {
-      await box.put('regulationsUserCountry', defaultCountry);
-      await box.put('regulationsUserSubregion', null);
-      await box.put('regulationsUserRule', null);
-      await _loadUserSelection();
-    }
+      Box box = await HiveProvider.getEncryptedBox(boxName: _hiveBoxName, boxKeyName: _hiveBoxKey);
 
-    Map<String, List<String?>> availableRegions = getAvailableRegions();
-    if (!availableRegions.containsKey(_userSelection.countryCode)) {
-      await _fullReset();
-      return;
-    }
-
-    Map<String, RegulationRuleset> availableRules = getAvailableRules(_userSelection.countryCode, _userSelection.subregionCode);
-    if (!availableRegions[_userSelection.countryCode]!.contains(_userSelection.subregionCode)) {
-      if (_userSelection.subregionCode == null) {
-        await _fullReset();
-      } else {
+      Future<void> _fullReset() async {
+        await box.put('regulationsUserCountry', defaultCountry);
         await box.put('regulationsUserSubregion', null);
-        await box.put('regulationsUserRule', availableRules.keys.first);
+        await box.put('regulationsUserRule', null);
         await _loadUserSelection();
       }
-      return;
+
+      Map<String, List<String?>> availableRegions = getAvailableRegions();
+      if (!availableRegions.containsKey(_userSelection.countryCode)) {
+        await _fullReset();
+        return true;
+      }
+
+      Map<String, RegulationRuleset> availableRules = getAvailableRules(_userSelection.countryCode, _userSelection.subregionCode);
+      if (!availableRegions[_userSelection.countryCode]!.contains(_userSelection.subregionCode)) {
+        if (_userSelection.subregionCode == null) {
+          await _fullReset();
+        } else {
+          if (availableRegions[_userSelection.countryCode]!.contains(null)) {
+            await box.put('regulationsUserSubregion', null);
+            await box.put('regulationsUserRule', availableRules.keys.first);
+            await _loadUserSelection();
+            return false;
+          } else {
+            await _fullReset();
+          }
+        }
+        return true;
+      }
+
+      if (!availableRules.containsKey(_userSelection.rule)) {
+        await box.put('regulationsUserRule', availableRules.keys.first);
+        await _loadUserSelection();
+        return false;
+      }
+      return false;
     }
 
-    if (!availableRules.containsKey(_userSelection.rule)) {
-      await box.put('regulationsUserRule', availableRules.keys.first);
-      await _loadUserSelection();
-      return;
-    }
+    bool changed = await _repair();
+    if (changed && _userSelectionChangeCallback != null)
+      _userSelectionChangeCallback!(showCountrySelection: true);
   }
 
   static Color getCardTextColor(RegulationResult result) {
@@ -297,7 +313,13 @@ class RegulationsProvider {
 
     jsonData['countries'].forEach((countryCode, value) {
       value as Map<String, dynamic>;
-      _insertRegulations(countryCode, null, value);
+      if (value['disableNationwide'] != true)
+        _insertRegulations(countryCode, null, value);
+      if (value.containsKey('copyRulesToSubregions')) {
+        value['copyRulesToSubregions'].forEach((subregion) {
+          _insertRegulations(countryCode, subregion, value);
+        });
+      }
       if (value.containsKey('subregions')) {
         value['subregions'].forEach((subregion, value) {
           _insertRegulations(countryCode, subregion, value);

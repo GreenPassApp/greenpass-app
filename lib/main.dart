@@ -101,7 +101,15 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    RegulationsProvider.setUserSelectionChangeCallback(() => setState(() {}));
+    RegulationsProvider.setUserSelectionChangeCallback(({required bool showCountrySelection}) {
+      if (showCountrySelection) {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => CountrySelectionPage()
+        )).then((_) => setState(() {}));
+      } else {
+        setState(() {});
+      }
+    });
     _tabController = TabController(length: _pageCount, vsync: this);
     _tabController.addListener(() {
       setState(() { _currentPageIdx = _tabController.index; });
