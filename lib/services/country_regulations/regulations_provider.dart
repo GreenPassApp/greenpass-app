@@ -32,6 +32,7 @@ class RegulationsProvider {
   static late RegulationSelection _userSelection;
 
   static Function({required bool showCountrySelection})? _userSelectionChangeCallback;
+  static bool _showCountrySelection = false;
 
   static const String _hiveBoxName = 'regulations';
   static const String _hiveBoxKey = 'regulationsKey';
@@ -154,7 +155,13 @@ class RegulationsProvider {
     await _loadUserSelection();
   }
 
-  static void setUserSelectionChangeCallback(Function({required bool showCountrySelection})? callback) => _userSelectionChangeCallback = callback;
+  static void setUserSelectionChangeCallback(Function({required bool showCountrySelection})? callback) {
+    if (callback != null && _showCountrySelection) {
+      callback(showCountrySelection: true);
+      _showCountrySelection = false;
+    }
+    _userSelectionChangeCallback = callback;
+  }
 
   static Map<String, List<String?>> getAvailableRegions() {
     Map<String, List<String?>> result = {};
@@ -234,8 +241,12 @@ class RegulationsProvider {
     }
 
     bool changed = await _repair();
-    if (changed && _userSelectionChangeCallback != null)
-      _userSelectionChangeCallback!(showCountrySelection: true);
+    if (changed) {
+      if (_userSelectionChangeCallback != null)
+        _userSelectionChangeCallback!(showCountrySelection: true);
+      else
+        _showCountrySelection = true;
+    }
   }
 
   static Color getCardTextColor(RegulationResult result) {
