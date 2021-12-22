@@ -80,13 +80,19 @@ class FirstAppLaunch {
             await FirstAppLaunch.setFirstLaunchFlag();
             String? countryCode = DetectCountry.countryCode;
             if (countryCode != null && RegulationsProvider.getAvailableRegions().containsKey(countryCode)) {
-              await RegulationsProvider.selectRegion(countryCode, null);
+              if (RegulationsProvider.getAvailableRegions()[countryCode]!.contains(null)) {
+                await RegulationsProvider.selectRegion(countryCode, null);
+                countryCode = null;
+              }
+            } else {
+              countryCode = null;
             }
+
             Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (context) => MyHomePage()
             ));
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => CountrySelectionPage()
+                builder: (context) => CountrySelectionPage(userSelectionChangeResult: UserSelectionChangeResult(showCountrySelectionPage: true, preSelectCountry: countryCode))
             ));
           } else {
             Navigator.of(context).pop();

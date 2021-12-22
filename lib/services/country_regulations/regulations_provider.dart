@@ -31,8 +31,8 @@ class RegulationsProvider {
   static Map<String, dynamic> _translations = {};
   static late RegulationSelection _userSelection;
 
-  static Function({required bool showCountrySelection})? _userSelectionChangeCallback;
-  static bool _showCountrySelection = false;
+  static Function(UserSelectionChangeResult userSelectionChangeResult)? _userSelectionChangeCallback;
+  static UserSelectionChangeResult? _userSelectionChangeResult;
 
   static const String _hiveBoxName = 'regulations';
   static const String _hiveBoxKey = 'regulationsKey';
@@ -155,10 +155,10 @@ class RegulationsProvider {
     await _loadUserSelection();
   }
 
-  static void setUserSelectionChangeCallback(Function({required bool showCountrySelection})? callback) {
-    if (callback != null && _showCountrySelection) {
-      callback(showCountrySelection: true);
-      _showCountrySelection = false;
+  static void setUserSelectionChangeCallback(Function(UserSelectionChangeResult repairUserSelectionResult)? callback) {
+    if (callback != null && _userSelectionChangeResult != null) {
+      callback(_userSelectionChangeResult!);
+      _userSelectionChangeResult = null;
     }
     _userSelectionChangeCallback = callback;
   }
@@ -190,11 +190,12 @@ class RegulationsProvider {
       await box.get('regulationsUserRule')
     );
     if (_userSelectionChangeCallback != null)
-      _userSelectionChangeCallback!(showCountrySelection: false);
+      _userSelectionChangeCallback!(UserSelectionChangeResult(showCountrySelectionPage: false));
   }
 
   // reset user selection when new regulations don't contain old selection
   static Future<void> _repairUserSelection() async {
+    String oldCountrySelection = _userSelection.countryCode;
 
     // returns true, when the county selection screen should be shown to the user
     Future<bool> _repair() async {
@@ -242,10 +243,12 @@ class RegulationsProvider {
 
     bool changed = await _repair();
     if (changed) {
+      UserSelectionChangeResult res = UserSelectionChangeResult(showCountrySelectionPage: true, preSelectCountry: getAvailableRegions().containsKey(oldCountrySelection) ? oldCountrySelection : null);
+
       if (_userSelectionChangeCallback != null)
-        _userSelectionChangeCallback!(showCountrySelection: true);
+        _userSelectionChangeCallback!(res);
       else
-        _showCountrySelection = true;
+        _userSelectionChangeResult = res;
     }
   }
 
@@ -345,4 +348,14 @@ class RegulationsProvider {
     Response res = await get(Uri.parse(_regulationsUrl));
     return jsonDecode(res.body);
   }
+}
+
+class UserSelectionChangeResult {
+  final bool showCountrySelectionPage;
+  final String? preSelectCountry;
+
+  UserSelectionChangeResult({
+    required this.showCountrySelectionPage,
+    this.preSelectCountry,
+  });
 }

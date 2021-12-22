@@ -5,7 +5,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/consts/configuration.dart';
 import 'package:greenpass_app/elements/platform_alert_dialog.dart';
@@ -101,10 +100,10 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    RegulationsProvider.setUserSelectionChangeCallback(({required bool showCountrySelection}) {
-      if (showCountrySelection) {
+    RegulationsProvider.setUserSelectionChangeCallback((UserSelectionChangeResult res) {
+      if (res.showCountrySelectionPage) {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => CountrySelectionPage()
+          builder: (context) => CountrySelectionPage(userSelectionChangeResult: res)
         )).then((_) => setState(() {}));
       } else {
         setState(() {});

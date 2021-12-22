@@ -9,7 +9,9 @@ import 'package:greenpass_app/services/country_regulations/regulations_provider.
 import 'package:greenpass_app/services/outdated_check.dart';
 
 class CountrySelectionPage extends StatefulWidget {
-  const CountrySelectionPage({Key? key}) : super(key: key);
+  final UserSelectionChangeResult? userSelectionChangeResult;
+
+  const CountrySelectionPage({Key? key, UserSelectionChangeResult? userSelectionChangeResult}) : this.userSelectionChangeResult = userSelectionChangeResult, super(key: key);
 
   @override
   _CountrySelectionPageState createState() => _CountrySelectionPageState();
@@ -21,6 +23,13 @@ class _CountrySelectionPageState extends State<CountrySelectionPage> {
 
   @override
   Widget build(BuildContext context) {
+    final scrollToCountry = new GlobalKey();
+
+    Future.delayed(Duration(milliseconds: 200), () {
+      if (scrollToCountry.currentContext != null)
+        Scrollable.ensureVisible(scrollToCountry.currentContext!, duration: Duration(milliseconds: 500));
+    });
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -69,7 +78,7 @@ class _CountrySelectionPageState extends State<CountrySelectionPage> {
             ],
             for (String c in _countryListOrderedByName()) ...[
               ListElements.horizontalLine(height: 0),
-              _countryListElement(code: c),
+              _countryListElement(scrollTo: (widget.userSelectionChangeResult?.preSelectCountry == c ? scrollToCountry : null), code: c),
             ],
             Padding(padding: const EdgeInsets.symmetric(vertical: 20.0)),
             _infoText('Work is currently underway to add the regulations for all other EU countries!'.tr()),
@@ -92,7 +101,7 @@ class _CountrySelectionPageState extends State<CountrySelectionPage> {
     );
   }
 
-  Widget _countryListElement({required String code}) {
+  Widget _countryListElement({Key? scrollTo, required String code}) {
     Locale l = Locale.fromSubtags(countryCode: code);
     CountryDetails? c;
     try {
@@ -108,13 +117,14 @@ class _CountrySelectionPageState extends State<CountrySelectionPage> {
       name = c.localizedName!;
 
     return IgnorePointer(
+      key: scrollTo,
       ignoring: OutdatedCheck.isOutdated,
       child: Opacity(
         opacity: OutdatedCheck.isOutdated ? 0.5 : 1.0,
         child: availableRegions.containsKey(code) ? ListElements.expandableListElement(
           context: context,
           icon: FlagElement.buildFlag(flag: code),
-          expanded: RegulationsProvider.getUserSelection().countryCode == code,
+          expanded: RegulationsProvider.getUserSelection().countryCode == code || scrollTo != null,
           mainText: name,
           secondaryText: '(' + code.toUpperCase() + ')',
           children: [
