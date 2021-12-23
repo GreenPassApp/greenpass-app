@@ -43,7 +43,7 @@ void main() async {
   DetectCountry.getCountryCode();
   runApp(
     EasyLocalization(
-      supportedLocales: [Locale('en'), Locale('de')],
+      supportedLocales: [Locale('en'), Locale('de'), Locale('sk')],
       path: 'assets/translations',
       fallbackLocale: Locale('en'),
       child: App(await FirstAppLaunch.isFirstLaunch())
