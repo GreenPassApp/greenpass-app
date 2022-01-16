@@ -44,6 +44,7 @@ class FirstAppLaunch {
                 child:  MarkdownBody(
                   onTapLink: (text, href, title) => launch('https://greenpassapp.eu/privacy'),
                   data: 'Your data is only stored and processed **locally and offline on your device** and will be deleted when you uninstall the app.'.tr() + '\n\n'
+                      + '**Adding or scanning** certificates will require giving the app access to **your camera or internal storage**.'.tr() + '\n\n'
                       + _getFeaturesText()
                       + 'All further information can be found in the [privacy policy]().'.tr(),
                   styleSheet: MarkdownStyleSheet(

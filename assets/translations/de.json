@@ -144,6 +144,7 @@
 
   "Privacy policy": "Datenschutzerklärung",
   "Your data is only stored and processed **locally and offline on your device** and will be deleted when you uninstall the app.": "Deine Daten werden ausschließlich **lokal und offline auf deinem Gerät** gespeichert und verarbeitet und werden beim Deinstallieren der App unwiderruflich gelöscht.",
+  "**Adding or scanning** certificates will require giving the app access to **your camera or internal storage**.": "Für das **Hinzufügen oder Scannen** von Zertifikaten benötigt die App Zugriff auf **deine Kamera oder internen Speicher**.",
   "When using the **Apple Wallet** feature, personal data is stored and processed online for the shortest possible period of time. Of course, you will be informed about this in the app before using this feature.": "Beim Verwenden der **Apple Wallet** Funktion werden deine Daten für den kürzest-notwendigen Zeitraum online gespeichert. Selbstverständlich wirst du davor noch einmal darüber aufgeklärt.",
   "All further information can be found in the [privacy policy]().": "Alle weiteren Infos findest du in der [Datenschutzerklärung]().",
   "I accept the privacy policy": "Ich akzeptiere die Datenschutzerklärung",
