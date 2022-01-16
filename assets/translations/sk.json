@@ -15,7 +15,7 @@
   "Unknown": "Neznámy",
   "PCR test": "PCR test",
   "Rapid test": "Rýchlotest",
-  "Antigen": "Antigénový test",
+  "Antigen": "Antigén",
   "mRNA": "mRNA",
   "COVID-19 Vaccine": "COVID-19 Vakcína",
   "COVID-19": "COVID-19",
@@ -108,7 +108,7 @@
   "Please make an effort in time to have a new certificate issued by then": "Zabezpečte, prosím, aby Vám bol vydaný nový certifikát do vyššie uvedeného dátumu",
   "Certificate identifier": "Identifikátor certifikátu",
 
-  "Vaccination ({}/{})": "Očkovanie ({}/{})",
+  "Vaccination ({}/{})": "Vakcinácia ({}/{})",
   "Vaccine type": "Typ vakcíny",
   "Vaccine": "Vakcína",
   "Manufacturer": "Výrobca",
