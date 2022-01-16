@@ -140,7 +140,7 @@ class _PassDetailsState extends State<PassDetails> {
                           actionButtonText: 'Create pass'.tr(),
                           action: () async {
                             try {
-                              await AppleWallet.getAppleWalletPass(rawCert: cert.rawData, serialNumber: cert.personInfo.pseudoIdentifier);
+                              await AppleWallet.getAppleWalletPass(rawCert: cert.rawData, serialNumber: cert.entryList.first.certificateIdentifier);
                             } catch (_) {
                               PlatformAlertDialog.showAlertDialog(
                                 context: context,
