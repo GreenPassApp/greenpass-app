@@ -126,6 +126,7 @@
   "Select **\"Check Pass\"** from the menu to validate QR codes from other people": "Sélectionnez **\"Valider le passeport \"** dans le menu pour valider les codes QR d'autres personnes",
   "Privacy policy": "Politique de confidentialité",
   "Your data is only stored and processed **locally and offline on your device** and will be deleted when you uninstall the app.": "Vos données seront uniquement stockées et traitées **localement et hors ligne sur votre appareil** et seront irrévocablement supprimées lorsque vous désinstallerez l'application.",
+  "**Adding or scanning** certificates will require giving the app access to **your camera or internal storage**.": "**Adding or scanning** certificates will require giving the app access to **your camera or internal storage**.",
   "When using the **Apple Wallet** feature, personal data is stored and processed online for the shortest possible period of time. Of course, you will be informed about this in the app before using this feature.": "When using the **Apple Wallet** feature, personal data is stored and processed online for the shortest possible period of time. Of course, you will be informed about this in the app before using this feature.",
   "All further information can be found in the [privacy policy]().": "Toutes les informations complémentaires se trouvent dans la [politique de confidentialité]().",
   "I accept the privacy policy": "J'accepte la politique de confidentialité",
