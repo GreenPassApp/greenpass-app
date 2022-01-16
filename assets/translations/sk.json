@@ -126,6 +126,7 @@
   "Select **\"Check Pass\"** from the menu to validate QR codes from other people": "Tapnite na **\"Check Pass\"** na domovskej obrazovke na overenie certifikátov",
   "Privacy policy": "Zásady ochrany súkromia",
   "Your data is only stored and processed **locally and offline on your device** and will be deleted when you uninstall the app.": "Vaše údaje sú uchované a spracúvané **offline na vašom zariadení** a budú vymazané po odinštalovaní apky.",
+  "**Adding or scanning** certificates will require giving the app access to **your camera or internal storage**.": "**Adding or scanning** certificates will require giving the app access to **your camera or internal storage**.",
   "When using the **Apple Wallet** feature, personal data is stored and processed online for the shortest possible period of time. Of course, you will be informed about this in the app before using this feature.": "Ak použijete **Apple Wallet** funkciu, osobné údaje budú spracované online počas čo najkratšej doby. Predtým však budete upozornení na túto skutočnosť.",
   "All further information can be found in the [privacy policy]().": "Ďalšie informácie nájdete v [Zásadách ochrany súkromia]().",
   "I accept the privacy policy": "Akceptujem Zásady ochrany súkromia",
