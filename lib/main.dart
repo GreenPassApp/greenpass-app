@@ -16,6 +16,7 @@ import 'package:greenpass_app/elements/flag_element.dart';
 import 'package:greenpass_app/services/country_regulations/regulations_provider.dart';
 import 'package:greenpass_app/services/my_certs/my_certs.dart';
 import 'package:greenpass_app/services/outdated_check.dart';
+import 'package:greenpass_app/services/permission_asker.dart';
 import 'package:greenpass_app/services/pub_certs/pub_certs.dart';
 import 'package:greenpass_app/services/settings.dart';
 import 'package:greenpass_app/services/update_check/update_check.dart';
@@ -184,7 +185,11 @@ class _HomePageState extends State<MyHomePage> with SingleTickerProviderStateMix
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentPageIdx,
         onTap: (newIdx) {
-          _tabController.animateTo(newIdx);
+          if (newIdx == 1) {
+            PermissionAsker.tryUntilCameraPermissionGranted(context, () => _tabController.animateTo(newIdx));
+          } else {
+            _tabController.animateTo(newIdx);
+          }
         },
         items: <BottomNavigationBarItem> [
           BottomNavigationBarItem(

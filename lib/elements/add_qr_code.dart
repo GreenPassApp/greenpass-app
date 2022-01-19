@@ -13,6 +13,7 @@ import 'package:greenpass_app/green_validator/green_validator.dart';
 import 'package:greenpass_app/green_validator/model/validation_result.dart';
 import 'package:greenpass_app/services/my_certs/my_cert.dart';
 import 'package:greenpass_app/services/my_certs/my_certs.dart';
+import 'package:greenpass_app/services/permission_asker.dart';
 import 'package:greenpass_app/views/add_my_pass_page.dart';
 import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import 'package:path/path.dart';
@@ -22,7 +23,7 @@ class AddQrCode {
 
   static const platform = const MethodChannel('eu.greenpassapp.greenpass/mlkit_vision');
 
-  static Future<void> openDialog(BuildContext context) {
+  static Future<void> openDialog(BuildContext context) async {
     Completer completer = Completer();
     showDialog(
       context: context,
@@ -60,9 +61,11 @@ class AddQrCode {
                       title: Text('Scan with camera'.tr()),
                       onTap: () {
                         Navigator.of(context).pop();
-                        completer.complete(Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => AddMyPassPage()
-                        )));
+                        PermissionAsker.tryUntilCameraPermissionGranted(context, () {
+                          completer.complete(Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => AddMyPassPage()
+                          )));
+                        });
                       },
                     ),
                     ListTile(
@@ -71,7 +74,7 @@ class AddQrCode {
                       title: Text('Select image'.tr()),
                       onTap: () {
                         Navigator.of(context).pop();
-                        _selectImage(context, completer);
+                        PermissionAsker.tryUntilReadStoragePermissionGranted(context, () => _selectImage(context, completer));
                       },
                     ),
                     ListTile(
@@ -80,7 +83,7 @@ class AddQrCode {
                       title: Text('Select PDF document'.tr()),
                       onTap: () {
                         Navigator.of(context).pop();
-                        _selectPDF(context, completer);
+                        PermissionAsker.tryUntilReadStoragePermissionGranted(context, () => _selectPDF(context, completer));
                       },
                     ),
                   ],

@@ -193,5 +193,14 @@
   "Expected to be valid from": "Voraussichtlich gültig ab",
   "Expired since": "Abgelaufen seit",
   "Expected to be valid forever": "Voraussichtlich für immer gültig",
-  "Expected to be valid until": "Voraussichtlich gültig bis"
+  "Expected to be valid until": "Voraussichtlich gültig bis",
+
+  "Permission required": "Berechtigung erforderlich",
+  "Please grant the app permission to access the camera. This is required to add or verify certificates.": "Bitte erteile der App die Erlaubnis, auf die Kamera zuzugreifen. Dies ist notwendig, um Zertifikate hinzuzufügen oder zu überprüfen.",
+  "Please grant the app permission to read from storage. This is required to add certificates.": "Bitte erteile der App die Erlaubnis zum Lesen aus dem internen Speicher. Dies ist notwendig, um Zertifikate hinzufügen zu können.",
+  "All added certificates are stored and processed locally and offline only.": "Alle hinzugefügten Zertifikate werden ausschließlich lokal und offline gespeichert und verarbeitet.",
+  "No data is stored when checking other certificates.": "Beim Überprüfen anderer Zertifikate werden keine Daten gespeichert.",
+
+  "Allow": "Erlauben",
+  "Deny": "Verweigern"
 }
