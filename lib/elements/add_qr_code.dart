@@ -74,7 +74,7 @@ class AddQrCode {
                       title: Text('Select image'.tr()),
                       onTap: () {
                         Navigator.of(context).pop();
-                        PermissionAsker.tryUntilReadStoragePermissionGranted(context, () => _selectImage(context, completer));
+                        PermissionAsker.tryUntilReadImagesPermissionGranted(context, () => _selectImage(context, completer));
                       },
                     ),
                     ListTile(
