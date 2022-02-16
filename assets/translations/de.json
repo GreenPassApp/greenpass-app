@@ -41,6 +41,13 @@
     "many": "Vor {} Stunden",
     "other": "Vor {} Stunden"
   },
+  "In {} days": {
+    "zero": "Ab heute",
+    "one": "Ab morgen",
+    "two": "In {} Tagen",
+    "many": "In {} Tagen",
+    "other": "In {} Tagen"
+  },
   "For {} days": {
     "zero": "Seit heute",
     "one": "Seit gestern",

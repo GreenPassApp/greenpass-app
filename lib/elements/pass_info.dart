@@ -169,7 +169,10 @@ class PassInfo {
         int timeDiff = DateTime.now()
             .difference(rec.validFrom)
             .inDays;
-        return Settings.translatePluralTravelMode('For {} days', timeDiff, travelMode: travelMode);
+        if (timeDiff < 0)
+          return Settings.translatePluralTravelMode('In {} days', -timeDiff, travelMode: travelMode);
+        else
+          return Settings.translatePluralTravelMode('For {} days', timeDiff, travelMode: travelMode);
       case CertificateType.test:
         var test = (cert.entryList[0] as CertEntryTest);
         int timeDiff = DateTime.now()
