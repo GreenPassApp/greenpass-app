@@ -30,6 +30,15 @@ class GreenValidator {
   static const int _res_body_dgc_v1 = 1;
 
   static ValidationResult validate(String rawInput) {
+    try {
+      return _validate(rawInput);
+    } catch (ex) {
+      print(ex);
+      return ValidationResult(errorCode: ValidationErrorCode.unable_to_parse);
+    }
+  }
+
+  static ValidationResult _validate(String rawInput) {
     rawInput = rawInput.trim();
 
     // check if the right prefix is present
@@ -74,7 +83,7 @@ class GreenValidator {
 
     // check if recovery certificate has expired
     if (greenCert.certificateType == CertificateType.recovery
-      && (greenCert.entryList[0] as CertEntryRecovery).validUntil.isBefore(DateTime.now())) {
+        && (greenCert.entryList[0] as CertEntryRecovery).validUntil.isBefore(DateTime.now())) {
       return ValidationResult(errorCode: ValidationErrorCode.certificate_expired);
     }
 
