@@ -39,7 +39,7 @@ class RegulationRuleset {
     String mp = vac.medicalProductCode;
     int dn = vac.doseNumber;
     int sd = vac.dosesNeeded;
-    bool full = (dn == sd);
+    bool full = (dn >= sd);
 
     bool _numberCheck(int num, dynamic entry) {
       bool _atomicCheck(dynamic test) {
