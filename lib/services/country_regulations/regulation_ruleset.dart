@@ -1,3 +1,4 @@
+import 'package:age_calculator/age_calculator.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_recovery.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_test.dart';
 import 'package:greenpass_app/green_validator/payload/cert_entry_vaccination.dart';
@@ -91,6 +92,11 @@ class RegulationRuleset {
 
       if (cond.containsKey('full')) {
         if (cond['full'] != full) continue;
+      }
+
+      if (cond.containsKey('age')) {
+        int personAge = AgeCalculator.age(cert.personInfo.dateOfBirth).years;
+        if (!_numberCheck(personAge, cond['age'])) continue;
       }
       // criteria passed
 
