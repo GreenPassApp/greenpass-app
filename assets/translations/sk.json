@@ -167,5 +167,13 @@
   "Expected to be valid from": "Predpokladá sa, že bude platný od",
   "Expired since": "Neplatný od",
   "Expected to be valid forever": "Predpokladá sa, že bude platný navždy",
-  "Expected to be valid until": "Predpokladá sa, že bude platný do"
+  "Expected to be valid until": "Predpokladá sa, že bude platný do",
+  "Permission required": "Permission required",
+  "Please grant the app permission to access the camera. This is required to add or verify certificates.": "Please grant the app permission to access the camera. This is required to add or verify certificates.",
+  "Please grant the app permission to read from storage. This is required to add certificates.": "Please grant the app permission to read from storage. This is required to add certificates.",
+  "Please grant the app permission to access your images. This is required to add certificates.": "Please grant the app permission to access your images. This is required to add certificates.",
+  "All added certificates are stored and processed locally and offline only.": "All added certificates are stored and processed locally and offline only.",
+  "No data is stored when checking other certificates.": "No data is stored when checking other certificates.",
+  "Allow": "Allow",
+  "Deny": "Deny"
 }
