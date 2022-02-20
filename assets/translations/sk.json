@@ -40,6 +40,13 @@
     "many": "Pred {} hodinami",
     "other": "Pred {} hodinami"
   },
+  "In {} days": {
+    "zero": "From today",
+    "one": "From tomorrow",
+    "two": "In {} days",
+    "many": "In {} days",
+    "other": "In {} days"
+  },
   "For {} days": {
     "zero": "Oddnes",
     "one": "Od včera",
