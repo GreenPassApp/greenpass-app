@@ -40,6 +40,13 @@
     "many": "{} hours ago",
     "other": "{} hours ago"
   },
+  "In {} days": {
+    "zero": "From today",
+    "one": "From tomorrow",
+    "two": "In {} days",
+    "many": "In {} days",
+    "other": "In {} days"
+  },
   "For {} days": {
     "zero": "Since today",
     "one": "Since yesterday",
