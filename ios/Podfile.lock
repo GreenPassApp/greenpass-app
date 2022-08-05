@@ -42,45 +42,43 @@ PODS:
   - Flutter (1.0.0)
   - flutter_secure_storage (3.3.1):
     - Flutter
-  - flutter_statusbarcolor_ns (0.0.1):
-    - Flutter
   - flutter_wallet (0.0.1):
     - Flutter
-  - GoogleDataTransport (9.0.1):
+  - GoogleDataTransport (9.1.2):
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
-    - PromisesObjC (~> 1.2)
-  - GoogleMLKit/BarcodeScanning (2.2.0):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleMLKit/BarcodeScanning (2.4.0):
     - GoogleMLKit/MLKitCore
-    - MLKitBarcodeScanning (~> 1.3.0)
-  - GoogleMLKit/MLKitCore (2.2.0):
-    - MLKitCommon (~> 3.0.0)
-  - GoogleToolboxForMac/DebugUtils (2.3.1):
-    - GoogleToolboxForMac/Defines (= 2.3.1)
-  - GoogleToolboxForMac/Defines (2.3.1)
-  - GoogleToolboxForMac/Logger (2.3.1):
-    - GoogleToolboxForMac/Defines (= 2.3.1)
-  - "GoogleToolboxForMac/NSData+zlib (2.3.1)":
-    - GoogleToolboxForMac/Defines (= 2.3.1)
-  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.3.1)":
-    - GoogleToolboxForMac/DebugUtils (= 2.3.1)
-    - GoogleToolboxForMac/Defines (= 2.3.1)
-    - "GoogleToolboxForMac/NSString+URLArguments (= 2.3.1)"
-  - "GoogleToolboxForMac/NSString+URLArguments (2.3.1)"
-  - GoogleUtilities/Environment (7.4.3):
-    - PromisesObjC (~> 1.2)
-  - GoogleUtilities/Logger (7.4.3):
+    - MLKitBarcodeScanning (~> 1.5.0)
+  - GoogleMLKit/MLKitCore (2.4.0):
+    - MLKitCommon (~> 4.0.0)
+  - GoogleToolboxForMac/DebugUtils (2.3.2):
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+  - GoogleToolboxForMac/Defines (2.3.2)
+  - GoogleToolboxForMac/Logger (2.3.2):
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+  - "GoogleToolboxForMac/NSData+zlib (2.3.2)":
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.3.2)":
+    - GoogleToolboxForMac/DebugUtils (= 2.3.2)
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.3.2)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.3.2)"
+  - GoogleUtilities/Environment (7.7.0):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Logger (7.7.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/UserDefaults (7.4.3):
+  - GoogleUtilities/UserDefaults (7.7.0):
     - GoogleUtilities/Logger
-  - GoogleUtilitiesComponents (1.0.0):
+  - GoogleUtilitiesComponents (1.1.0):
     - GoogleUtilities/Logger
-  - GTMSessionFetcher/Core (1.6.1)
+  - GTMSessionFetcher/Core (1.7.0)
   - MLImage (1.0.0-beta1)
-  - MLKitBarcodeScanning (1.3.0):
-    - MLKitCommon (~> 3.0)
-    - MLKitVision (~> 1.3)
-  - MLKitCommon (3.0.0):
+  - MLKitBarcodeScanning (1.5.0):
+    - MLKitCommon (~> 4.0)
+    - MLKitVision (~> 2.0)
+  - MLKitCommon (4.0.0):
     - GoogleDataTransport (~> 9.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
@@ -89,12 +87,12 @@ PODS:
     - GoogleUtilitiesComponents (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
     - Protobuf (~> 3.12)
-  - MLKitVision (1.3.0):
+  - MLKitVision (2.0.0):
     - GoogleToolboxForMac/Logger (~> 2.1)
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - GTMSessionFetcher/Core (~> 1.1)
     - MLImage (= 1.0.0-beta1)
-    - MLKitCommon (~> 3.0)
+    - MLKitCommon (~> 4.0)
     - Protobuf (~> 3.12)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
@@ -107,20 +105,20 @@ PODS:
     - Flutter
   - package_info (0.0.1):
     - Flutter
-  - path_provider (0.0.1):
+  - path_provider_ios (0.0.1):
     - Flutter
-  - PromisesObjC (1.2.12)
-  - Protobuf (3.17.0)
+  - PromisesObjC (2.0.0)
+  - Protobuf (3.19.4)
   - qr_mobile_vision (0.0.1):
     - Flutter
     - GoogleMLKit/BarcodeScanning
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
-  - shared_preferences (0.0.1):
+  - shared_preferences_ios (0.0.1):
     - Flutter
   - SwiftyGif (5.4.0)
-  - url_launcher (0.0.1):
+  - url_launcher_ios (0.0.1):
     - Flutter
   - vibration (1.7.4-nullsafety.0):
     - Flutter
@@ -132,16 +130,15 @@ DEPENDENCIES:
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
-  - flutter_statusbarcolor_ns (from `.symlinks/plugins/flutter_statusbarcolor_ns/ios`)
   - flutter_wallet (from `.symlinks/plugins/flutter_wallet/ios`)
-  - GoogleMLKit/BarcodeScanning (~> 2.2.0)
+  - GoogleMLKit/BarcodeScanning (~> 2.4.0)
   - native_device_orientation (from `.symlinks/plugins/native_device_orientation/ios`)
   - native_pdf_renderer (from `.symlinks/plugins/native_pdf_renderer/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
-  - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - qr_mobile_vision (from `.symlinks/plugins/qr_mobile_vision/ios`)
-  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
-  - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
+  - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - vibration (from `.symlinks/plugins/vibration/ios`)
 
 SPEC REPOS:
@@ -177,8 +174,6 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
-  flutter_statusbarcolor_ns:
-    :path: ".symlinks/plugins/flutter_statusbarcolor_ns/ios"
   flutter_wallet:
     :path: ".symlinks/plugins/flutter_wallet/ios"
   native_device_orientation:
@@ -187,14 +182,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/native_pdf_renderer/ios"
   package_info:
     :path: ".symlinks/plugins/package_info/ios"
-  path_provider:
-    :path: ".symlinks/plugins/path_provider/ios"
+  path_provider_ios:
+    :path: ".symlinks/plugins/path_provider_ios/ios"
   qr_mobile_vision:
     :path: ".symlinks/plugins/qr_mobile_vision/ios"
-  shared_preferences:
-    :path: ".symlinks/plugins/shared_preferences/ios"
-  url_launcher:
-    :path: ".symlinks/plugins/url_launcher/ios"
+  shared_preferences_ios:
+    :path: ".symlinks/plugins/shared_preferences_ios/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
   vibration:
     :path: ".symlinks/plugins/vibration/ios"
 
@@ -205,34 +200,33 @@ SPEC CHECKSUMS:
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
-  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
-  flutter_statusbarcolor_ns: 68a360889d88d7915ae524e422aeab62e4063804
   flutter_wallet: 28ee392bfd5492527a1d209272630f8a5544b65a
-  GoogleDataTransport: 04c3e9a480bbcaa2ec3f5d27f1cdeb6a92f20c8d
-  GoogleMLKit: 85ffdc9641d05311c76dbba5bbf93059087be12f
-  GoogleToolboxForMac: 471e0c05d39506e50e6398f46fa9a12ae0efeff9
-  GoogleUtilities: 45dbb24a7f351d69d0a601482b39ad6c32e30dab
-  GoogleUtilitiesComponents: a69c0b3b369ba443e988141e75ef49d9010b1c80
-  GTMSessionFetcher: 36689134877faeb055b27dfa4ccc9ceaa42e029e
+  GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
+  GoogleMLKit: db5007bddb78dedf52b60f4038d32e7bd006b519
+  GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
+  GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
+  GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
+  GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   MLImage: 647f3d580c10b3c9a3f6154f5d7baead60c42a0c
-  MLKitBarcodeScanning: 6b998bd1cfe471ae407a7f647d649494617787c0
-  MLKitCommon: 6d6be0a2e9a6340aad1c1f2b9449c11dee8af70f
-  MLKitVision: 26da299aef93291f24f5200e8372919f73abf3b5
+  MLKitBarcodeScanning: 9fee06fcf50972f0d816ac8a6af29cee9838e6a6
+  MLKitCommon: 923bcf261636f36af5fbf329b1643ea3cd69468b
+  MLKitVision: 53b8f93a864c8d9740f7f09041911f2e64150ec8
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   native_device_orientation: 3b4cfc9565a7b879cc4fde282b3e27745e852d0d
   native_pdf_renderer: 0e545bf94fb341e0fe7508bf72d4c1c42c30aa02
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
-  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
-  PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
-  Protobuf: 7327d4444215b5f18e560a97f879ff5503c4581c
+  path_provider_ios: 7d7ce634493af4477d156294792024ec3485acd5
+  PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  Protobuf: 235750e4696ff59fb07d949a9dbbc92b3c0700fe
   qr_mobile_vision: 308ef269e6bc257c05a4adf218e02afc2be09736
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
-  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
+  shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   SwiftyGif: 5d4af95df24caf1c570dbbcb32a3b8a0763bc6d7
-  url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
+  url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
   vibration: 1ec279c4a1a7a646627b54039d812334b3f1114a
 
-PODFILE CHECKSUM: 63230b498245fa63a5c7cbb9e57576906b7c7634
+PODFILE CHECKSUM: 973f078944b1d0eb0208462178c514432c640e55
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2

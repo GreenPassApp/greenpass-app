@@ -15,8 +15,8 @@ import 'package:greenpass_app/services/my_certs/my_cert.dart';
 import 'package:greenpass_app/services/my_certs/my_certs.dart';
 import 'package:greenpass_app/services/permission_asker.dart';
 import 'package:greenpass_app/views/add_my_pass_page.dart';
-import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import 'package:path/path.dart';
+import 'package:pdfx/pdfx.dart';
 
 class AddQrCode {
   static const String _tmpPdfImgFilename = '/tmpPdfImg.png';
@@ -153,7 +153,7 @@ class AddQrCode {
         doFacts: for (int fact in const [1, 2, 4, 8]) {
           for (int pageNum = 1; pageNum <= doc.pagesCount; pageNum++) {
             PdfPage page = await doc.getPage(pageNum);
-            PdfPageImage? pageImage = await page.render(width: page.width * fact, height: page.height * fact, format: PdfPageFormat.PNG, backgroundColor: '#FFFFFF');
+            PdfPageImage? pageImage = await page.render(width: page.width * fact, height: page.height * fact, format: PdfPageImageFormat.png, backgroundColor: '#FFFFFF');
             page.close();
 
             Directory tmpDir = Directory.systemTemp.createTempSync();
