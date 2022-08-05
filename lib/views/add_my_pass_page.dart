@@ -5,6 +5,7 @@ import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/consts/vibration.dart';
 import 'package:greenpass_app/elements/platform_alert_dialog.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
+import 'package:greenpass_app/green_validator/model/validation_error_code.dart';
 import 'package:greenpass_app/green_validator/model/validation_result.dart';
 import 'package:greenpass_app/services/my_certs/my_cert.dart';
 import 'package:greenpass_app/services/my_certs/my_certs.dart';
@@ -50,12 +51,21 @@ class _AddMyPassPageState extends State<AddMyPassPage> {
 
               if (!res.success) {
                 GPVibration.error();
-                PlatformAlertDialog.showAlertDialog(
-                  context: context,
-                  title: 'Invalid QR code'.tr(),
-                  text: 'The QR code you scanned is invalid. Please try again.'.tr(),
-                  dismissButtonText: 'Ok'.tr()
-                ).then((_) => stopScanning = false);
+                if (res.errorCode == ValidationErrorCode.certificate_expired) {
+                  PlatformAlertDialog.showAlertDialog(
+                    context: context,
+                    title: 'Certificate expired'.tr(),
+                    text: 'This certificate has already expired. Please make an effort to have a new certificate issued.'.tr(),
+                    dismissButtonText: 'Ok'.tr()
+                  ).then((_) => stopScanning = false);
+                } else {
+                  PlatformAlertDialog.showAlertDialog(
+                    context: context,
+                    title: 'Invalid QR code'.tr(),
+                    text: 'The QR code you scanned is invalid. Please try again.'.tr(),
+                    dismissButtonText: 'Ok'.tr()
+                  ).then((_) => stopScanning = false);
+                }
               } else {
                 if (MyCerts.getCurrentCerts().any((c) => c.qrCode == code)) {
                   GPVibration.error();

@@ -1,19 +1,18 @@
-import 'package:country_codes/country_codes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/consts/vibration.dart';
 import 'package:greenpass_app/elements/colored_card.dart';
-import 'package:greenpass_app/elements/flag_element.dart';
 import 'package:greenpass_app/elements/pass_info.dart';
 import 'package:greenpass_app/green_validator/model/validation_result.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:greenpass_app/green_validator/payload/certificate_type.dart';
 import 'package:greenpass_app/services/country_regulations/regulation_result.dart';
 import 'package:greenpass_app/services/country_regulations/regulations_provider.dart';
 import 'package:greenpass_app/services/settings.dart';
 import 'package:intl/intl.dart';
+
+import '../green_validator/model/validation_error_code.dart';
 
 class ModalCert extends StatelessWidget {
   final ValidationResult cert;
@@ -157,7 +156,9 @@ class ModalCert extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text(
-                              'Invalid'.tr(),
+                              cert.errorCode == ValidationErrorCode.certificate_expired
+                              ? 'Expired'.tr()
+                              : 'Invalid'.tr(),
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 25.0,
@@ -173,7 +174,9 @@ class ModalCert extends StatelessWidget {
                             children: <Widget>[
                               Flexible(
                                 child: Text(
-                                  'This QR code is invalid. Please try to scan another one.'.tr(),
+                                  cert.errorCode == ValidationErrorCode.certificate_expired
+                                  ? 'This certificate has expired. Please try to scan another one.'.tr()
+                                  : 'This QR code is invalid. Please try to scan another one.'.tr(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.white,

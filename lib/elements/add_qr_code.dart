@@ -10,6 +10,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:greenpass_app/consts/colors.dart';
 import 'package:greenpass_app/elements/platform_alert_dialog.dart';
 import 'package:greenpass_app/green_validator/green_validator.dart';
+import 'package:greenpass_app/green_validator/model/validation_error_code.dart';
 import 'package:greenpass_app/green_validator/model/validation_result.dart';
 import 'package:greenpass_app/services/my_certs/my_cert.dart';
 import 'package:greenpass_app/services/my_certs/my_certs.dart';
@@ -110,7 +111,11 @@ class AddQrCode {
           ValidationResult res = GreenValidator.validate(code);
 
           if (!res.success) {
-            _invalidCodeError(context);
+            if (res.errorCode == ValidationErrorCode.certificate_expired) {
+              _certificateExpiredError(context);
+            } else {
+              _invalidCodeError(context);
+            }
           } else {
             if (MyCerts.getCurrentCerts().any((c) => c.qrCode == code)) {
               _alreadyAddedError(context);
@@ -154,7 +159,11 @@ class AddQrCode {
               ValidationResult res = GreenValidator.validate(code);
 
               if (!res.success) {
-                _invalidCodeError(context);
+                if (res.errorCode == ValidationErrorCode.certificate_expired) {
+                  _certificateExpiredError(context);
+                } else {
+                  _invalidCodeError(context);
+                }
               } else {
                 if (MyCerts.getCurrentCerts().any((c) => c.qrCode == code)) {
                   _alreadyAddedError(context);
@@ -178,6 +187,15 @@ class AddQrCode {
       if (e.code == 'read_external_storage_denied')
         _permissionError(context);
     }
+  }
+
+  static void _certificateExpiredError(BuildContext context) {
+    PlatformAlertDialog.showAlertDialog(
+      context: context,
+      title: 'Certificate expired'.tr(),
+      text: 'This certificate has already expired. Please make an effort to have a new certificate issued.'.tr(),
+      dismissButtonText: 'Ok'.tr()
+    );
   }
 
   static void _alreadyAddedError(BuildContext context) {
