@@ -104,31 +104,16 @@ class AddQrCode {
         List<String> barcodes = await _readQrCodes(File(result.files.first.path!));
 
         if (barcodes.isEmpty) {
-          PlatformAlertDialog.showAlertDialog(
-            context: context,
-            title: 'Nothing found'.tr(),
-            text: 'No QR code was found in the selected file. Please try another one.'.tr(),
-            dismissButtonText: 'Ok'.tr()
-          );
+          _nothingFoundError(context);
         } else {
           String code = barcodes.first;
           ValidationResult res = GreenValidator.validate(code);
 
           if (!res.success) {
-            PlatformAlertDialog.showAlertDialog(
-              context: context,
-              title: 'Invalid QR code'.tr(),
-              text: 'The QR code in the selected file is invalid. Please try again.'.tr(),
-              dismissButtonText: 'Ok'.tr()
-            );
+            _invalidCodeError(context);
           } else {
             if (MyCerts.getCurrentCerts().any((c) => c.qrCode == code)) {
-              PlatformAlertDialog.showAlertDialog(
-                context: context,
-                title: 'Already added'.tr(),
-                text: 'You have already added this QR code. Please select another file.'.tr(),
-                dismissButtonText: 'Ok'.tr()
-              );
+              _alreadyAddedError(context);
             } else {
               completer.complete(MyCerts.addCert(
                 MyCert(qrCode: code),
@@ -169,20 +154,10 @@ class AddQrCode {
               ValidationResult res = GreenValidator.validate(code);
 
               if (!res.success) {
-                PlatformAlertDialog.showAlertDialog(
-                  context: context,
-                  title: 'Invalid QR code'.tr(),
-                  text: 'The QR code in the selected file is invalid. Please try again.'.tr(),
-                  dismissButtonText: 'Ok'.tr()
-                );
+                _invalidCodeError(context);
               } else {
                 if (MyCerts.getCurrentCerts().any((c) => c.qrCode == code)) {
-                  PlatformAlertDialog.showAlertDialog(
-                    context: context,
-                    title: 'Already added'.tr(),
-                    text: 'You have already added this QR code. Please select another file.'.tr(),
-                    dismissButtonText: 'Ok'.tr()
-                  );
+                  _alreadyAddedError(context);
                 } else {
                   completer.complete(MyCerts.addCert(
                     MyCert(qrCode: code),
@@ -195,12 +170,7 @@ class AddQrCode {
         }
 
         if (!found) {
-          PlatformAlertDialog.showAlertDialog(
-            context: context,
-            title: 'Nothing found'.tr(),
-            text: 'No QR code was found in the selected file. Please try another one.'.tr(),
-            dismissButtonText: 'Ok'.tr()
-          );
+          _nothingFoundError(context);
         }
         doc.close();
       }
@@ -208,6 +178,33 @@ class AddQrCode {
       if (e.code == 'read_external_storage_denied')
         _permissionError(context);
     }
+  }
+
+  static void _alreadyAddedError(BuildContext context) {
+    PlatformAlertDialog.showAlertDialog(
+      context: context,
+      title: 'Already added'.tr(),
+      text: 'You have already added this QR code. Please select another file.'.tr(),
+      dismissButtonText: 'Ok'.tr()
+    );
+  }
+
+  static void _invalidCodeError(BuildContext context) {
+    PlatformAlertDialog.showAlertDialog(
+      context: context,
+      title: 'Invalid QR code'.tr(),
+      text: 'The QR code in the selected file is invalid. Please try again.'.tr(),
+      dismissButtonText: 'Ok'.tr()
+    );
+  }
+
+  static void _nothingFoundError(BuildContext context) {
+    PlatformAlertDialog.showAlertDialog(
+      context: context,
+      title: 'Nothing found'.tr(),
+      text: 'No QR code was found in the selected file. Please try another one.'.tr(),
+      dismissButtonText: 'Ok'.tr()
+    );
   }
 
   static void _permissionError(BuildContext context) {
