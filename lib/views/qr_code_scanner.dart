@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:greenpass_app/consts/colors.dart';
+import 'package:greenpass_app/elements/flashlight_button.dart';
 import 'package:greenpass_app/services/country_regulations/regulations_provider.dart';
 import 'package:greenpass_app/views/rule_selection_modal.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -104,6 +104,15 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
               width: double.infinity,
             ),
             Expanded(child: Container()),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: FlashlightButton(),
+                ),
+              ],
+            ),
             if (showRuleSelection && RegulationsProvider.useColorValidation()) ...[
               Container(
                 child: TextButton(
