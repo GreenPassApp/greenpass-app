@@ -110,7 +110,7 @@ class ModalCert extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: ColoredCard.buildIcon(
-                              icon: cardColor == GPColors.red ? FontAwesome5Solid.times
+                              icon: cardColor == GPColors.red ? (cert.errorCode == ValidationErrorCode.certificate_expired ? FontAwesome5Solid.hourglass_end : FontAwesome5Solid.times)
                                   : (cardColor == GPColors.green ? FontAwesome5Solid.check : ColoredCard.getValidationIcon(cert))
                             ),
                           ),
@@ -168,7 +168,7 @@ class ModalCert extends StatelessWidget {
                           ],
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.all(35.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
