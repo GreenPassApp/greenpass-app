@@ -62,7 +62,7 @@ class FirstAppLaunch {
               ),
               decoration: PageDecoration(
                   bodyAlignment: Alignment.center,
-                  descriptionPadding: const EdgeInsets.all(30.0),
+                  bodyPadding: const EdgeInsets.all(30.0),
                   titleTextStyle: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold)
               ),
             ),
@@ -121,7 +121,7 @@ class FirstAppLaunch {
       ),
       decoration: PageDecoration(
         bodyAlignment: Alignment.center,
-        descriptionPadding: const EdgeInsets.all(60.0),
+        bodyPadding: const EdgeInsets.all(60.0),
         titleTextStyle: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold)
       ),
     );

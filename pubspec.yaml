@@ -36,28 +36,29 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  qr_mobile_vision: ^3.0.1
+  qr_mobile_vision:
+    git:
+      url: https://github.com/kevinhaendel/flutter_qr_mobile_vision
   app_settings: ^4.1.0
   modal_bottom_sheet: ^2.0.0
   flutter_vector_icons: ^1.0.0
   easy_localization: ^3.0.0
-  smooth_page_indicator: ^0.3.0-nullsafety.0
+  smooth_page_indicator: ^1.0.0+2
   pretty_qr_code: ^2.0.2
   hive: ^2.0.4
   hive_flutter: ^1.1.0
-  flutter_secure_storage: ^4.2.0
-  flag: ^5.0.0-nullsafety
+  flutter_secure_storage: ^5.1.0
+  flag: ^6.0.0
   package_info: ^2.0.2
-  introduction_screen: ^2.1.0
+  introduction_screen: ^3.0.2
   shared_preferences: ^2.0.6
   flutter_markdown: ^0.6.2
-  file_picker: ^3.0.3
+  file_picker: ^5.0.1
   pdfx: ^2.2.0
   crypto: ^3.0.1
   dio: ^4.0.0
   flutter_wallet:
-    git:
-      url: https://github.com/Hiyorimi/flutter_wallet
+    path: packages/flutter_wallet
   ota_update:
     path: packages/ota_update
   pointycastle: ^3.4.0
