@@ -3,7 +3,7 @@ PODS:
     - Flutter
   - country_codes (0.0.1):
     - Flutter
-  - device_info (0.0.1):
+  - device_info_plus (0.0.1):
     - Flutter
   - DKImagePickerController/Core (4.3.2):
     - DKImagePickerController/ImageDataManager
@@ -101,11 +101,11 @@ PODS:
   - nanopb/encode (2.30908.0)
   - native_device_orientation (0.0.1):
     - Flutter
-  - native_pdf_renderer (1.2.0):
-    - Flutter
   - package_info (0.0.1):
     - Flutter
   - path_provider_ios (0.0.1):
+    - Flutter
+  - pdfx (1.0.0):
     - Flutter
   - PromisesObjC (2.0.0)
   - Protobuf (3.19.4)
@@ -120,22 +120,22 @@ PODS:
   - SwiftyGif (5.4.0)
   - url_launcher_ios (0.0.1):
     - Flutter
-  - vibration (1.7.4-nullsafety.0):
+  - vibration (1.7.5):
     - Flutter
 
 DEPENDENCIES:
   - app_settings (from `.symlinks/plugins/app_settings/ios`)
   - country_codes (from `.symlinks/plugins/country_codes/ios`)
-  - device_info (from `.symlinks/plugins/device_info/ios`)
+  - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_wallet (from `.symlinks/plugins/flutter_wallet/ios`)
   - GoogleMLKit/BarcodeScanning (~> 2.4.0)
   - native_device_orientation (from `.symlinks/plugins/native_device_orientation/ios`)
-  - native_pdf_renderer (from `.symlinks/plugins/native_pdf_renderer/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
+  - pdfx (from `.symlinks/plugins/pdfx/ios`)
   - qr_mobile_vision (from `.symlinks/plugins/qr_mobile_vision/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
@@ -166,8 +166,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/app_settings/ios"
   country_codes:
     :path: ".symlinks/plugins/country_codes/ios"
-  device_info:
-    :path: ".symlinks/plugins/device_info/ios"
+  device_info_plus:
+    :path: ".symlinks/plugins/device_info_plus/ios"
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
@@ -178,12 +178,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_wallet/ios"
   native_device_orientation:
     :path: ".symlinks/plugins/native_device_orientation/ios"
-  native_pdf_renderer:
-    :path: ".symlinks/plugins/native_pdf_renderer/ios"
   package_info:
     :path: ".symlinks/plugins/package_info/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
+  pdfx:
+    :path: ".symlinks/plugins/pdfx/ios"
   qr_mobile_vision:
     :path: ".symlinks/plugins/qr_mobile_vision/ios"
   shared_preferences_ios:
@@ -196,7 +196,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   app_settings: d103828c9f5d515c4df9ee754dabd443f7cedcf3
   country_codes: b0900f46ad686281d5dab438e354e44ad10f5941
-  device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
+  device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
@@ -215,9 +215,9 @@ SPEC CHECKSUMS:
   MLKitVision: 53b8f93a864c8d9740f7f09041911f2e64150ec8
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   native_device_orientation: 3b4cfc9565a7b879cc4fde282b3e27745e852d0d
-  native_pdf_renderer: 0e545bf94fb341e0fe7508bf72d4c1c42c30aa02
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
-  path_provider_ios: 7d7ce634493af4477d156294792024ec3485acd5
+  path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
+  pdfx: 7b876b09de8b7a0bf444a4f82b439ffcff4ee1ec
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   Protobuf: 235750e4696ff59fb07d949a9dbbc92b3c0700fe
   qr_mobile_vision: 308ef269e6bc257c05a4adf218e02afc2be09736
@@ -225,7 +225,7 @@ SPEC CHECKSUMS:
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   SwiftyGif: 5d4af95df24caf1c570dbbcb32a3b8a0763bc6d7
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
-  vibration: 1ec279c4a1a7a646627b54039d812334b3f1114a
+  vibration: 7d883d141656a1c1a6d8d238616b2042a51a1241
 
 PODFILE CHECKSUM: 973f078944b1d0eb0208462178c514432c640e55
 
